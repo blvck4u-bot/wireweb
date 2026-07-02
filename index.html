@@ -10,27 +10,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Deep dark minimal palette */
             --bg: #050505;
-            --frame: #000000;
-            --card: #101010;
-            --card-hi: #171717;
-            --glass: #121212;
-            --glass-hi: #1e1e1e;
-            --line: #313131;
-            --soft-line: #222222;
-            --ink: #f7f7f7;
-            --muted: #9e9e9e;
-            --dim: #686868;
-            --success: #cffff0;
-            --warn: #fff0bd;
-            --error: #ffd5d5;
-            --red: #ff5f57;
-            --yellow: #ffbd2e;
-            --green: #28c840;
-            --accent: #ffffff;
+            --frame: #0a0a0a;
+            --card: rgba(15, 15, 15, 0.6);
+            --card-hi: rgba(25, 25, 25, 0.8);
+            --glass: rgba(10, 10, 10, 0.5);
+            --glass-hi: rgba(20, 20, 20, 0.7);
+            --line: #222222;
+            --soft-line: rgba(255, 255, 255, 0.08);
+            --ink: #ffffff;
+            --muted: #888888;
+            --dim: #555555;
+            
+            /* Vibrant Accents */
+            --sol-green: #14F195;
+            --sol-purple: #9945FF;
+            --red: #FF3B30;
+            --yellow: #FFCC00;
+            --green: #34C759;
+            
             --grid-color: rgba(255, 255, 255, 0.03);
             --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-            --transition: all 0.3s ease;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * {
@@ -39,6 +41,7 @@
             box-sizing: border-box;
             font-family: var(--font-sans);
             scroll-behavior: smooth;
+            cursor: none; 
         }
 
         body {
@@ -50,19 +53,98 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        /* --- Custom Minimal Cursor --- */
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--sol-green);
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            box-shadow: 0 0 10px var(--sol-green);
+        }
+
+        .cursor-outline {
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(20, 241, 149, 0.3);
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                        height 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                        border-color 0.3s,
+                        background-color 0.3s;
+        }
+
+        .cursor-hover .cursor-dot {
+            width: 0;
+            height: 0;
+        }
+        
+        .cursor-hover .cursor-outline {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(20, 241, 149, 0.05);
+            border-color: var(--sol-green);
+            backdrop-filter: blur(2px);
+        }
+
+        /* --- Background Effects --- */
         .grid-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -1;
+            z-index: -2;
             background-image: 
                 linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
                 linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-            background-size: 15vw 15vw;
+            background-size: 100px 100px;
             pointer-events: none;
         }
+
+        .ambient-glow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 100vh;
+            transform: translate(-50%, -50%);
+            /* Subtle Solana-inspired atmospheric glow */
+            background: radial-gradient(circle at 30% 30%, rgba(20, 241, 149, 0.04) 0%, transparent 40%),
+                        radial-gradient(circle at 70% 70%, rgba(153, 69, 255, 0.03) 0%, transparent 40%);
+            z-index: -3;
+            pointer-events: none;
+            animation: breathe 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes breathe {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+        }
+
+        /* --- Scroll Reveal Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
 
         /* Utility */
         .hidden { display: none !important; }
@@ -73,99 +155,128 @@
             justify-content: space-between;
             align-items: center;
             padding: 24px 5%;
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(12px);
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--soft-line);
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 100;
+            transition: var(--transition);
+        }
+
+        .nav-scrolled {
+            padding: 16px 5%;
+            background: rgba(5, 5, 5, 0.9);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 800;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             display: flex;
             align-items: center;
             gap: 12px;
+            text-transform: uppercase;
         }
 
         .logo::before {
             content: '';
             display: block;
-            width: 12px;
-            height: 12px;
-            background: var(--ink);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--ink);
+            width: 8px;
+            height: 8px;
+            background: var(--sol-green);
+            box-shadow: 0 0 15px var(--sol-green);
         }
 
         .nav-links {
             display: flex;
-            gap: 32px;
+            gap: 40px;
         }
 
         .nav-links a {
             color: var(--muted);
             text-decoration: none;
-            font-size: 14px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             font-weight: 600;
             transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--sol-green);
+            transition: width 0.3s ease;
         }
 
         .nav-links a:hover {
             color: var(--ink);
         }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
 
+        /* Buttons */
         .btn-primary {
             background: var(--ink);
             color: var(--bg);
-            padding: 12px 24px;
-            border-radius: 4px;
+            padding: 14px 28px;
+            border-radius: 2px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 14px;
-            transition: all 0.3s ease;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: var(--transition);
             border: 1px solid var(--ink);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
             width: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(255,255,255,0.1);
         }
 
         .btn-primary:hover {
-            background: transparent;
-            color: var(--ink);
-            box-shadow: 0 0 20px rgba(247, 247, 247, 0.2);
-            transform: translateY(-2px);
+            background: rgba(20, 241, 149, 0.1);
+            color: var(--sol-green);
+            border-color: var(--sol-green);
+            box-shadow: 0 0 30px rgba(20, 241, 149, 0.2);
         }
 
         .btn-copy {
-            background: var(--glass-hi);
+            background: var(--glass);
             border: 1px solid var(--soft-line);
             color: var(--muted);
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 11px;
+            padding: 8px 16px;
+            border-radius: 2px;
+            font-size: 10px;
             font-weight: 700;
-            cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.2s ease;
+            letter-spacing: 1px;
+            transition: var(--transition);
         }
 
         .btn-copy:hover {
-            color: var(--ink);
-            border-color: var(--muted);
-            background: var(--line);
+            color: var(--sol-green);
+            border-color: var(--sol-green);
+            background: rgba(20, 241, 149, 0.05);
         }
 
         .btn-copy.copied {
-            color: var(--success);
-            border-color: var(--success);
-            background: rgba(207, 255, 240, 0.05);
+            color: var(--bg);
+            border-color: var(--sol-green);
+            background: var(--sol-green);
         }
 
         /* Hero */
@@ -176,144 +287,152 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 140px 5% 60px;
+            padding: 160px 5% 80px;
             position: relative;
-            background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, transparent 70%);
         }
 
         .hero-badge {
-            background: var(--glass-hi);
-            border: 1px solid var(--soft-line);
+            background: rgba(20, 241, 149, 0.05);
+            border: 1px solid rgba(20, 241, 149, 0.2);
             padding: 8px 16px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 600;
-            color: var(--success);
-            margin-bottom: 24px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--sol-green);
+            margin-bottom: 32px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            animation: fadeInDown 1s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(20, 241, 149, 0.1);
         }
 
         .hero-badge::before {
             content: '';
             width: 8px;
             height: 8px;
-            background: var(--green);
+            background: var(--sol-green);
             border-radius: 50%;
             display: inline-block;
-            box-shadow: 0 0 8px var(--green);
+            box-shadow: 0 0 12px var(--sol-green);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(20, 241, 149, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(20, 241, 149, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(20, 241, 149, 0); }
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 6vw, 5rem);
+            font-size: clamp(3rem, 7vw, 6rem);
             font-weight: 800;
-            letter-spacing: -1px;
-            line-height: 1.1;
+            letter-spacing: -2px;
+            line-height: 1.05;
             margin-bottom: 24px;
-            max-width: 900px;
-            background: linear-gradient(180deg, #ffffff 0%, #888888 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeInUp 1s ease 0.2s both;
+            max-width: 1000px;
+            color: var(--ink);
         }
 
         .hero p {
-            font-size: clamp(1.1rem, 2vw, 1.25rem);
+            font-size: clamp(1rem, 1.5vw, 1.15rem);
             color: var(--muted);
             max-width: 600px;
-            margin-bottom: 40px;
-            animation: fadeInUp 1s ease 0.4s both;
+            margin-bottom: 48px;
+            font-weight: 400;
         }
 
         .hero-actions {
             display: flex;
             gap: 16px;
-            animation: fadeInUp 1s ease 0.6s both;
         }
 
         .btn-secondary {
-            background: var(--glass);
+            background: transparent;
             color: var(--ink);
-            padding: 12px 32px;
-            border-radius: 4px;
+            padding: 14px 28px;
+            border-radius: 2px;
             text-decoration: none;
-            font-weight: 600;
-            border: 1px solid var(--line);
-            transition: all 0.3s ease;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 1px solid var(--soft-line);
+            transition: var(--transition);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
         }
 
         .btn-secondary:hover {
-            background: var(--glass-hi);
-            border-color: var(--muted);
-            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--ink);
         }
 
         /* Mockup */
         .mockup-container {
-            margin-top: 80px;
+            margin-top: 100px;
             width: 100%;
             max-width: 1000px;
-            background: var(--frame);
-            border: 1px solid var(--line);
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--soft-line);
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 100px rgba(247, 247, 247, 0.05);
-            animation: fadeInUp 1s ease 0.8s both;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255,255,255,0.05) inset;
         }
 
         .mockup-header {
-            background: var(--bg);
-            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 16px 20px;
             display: flex;
             align-items: center;
-            border-bottom: 1px solid var(--line);
+            border-bottom: 1px solid var(--soft-line);
             gap: 8px;
         }
 
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+        .dot { 
+            width: 10px; 
+            height: 10px; 
+            border-radius: 50%; 
+            margin-right: 2px;
         }
-        .dot.red { background: var(--red); }
-        .dot.yellow { background: var(--yellow); }
-        .dot.green { background: var(--green); }
+        .dot.red { background: var(--red); box-shadow: 0 0 8px rgba(255, 59, 48, 0.5); }
+        .dot.yellow { background: var(--yellow); box-shadow: 0 0 8px rgba(255, 204, 0, 0.5); }
+        .dot.green { background: var(--green); box-shadow: 0 0 8px rgba(52, 199, 89, 0.5); }
 
         .mockup-title {
-            margin-left: 12px;
-            font-size: 12px;
-            color: var(--dim);
+            margin-left: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--muted);
             font-weight: 600;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
         .mockup-body {
             padding: 40px;
-            background: var(--bg);
             display: grid;
-            grid-template-columns: 250px 1fr;
+            grid-template-columns: 280px 1fr;
             gap: 24px;
         }
 
         .mockup-sidebar {
-            background: var(--card);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--soft-line);
             border-radius: 4px;
-            padding: 24px;
+            padding: 32px;
             text-align: left;
         }
 
         .mockup-main {
-            background: var(--glass);
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--soft-line);
             border-radius: 4px;
-            padding: 24px;
+            padding: 32px;
             position: relative;
             overflow: hidden;
             text-align: left;
@@ -321,13 +440,10 @@
 
         .scanline {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-            animation: scan 3s linear infinite;
+            top: 0; left: 0; width: 100%; height: 1px;
+            background: rgba(20, 241, 149, 0.1);
+            box-shadow: 0 0 20px rgba(20, 241, 149, 0.2);
+            animation: scan 4s linear infinite;
         }
 
         @keyframes scan {
@@ -338,183 +454,204 @@
         .mockup-code {
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
+            line-height: 2.2;
             color: var(--muted);
         }
 
-        .mockup-code span.success { color: var(--success); }
-        .mockup-code span.warn { color: var(--warn); }
+        .mockup-code span.success { color: var(--sol-green); text-shadow: 0 0 10px rgba(20, 241, 149, 0.3); }
+        .mockup-code span.warn { color: var(--yellow); }
+        .mockup-code span.highlight { color: var(--sol-purple); }
 
         /* Features Section */
         .features {
-            padding: 100px 5%;
+            padding: 140px 5%;
             background: var(--bg);
             position: relative;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 100px;
         }
 
         .section-header h2 {
             font-size: 2.5rem;
             margin-bottom: 16px;
+            letter-spacing: -1px;
         }
 
         .section-header p {
             color: var(--muted);
             max-width: 500px;
             margin: 0 auto;
+            font-size: 1.1rem;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1px; 
+            background: var(--line);
+            border: 1px solid var(--line);
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .feature-card {
-            background: var(--card);
-            border: 1px solid var(--soft-line);
-            padding: 32px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
+            background: var(--bg);
+            padding: 48px 40px;
+            transition: var(--transition);
             position: relative;
             overflow: hidden;
             text-align: left;
         }
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--line);
-            background: var(--card-hi);
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at top right, rgba(20, 241, 149, 0.05), transparent 60%);
+            opacity: 0;
+            transition: var(--transition);
         }
 
+        .feature-card:hover::before { opacity: 1; }
+        
         .feature-icon {
-            font-size: 24px;
-            margin-bottom: 24px;
-            color: var(--dim);
+            font-size: 14px;
+            margin-bottom: 32px;
+            color: var(--sol-green);
             font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
         }
 
         .feature-card h3 {
             font-size: 1.25rem;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            font-weight: 600;
         }
 
         .feature-card p {
             color: var(--muted);
             font-size: 0.95rem;
+            line-height: 1.7;
         }
 
         /* App Purchase Section */
         .app-purchase-section {
-            padding: 100px 5%;
+            padding: 140px 5%;
             background: var(--frame);
             border-top: 1px solid var(--line);
             text-align: center;
+            position: relative;
         }
 
         .checkout-box {
             max-width: 500px;
             margin: 0 auto;
-            background: var(--card);
-            border: 1px solid var(--line);
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--soft-line);
+            padding: 56px 48px;
+            border-radius: 4px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.02) inset;
             text-align: left;
+            position: relative;
         }
 
         .checkout-header {
             text-align: center;
-            margin-bottom: 32px;
+            margin-bottom: 40px;
         }
-        .checkout-header h2 { font-size: 2rem; margin-bottom: 8px; }
-        .checkout-header p { color: var(--muted); }
+        .checkout-header h2 { font-size: 2rem; margin-bottom: 8px; letter-spacing: -1px; }
+        .checkout-header p { color: var(--muted); font-size: 0.9rem; }
 
         .price-tag {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             font-weight: 800;
-            color: var(--success);
+            color: var(--sol-green);
             text-align: center;
             margin-bottom: 32px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -2px;
+            text-shadow: 0 0 20px rgba(20, 241, 149, 0.2);
         }
 
         /* Token Creator Studio Section */
         .creator-section {
-            padding: 100px 5%;
+            padding: 140px 5%;
             background: var(--bg);
             border-top: 1px solid var(--line);
             position: relative;
         }
 
         .creator-container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1.2fr 1fr;
-            gap: 40px;
+            gap: 64px;
         }
 
         .creator-form-panel {
-            background: var(--card);
-            border: 1px solid var(--line);
-            padding: 40px;
-            border-radius: 8px;
             text-align: left;
         }
 
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 32px;
         }
 
         .form-group label {
             display: block;
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 700;
             color: var(--muted);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
         .form-control {
             width: 100%;
-            background: var(--bg);
-            border: 1px solid var(--line);
-            padding: 14px;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--line);
+            padding: 16px 0;
             color: var(--ink);
-            font-size: 14px;
-            border-radius: 4px;
-            transition: border-color 0.3s;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .form-control::placeholder {
+            color: var(--dim);
         }
 
         .form-control:focus {
             outline: none;
-            border-color: var(--ink);
+            border-color: var(--sol-green);
         }
 
         .grid-2col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            gap: 32px;
         }
 
         .file-upload-wrapper {
             position: relative;
-            border: 2px dashed var(--line);
-            border-radius: 4px;
-            padding: 30px;
+            border: 1px dashed var(--line);
+            padding: 40px;
             text-align: center;
-            background: var(--bg);
+            background: rgba(255,255,255,0.01);
             cursor: pointer;
-            transition: border-color 0.3s;
+            transition: var(--transition);
         }
 
-        .file-upload-wrapper:hover { border-color: var(--muted); }
+        .file-upload-wrapper:hover { 
+            border-color: var(--sol-green); 
+            background: rgba(20, 241, 149, 0.02);
+        }
+        
         .file-upload-wrapper input[type="file"] {
             position: absolute;
             top: 0; left: 0;
@@ -525,95 +662,86 @@
         .upload-preview-img {
             width: 64px; height: 64px;
             border-radius: 50%; object-fit: cover;
-            display: none; margin: 0 auto 12px;
-            border: 1px solid var(--line);
+            display: none; margin: 0 auto 16px;
+            border: 1px solid var(--sol-green);
+            box-shadow: 0 0 15px rgba(20, 241, 149, 0.2);
         }
 
         /* Toggle Switches */
         .toggle-group {
-            margin-top: 32px;
-            border-top: 1px solid var(--line);
-            padding-top: 24px;
+            margin-top: 48px;
+            padding-top: 32px;
         }
 
         .toggle-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--bg);
-            border: 1px solid var(--line);
-            padding: 16px;
-            border-radius: 4px;
-            margin-bottom: 12px;
-            transition: border-color 0.3s ease;
-        }
-
-        .toggle-row:hover {
-            border-color: var(--muted);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--line);
+            transition: var(--transition);
         }
 
         .toggle-info h4 {
             font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 2px;
+            font-weight: 500;
+            margin-bottom: 4px;
             color: var(--ink);
         }
 
         .toggle-info p {
-            font-size: 12px;
-            color: var(--success);
+            font-size: 11px;
+            color: var(--sol-purple);
             font-family: 'JetBrains Mono', monospace;
         }
 
         .switch {
             position: relative;
             display: inline-block;
-            width: 40px;
-            height: 22px;
+            width: 36px;
+            height: 20px;
         }
 
-        .switch input { 
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+        .switch input { opacity: 0; width: 0; height: 0; }
 
         .slider {
             position: absolute;
             cursor: pointer;
             top: 0; left: 0; right: 0; bottom: 0;
             background-color: var(--line);
-            transition: .3s;
-            border-radius: 22px;
+            transition: .4s;
+            border-radius: 20px;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 16px;
-            width: 16px;
-            left: 3px;
-            bottom: 3px;
+            height: 12px;
+            width: 12px;
+            left: 4px;
+            bottom: 4px;
             background-color: var(--muted);
-            transition: .3s;
+            transition: .4s;
             border-radius: 50%;
         }
 
         input:checked + .slider {
-            background-color: var(--success);
+            background-color: var(--sol-green);
+            box-shadow: 0 0 10px rgba(20, 241, 149, 0.4);
         }
 
         input:checked + .slider:before {
-            transform: translateX(18px);
+            transform: translateX(16px);
             background-color: var(--bg);
         }
 
         /* Side Panel / Shared UI Components */
         .creator-preview-panel {
-            background: var(--bg);
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: 32px;
+            background: rgba(15, 15, 15, 0.5);
+            border: 1px solid var(--soft-line);
+            backdrop-filter: blur(20px);
+            padding: 48px;
+            border-radius: 4px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -623,65 +751,76 @@
         }
 
         .token-badge-preview {
-            display: flex; align-items: center; gap: 16px;
-            background: var(--card); padding: 20px;
-            border-radius: 6px; border: 1px solid var(--soft-line);
-            margin-bottom: 24px;
+            display: flex; align-items: center; gap: 20px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 32px;
         }
 
         .token-badge-avatar {
-            width: 50px; height: 50px;
+            width: 56px; height: 56px;
             border-radius: 50%; background: var(--line);
             display: flex; align-items: center; justify-content: center;
-            font-weight: 800; color: var(--dim); overflow: hidden;
+            font-weight: 600; color: var(--dim); overflow: hidden;
+            font-size: 20px;
+            border: 1px solid var(--soft-line);
         }
         .token-badge-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
         .order-summary {
-            background: var(--glass-hi);
-            border: 1px solid var(--soft-line);
-            padding: 24px; border-radius: 6px; margin-bottom: 24px;
+            margin-bottom: 40px;
         }
 
         .summary-row {
             display: flex; justify-content: space-between;
-            margin-bottom: 12px; font-size: 14px;
+            margin-bottom: 16px; font-size: 13px;
+            color: var(--muted);
+        }
+        .summary-row span:last-child {
+            color: var(--ink);
+            font-family: 'JetBrains Mono', monospace;
         }
         .summary-row.total {
             border-top: 1px solid var(--line);
-            padding-top: 12px; font-weight: 800;
-            font-size: 18px; color: var(--success);
+            padding-top: 24px; margin-top: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--sol-green);
         }
 
         /* Payment & Loading States */
         .state-box {
-            background: var(--glass);
-            border: 1px solid var(--soft-line);
-            padding: 24px;
-            border-radius: 4px;
-            margin-bottom: 20px;
+            padding: 32px 0 0 0;
+            border-top: 1px solid var(--line);
+            margin-bottom: 24px;
         }
 
         .step-label {
-            font-size: 11px; color: var(--dim);
-            font-weight: 800; margin-bottom: 12px;
-            letter-spacing: 1px; text-transform: uppercase;
+            font-size: 10px; color: var(--dim);
+            font-weight: 700; margin-bottom: 16px;
+            letter-spacing: 2px; text-transform: uppercase;
         }
 
         .copy-row {
             display: flex; 
             align-items: center; 
             justify-content: space-between; 
-            background: var(--bg); 
+            background: rgba(255,255,255,0.02); 
             padding: 12px 16px; 
             border: 1px solid var(--line); 
-            border-radius: 4px; 
-            margin-bottom: 16px;
+            margin-bottom: 20px;
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .copy-row:hover {
+            border-color: var(--sol-green);
+            background: rgba(20, 241, 149, 0.05);
         }
 
         .copy-row-text {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--ink);
             word-break: break-all;
             padding-right: 12px;
@@ -689,125 +828,131 @@
 
         /* Loader Animation Styles */
         .spinner {
-            border: 3px solid rgba(255,255,255,0.1);
-            border-top: 3px solid var(--success);
+            border: 2px solid rgba(20, 241, 149, 0.1);
+            border-top: 2px solid var(--sol-green);
             border-radius: 50%;
             width: 30px; height: 30px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 16px;
+            margin: 0 auto 24px;
+            box-shadow: 0 0 15px rgba(20, 241, 149, 0.2);
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         .loader-terminal {
-            background: var(--bg); border: 1px solid var(--line);
-            padding: 12px; border-radius: 4px; font-family: 'JetBrains Mono', monospace;
-            font-size: 11px; color: var(--muted); height: 120px;
-            overflow-y: hidden; text-align: left; margin: 16px 0;
+            background: rgba(0,0,0,0.6); border: 1px solid var(--line);
+            padding: 16px; font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; color: var(--sol-green); height: 100px;
+            overflow-y: hidden; text-align: left; margin: 24px 0;
             display: flex; flex-direction: column; justify-content: flex-end;
+            line-height: 2;
+            border-radius: 2px;
         }
-        .loader-terminal div { margin-bottom: 4px; }
 
         .discord-alert {
-            background: rgba(255, 189, 46, 0.05);
-            border: 1px solid var(--yellow);
-            padding: 16px; border-radius: 4px;
-            text-align: center; margin-top: 16px;
+            background: rgba(153, 69, 255, 0.05);
+            border: 1px solid rgba(153, 69, 255, 0.3);
+            padding: 24px;
+            border-radius: 2px;
+            text-align: center; margin-top: 24px;
         }
-        .discord-alert h4 { color: var(--yellow); font-size: 14px; margin-bottom: 8px;}
-        .discord-alert p { font-size: 12px; color: var(--muted); margin-bottom: 16px;}
+        .discord-alert h4 { color: var(--sol-purple); font-size: 12px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;}
+        .discord-alert p { font-size: 12px; color: var(--muted); margin-bottom: 20px;}
 
         /* Data Section */
         .data-section {
-            padding: 100px 5%; background: var(--bg);
+            padding: 140px 5%; background: var(--bg);
             border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
         }
 
         .data-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
             background: var(--line); max-width: 1000px;
             margin: 0 auto; border: 1px solid var(--line);
         }
 
-        .data-stat { background: var(--bg); padding: 40px; text-align: center; }
-        .data-stat h4 { font-size: 3rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; }
-        .data-stat p { color: var(--dim); font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
+        .data-stat { background: var(--bg); padding: 64px 40px; text-align: center; transition: var(--transition); }
+        .data-stat:hover { background: rgba(20, 241, 149, 0.02); }
+        .data-stat h4 { font-size: 3.5rem; font-weight: 300; font-family: 'JetBrains Mono', monospace; margin-bottom: 16px; color: var(--ink); letter-spacing: -2px;}
+        .data-stat p { color: var(--sol-green); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
 
         /* Footer */
-        footer { padding: 60px 5%; text-align: center; background: var(--bg); border-top: 1px solid var(--soft-line); }
-        .footer-links { margin-bottom: 20px; }
-        .footer-links a { color: var(--muted); text-decoration: none; margin: 0 12px; font-size: 0.9rem; transition: color 0.3s; }
-        .footer-links a:hover { color: var(--ink); }
-        footer p { color: var(--dim); font-size: 0.9rem; }
-
-        /* Animations */
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        footer { padding: 80px 5% 40px; text-align: center; background: var(--frame); }
+        .footer-logo { font-size: 24px; font-weight: 800; letter-spacing: 4px; margin-bottom: 32px; color: var(--dim); }
+        .footer-links { margin-bottom: 40px; }
+        .footer-links a { color: var(--muted); text-decoration: none; margin: 0 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--sol-green); }
+        footer p { color: var(--dim); font-size: 10px; letter-spacing: 1px; }
 
         @media (max-width: 900px) {
             .creator-container { grid-template-columns: 1fr; }
-            .creator-preview-panel { position: relative; top: 0; }
-            .mockup-body { grid-template-columns: 1fr; }
+            .creator-preview-panel { position: relative; top: 0; padding: 32px; }
+            .mockup-body { grid-template-columns: 1fr; padding: 24px;}
             .nav-links { display: none; }
             .data-grid { grid-template-columns: 1fr; }
+            .cursor-dot, .cursor-outline { display: none; } 
+            * { cursor: auto; }
         }
     </style>
 </head>
 <body>
 
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <div class="ambient-glow"></div>
     <div class="grid-background"></div>
 
-    <nav>
-        <div class="logo">WIRE</div>
+    <nav id="navbar">
+        <div class="logo cursor-hover-target">WIRE</div>
         <div class="nav-links">
-            <a href="#features">App Features</a>
-            <a href="#app-purchase">Get Software</a>
-            <a href="#creator">Token Creator</a>
+            <a href="#features" class="cursor-hover-target">Modules</a>
+            <a href="#app-purchase" class="cursor-hover-target">License</a>
+            <a href="#creator" class="cursor-hover-target">Deploy</a>
         </div>
-        <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary" style="width:auto;">Join Discord</a>
+        <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary cursor-hover-target" style="width:auto; padding: 10px 20px;">Join Discord</a>
     </nav>
 
-    <section class="hero">
-        <div class="hero-badge">RPC Connection: Active</div>
-        <h1>Memecoin Control Center.</h1>
-        <p>A polished, high-performance local dashboard for Solana memecoin traders. Manage wallets, deploy tokens with integrated liquidity, and execute complex market tools with absolute precision.</p>
+    <section class="hero reveal">
+        <div class="hero-badge reveal reveal-delay-1">RPC Connection: Active & Secure</div>
+        <h1 class="reveal reveal-delay-2">Memecoin<br>Control Center.</h1>
+        <p class="reveal reveal-delay-3">A polished, high-performance local dashboard for Solana traders. Manage wallets, deploy tokens with integrated liquidity, and execute complex market tools with absolute precision.</p>
         
-        <div class="hero-actions">
-            <a href="#app-purchase" class="btn-primary" style="width: auto;">Purchase App</a>
-            <a href="#creator" class="btn-secondary">Launch Token</a>
+        <div class="hero-actions reveal reveal-delay-3">
+            <a href="#app-purchase" class="btn-primary cursor-hover-target" style="width: auto;">Purchase App</a>
+            <a href="#creator" class="btn-secondary cursor-hover-target">Launch Token</a>
         </div>
 
-        <div class="mockup-container">
+        <div class="mockup-container reveal reveal-delay-3">
             <div class="mockup-header">
                 <div class="dot red"></div>
                 <div class="dot yellow"></div>
                 <div class="dot green"></div>
-                <div class="mockup-title">WIRE / CONTROL SUITE</div>
+                <div class="mockup-title">WIRE_TERMINAL</div>
             </div>
             <div class="mockup-body">
                 <div class="mockup-sidebar">
-                    <div style="font-size: 20px; font-weight: 800; margin-bottom: 24px;">WIRE</div>
-                    <div style="color: var(--dim); font-size: 10px; font-weight: 600; margin-bottom: 8px;">CONNECTED WALLET</div>
-                    <div style="font-family: 'JetBrains Mono'; font-size: 11px; margin-bottom: 16px;">8xT1...9pq2</div>
-                    <div style="color: var(--dim); font-size: 10px; font-weight: 600; margin-bottom: 8px;">SOL BALANCE</div>
-                    <div style="font-size: 24px; font-weight: 600;">14.50 SOL</div>
+                    <div style="font-size: 16px; font-weight: 800; margin-bottom: 32px; letter-spacing: 2px;">WIRE</div>
+                    <div style="color: var(--dim); font-size: 9px; font-weight: 700; margin-bottom: 8px; letter-spacing: 1px;">ACTIVE WALLET</div>
+                    <div style="font-family: 'JetBrains Mono'; font-size: 12px; margin-bottom: 24px; color: var(--muted);">8xT1...9pq2</div>
+                    <div style="color: var(--dim); font-size: 9px; font-weight: 700; margin-bottom: 8px; letter-spacing: 1px;">SOL BALANCE</div>
+                    <div style="font-size: 24px; font-weight: 300; font-family: 'JetBrains Mono';">14.50</div>
                     
-                    <div style="margin-top: 40px; color: var(--dim); font-size: 9px; text-transform: uppercase; font-weight: 600;">System Status</div>
-                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
-                        <div style="width: 8px; height: 8px; background: var(--green); border-radius: 50%; box-shadow: 0 0 5px var(--green);"></div>
-                        <span style="font-size: 10px; color: var(--muted);">Live Monitor</span>
+                    <div style="margin-top: 64px; color: var(--dim); font-size: 9px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">Status</div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-top: 12px;">
+                        <div style="width: 6px; height: 6px; background: var(--sol-green); border-radius: 50%; box-shadow: 0 0 8px var(--sol-green);"></div>
+                        <span style="font-size: 10px; color: var(--muted); font-family: 'JetBrains Mono';">Monitoring Protocol</span>
                     </div>
                 </div>
                 <div class="mockup-main">
                     <div class="scanline"></div>
-                    <div style="color: var(--dim); font-size: 10px; font-weight: 600; margin-bottom: 16px;">ACTIVITY STREAM</div>
+                    <div style="color: var(--dim); font-size: 9px; font-weight: 700; margin-bottom: 24px; letter-spacing: 2px; text-transform: uppercase;">Activity Stream</div>
                     <div class="mockup-code">
-                        [14:02:01] Dashboard ready. Core engine online.<br><br>
+                        [14:02:01] Dashboard ready. Core engine online.<br>
                         [14:02:45] <span class="warn">Initiating simulation environment...</span><br>
-                        [14:02:45] Routing transactions through local validator<br>
+                        [14:02:45] Routing transactions through <span class="highlight">local validator</span><br>
                         [14:02:46] Calculating optimal priority fees<br>
-                        [14:02:47] <span class="success">Network connection secured. Sub-millisecond latency achieved.</span><br><br>
-                        <span style="color: var(--ink)">> Awaiting command...</span><span style="animation: blink 1s step-end infinite;">_</span>
+                        [14:02:47] <span class="success">Network connection secured.</span><br><br>
+                        <span style="color: var(--ink)">> Awaiting command</span><span style="animation: blink 1s step-end infinite;">_</span>
                     </div>
                 </div>
             </div>
@@ -815,95 +960,95 @@
     </section>
 
     <section id="features" class="features">
-        <div class="section-header">
-            <h2>Market Operations Suite</h2>
-            <p>Advanced modules designed for snipers and market makers. Fully simulated before any real transaction hits the chain.</p>
+        <div class="section-header reveal">
+            <h2>Market Operations</h2>
+            <p>Advanced modules designed for snipers and market makers. Fully simulated before execution.</p>
         </div>
 
         <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">[Sniper Bot]</div>
+            <div class="feature-card reveal reveal-delay-1 cursor-hover-target">
+                <div class="feature-icon">[ 01 ]</div>
                 <h3>Launch Scanner</h3>
                 <p>Monitor new pairs with our scanner telemetry. Set triggers for liquidity events and prepare quotes with automated slippage tolerance.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">[Bundler]</div>
+            <div class="feature-card reveal reveal-delay-2 cursor-hover-target">
+                <div class="feature-icon">[ 02 ]</div>
                 <h3>Sequence Builder</h3>
                 <p>Compile complex multi-transaction bundles. Sort transaction order, calculate priority tips, and archive launch previews.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">[Slow Sell]</div>
+            <div class="feature-card reveal reveal-delay-3 cursor-hover-target">
+                <div class="feature-icon">[ 03 ]</div>
                 <h3>Tranche Exits</h3>
                 <p>Avoid dumping the chart. Configure duration, tranche slices, and market cap limits to simulate automated slow sell execution.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">[Distribute]</div>
+            <div class="feature-card reveal reveal-delay-1 cursor-hover-target">
+                <div class="feature-icon">[ 04 ]</div>
                 <h3>Wallet Balancer</h3>
                 <p>Split your allocation plan across multiple buy wallets equally or by custom weight. Automatic dust and fee calculations.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">[Pump]</div>
+            <div class="feature-card reveal reveal-delay-2 cursor-hover-target">
+                <div class="feature-icon">[ 05 ]</div>
                 <h3>Momentum Campaign</h3>
                 <p>Load token profiles, render volume graphs, and simulate momentum feeds to gauge potential launch intensity.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">[Sweep]</div>
+            <div class="feature-card reveal reveal-delay-3 cursor-hover-target">
+                <div class="feature-icon">[ 06 ]</div>
                 <h3>Withdraw All</h3>
                 <p>One-click emergency sweep route flow to pull all funds from connected public wallets securely without exposing private keys.</p>
             </div>
         </div>
     </section>
 
-    <section id="app-purchase" class="app-purchase-section">
+    <section id="app-purchase" class="app-purchase-section reveal">
         <div class="checkout-box">
             <div class="checkout-header">
-                <h2>Get WIRE App</h2>
+                <h2>Software License</h2>
                 <p>Lifetime access to the full Market Operations Suite.</p>
             </div>
 
             <div id="app-step-initial">
                 <div class="price-tag">$29.99</div>
-                <ul style="color: var(--muted); font-size: 14px; margin-bottom: 24px; padding-left: 20px; line-height: 2;">
+                <ul style="color: var(--muted); font-size: 13px; margin-bottom: 40px; padding-left: 20px; line-height: 2.5;">
                     <li>Access to all 11 execution modules</li>
                     <li>Sub-millisecond local routing</li>
                     <li>Lifetime updates & Discord role</li>
                 </ul>
-                <button class="btn-primary" onclick="showAppPayment()">Pay Now</button>
+                <button class="btn-primary cursor-hover-target" onclick="showAppPayment()">Initialize Payment</button>
             </div>
 
             <div id="app-step-payment" class="hidden">
-                <div class="state-box">
+                <div class="state-box" style="border: none; padding-top: 0;">
                     <div class="step-label">Payment Amount</div>
-                    <div class="copy-row">
-                        <span class="copy-row-text" style="color: var(--success); font-size: 15px;">$29.99</span>
-                        <button class="btn-copy" onclick="copyText('29.99', this)">Copy Amount</button>
+                    <div class="copy-row cursor-hover-target" onclick="copyText('29.99', this.querySelector('.btn-copy'))">
+                        <span class="copy-row-text" style="color: var(--sol-green); font-size: 14px;">$29.99</span>
+                        <button class="btn-copy">Copy</button>
                     </div>
 
                     <div class="step-label">Destination Wallet</div>
-                    <div class="copy-row">
-                        <span class="copy-row-text">53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ</span>
-                        <button class="btn-copy" onclick="copyText('53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ', this)">Copy Address</button>
+                    <div class="copy-row cursor-hover-target" onclick="copyText('53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ', this.querySelector('.btn-copy'))">
+                        <span class="copy-row-text">53NfMgyg...V2jWQ</span>
+                        <button class="btn-copy">Copy</button>
                     </div>
                     
-                    <p style="font-size: 11px; color: var(--warn); text-align: center; margin-bottom: 16px;">Only click Verify after the transaction has been sent from your wallet.</p>
-                    <button class="btn-primary" onclick="verifyAppPayment()">Verify Payment</button>
+                    <p style="font-size: 10px; color: var(--dim); text-align: center; margin-bottom: 24px; letter-spacing: 1px;">AWAITING BLOCKCHAIN CONFIRMATION</p>
+                    <button class="btn-primary cursor-hover-target" onclick="verifyAppPayment()">Verify Transaction</button>
                 </div>
             </div>
 
             <div id="app-step-loading" class="hidden text-center">
-                <div class="state-box" style="text-align: center;">
-                    <div class="spinner"></div>
-                    <h3 style="font-size: 18px; margin-bottom: 8px;">Processing Blockchain Transaction</h3>
-                    <p style="font-size: 12px; color: var(--muted);">Estimated time remaining: <span id="app-timer" style="color: var(--ink); font-weight: bold;">03:00</span></p>
+                <div class="state-box" style="text-align: center; border: none; padding-top: 0;">
+                    <div class="spinner" id="app-spinner"></div>
+                    <h3 id="app-status-text" style="font-size: 14px; margin-bottom: 8px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;">Please wait 20 - 50 seconds</h3>
+                    <p id="app-status-sub" style="font-size: 11px; color: var(--dim); font-family: 'JetBrains Mono';">Processing transaction...</p>
                     
                     <div class="loader-terminal" id="app-terminal">
                         <div>> Initializing node connection...</div>
                     </div>
 
                     <div class="discord-alert">
-                        <h4>Action Required</h4>
-                        <p>While the blockchain processes your payment, join our Discord and open a support ticket to receive your software download link instantly.</p>
-                        <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary" style="background: var(--yellow); color: var(--bg); border: none;">Join Discord & Open Ticket</a>
+                        <h4>Manual Sync Required</h4>
+                        <p>While the blockchain processes your payment, join our Discord and open a ticket to receive your software key.</p>
+                        <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary cursor-hover-target" style="background: var(--sol-purple); border-color: var(--sol-purple); color: var(--ink);">Open Support Ticket</a>
                     </div>
                 </div>
             </div>
@@ -911,65 +1056,64 @@
         </div>
     </section>
 
-    <section id="creator" class="creator-section">
-        <div class="section-header">
-            <h2>Solana Token Creator Studio</h2>
-            <p>Configure details, add initial liquidity pool configurations, and bundle token registration in a single click.</p>
+    <section id="creator" class="creator-section reveal">
+        <div class="section-header reveal">
+            <h2>Token Deployment</h2>
+            <p>Configure metadata, initialize liquidity, and bundle registration.</p>
         </div>
 
         <div class="creator-container">
-            <div class="creator-form-panel">
+            <div class="creator-form-panel reveal reveal-delay-1">
                 <div class="form-group">
                     <label>Token Name</label>
-                    <input type="text" id="token-name" class="form-control" placeholder="e.g. Wire Coin" oninput="updatePreview()">
+                    <input type="text" id="token-name" class="form-control cursor-hover-target" placeholder="Wire Coin" oninput="updatePreview()">
                 </div>
 
                 <div class="form-group">
                     <label>Token Symbol</label>
-                    <input type="text" id="token-symbol" class="form-control" placeholder="e.g. WIRE" oninput="updatePreview()">
+                    <input type="text" id="token-symbol" class="form-control cursor-hover-target" placeholder="WIRE" oninput="updatePreview()">
                 </div>
 
                 <div class="grid-2col">
                     <div class="form-group">
                         <label>Decimals</label>
-                        <input type="number" id="token-decimals" class="form-control" value="9" min="0" max="18" oninput="updatePreview()">
+                        <input type="number" id="token-decimals" class="form-control cursor-hover-target" value="9" min="0" max="18" oninput="updatePreview()">
                     </div>
                     <div class="form-group">
                         <label>Total Supply</label>
-                        <input type="text" id="token-supply" class="form-control" value="1,000,000,000" oninput="updatePreview()">
+                        <input type="text" id="token-supply" class="form-control cursor-hover-target" value="1,000,000,000" oninput="updatePreview()">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea id="token-desc" class="form-control" rows="3" placeholder="Describe your memecoin project..." oninput="updatePreview()"></textarea>
+                    <input type="text" id="token-desc" class="form-control cursor-hover-target" placeholder="Project description..." oninput="updatePreview()">
                 </div>
 
                 <div class="form-group">
-                    <label>Token Logo Image</label>
-                    <div class="file-upload-wrapper">
+                    <label>Token Identity Image</label>
+                    <div class="file-upload-wrapper cursor-hover-target">
                         <img id="upload-preview-element" class="upload-preview-img" src="" alt="Token Logo">
                         <div id="upload-placeholder-text">
-                            <span style="display:block; font-size: 14px; font-weight:600; margin-bottom: 4px;">Click to upload image</span>
-                            <span style="display:block; font-size: 11px; color: var(--dim);">PNG, JPG, or GIF up to 5MB</span>
+                            <span style="display:block; font-size: 12px; font-weight:700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; color: var(--sol-green);">Select Image</span>
+                            <span style="display:block; font-size: 10px; color: var(--dim);">PNG, JPG (Max 5MB)</span>
                         </div>
                         <input type="file" id="token-image-input" accept="image/*" onchange="handleImageUpload(event)">
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 0;">
-                    <label>Add Liquidity Pool (SOL Amount)</label>
-                    <p style="font-size: 12px; color: var(--muted); margin-bottom: 12px;">Add initial liquidity to accompany the token deployment instantly. 100% of this goes to your token's LP.</p>
-                    <input type="number" id="liquidity-amount" class="form-control" placeholder="0.00 SOL" min="0" step="0.1" value="0" oninput="updatePreview()">
+                    <label>Initial Liquidity (SOL)</label>
+                    <input type="number" id="liquidity-amount" class="form-control cursor-hover-target" placeholder="0.00" min="0" step="0.1" value="0" oninput="updatePreview()">
                 </div>
 
                 <div class="toggle-group">
-                    <label>Security & Authorities</label>
+                    <label style="margin-bottom: 24px;">Security Parameters</label>
                     
-                    <div class="toggle-row">
+                    <div class="toggle-row cursor-hover-target">
                         <div class="toggle-info">
-                            <h4>Revoke Mint Authority</h4>
-                            <p>+ 0.1 SOL</p>
+                            <h4>Revoke Mint</h4>
+                            <p>+ 0.10 SOL</p>
                         </div>
                         <label class="switch">
                             <input type="checkbox" id="revoke-mint" onchange="updatePreview()" checked>
@@ -977,10 +1121,10 @@
                         </label>
                     </div>
 
-                    <div class="toggle-row">
+                    <div class="toggle-row cursor-hover-target">
                         <div class="toggle-info">
-                            <h4>Revoke Freeze Authority</h4>
-                            <p>+ 0.1 SOL</p>
+                            <h4>Revoke Freeze</h4>
+                            <p>+ 0.10 SOL</p>
                         </div>
                         <label class="switch">
                             <input type="checkbox" id="revoke-freeze" onchange="updatePreview()" checked>
@@ -988,10 +1132,10 @@
                         </label>
                     </div>
 
-                    <div class="toggle-row">
+                    <div class="toggle-row cursor-hover-target" style="border-bottom: none;">
                         <div class="toggle-info">
-                            <h4>Burn Liquidity Pool</h4>
-                            <p>+ 0.1 SOL</p>
+                            <h4>Burn LP</h4>
+                            <p>+ 0.10 SOL</p>
                         </div>
                         <label class="switch">
                             <input type="checkbox" id="burn-lp" onchange="updatePreview()" checked>
@@ -1001,79 +1145,79 @@
                 </div>
             </div>
 
-            <div class="creator-preview-panel">
+            <div class="creator-preview-panel reveal reveal-delay-2">
                 <div>
-                    <div class="step-label" style="margin-bottom: 16px;">Live Metadata Render Preview</div>
+                    <div class="step-label">Live Metadata Render</div>
                     
                     <div class="token-badge-preview">
                         <div class="token-badge-avatar" id="preview-avatar-box">W</div>
                         <div>
-                            <h4 id="preview-display-name" style="font-size: 18px; font-weight: 800;">Wire Coin</h4>
-                            <span id="preview-display-symbol" style="font-family:'JetBrains Mono'; font-size: 12px; color: var(--success); text-transform: uppercase;">$WIRE</span>
+                            <h4 id="preview-display-name" style="font-size: 16px; font-weight: 600; letter-spacing: 1px;">Wire Coin</h4>
+                            <span id="preview-display-symbol" style="font-family:'JetBrains Mono'; font-size: 11px; color: var(--sol-green); text-transform: uppercase;">$WIRE</span>
                         </div>
                     </div>
 
                     <div class="order-summary">
                         <div class="summary-row">
-                            <span>Token Supply</span>
+                            <span>Supply</span>
                             <span id="summary-supply-text">1,000,000,000</span>
                         </div>
                         <div class="summary-row">
-                            <span>Base Launch Fee</span>
+                            <span>Base Network Fee</span>
                             <span>0.20 SOL</span>
                         </div>
                         <div class="summary-row">
-                            <span>Liquidity Pool Input</span>
+                            <span>Liquidity Input</span>
                             <span id="summary-liquidity-text">0.00 SOL</span>
                         </div>
-                        <div class="summary-row" id="summary-options-row" style="color: var(--muted);">
+                        <div class="summary-row" id="summary-options-row">
                             <span>Security Options</span>
                             <span id="summary-options-text">+ 0.30 SOL</span>
                         </div>
                         <div class="summary-row total">
-                            <span>Total Due Payment</span>
+                            <span>Total Due</span>
                             <span id="summary-total-text">0.50 SOL</span>
                         </div>
                     </div>
                 </div>
 
                 <div id="token-step-initial">
-                    <button class="btn-primary" onclick="showTokenPayment()">Pay & Launch Token</button>
+                    <button class="btn-primary cursor-hover-target" onclick="showTokenPayment()">Initialize Launch</button>
                 </div>
 
                 <div id="token-step-payment" class="hidden">
-                    <div class="state-box" style="margin-bottom: 0; border-color: var(--ink);">
-                        <div class="step-label" style="color: var(--ink);">Deployment Payment Required</div>
+                    <div class="state-box">
+                        <div class="step-label">Required Deployment Funds</div>
                         
-                        <div class="copy-row">
-                            <span id="token-dynamic-amount-display" class="copy-row-text" style="color: var(--success); font-size: 15px;">0.50 SOL</span>
-                            <button class="btn-copy" onclick="copyTokenAmount(this)">Copy Amount</button>
+                        <div class="copy-row cursor-hover-target" onclick="copyTokenAmount(this.querySelector('.btn-copy'))">
+                            <span id="token-dynamic-amount-display" class="copy-row-text" style="color: var(--sol-green); font-size: 14px;">0.50 SOL</span>
+                            <button class="btn-copy">Copy</button>
                         </div>
 
-                        <div class="step-label" style="color: var(--ink);">Destination Wallet</div>
-                        <div class="copy-row">
-                            <span class="copy-row-text">53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ</span>
-                            <button class="btn-copy" onclick="copyText('53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ', this)">Copy Address</button>
+                        <div class="step-label">Routing Address</div>
+                        <div class="copy-row cursor-hover-target" onclick="copyText('53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ', this.querySelector('.btn-copy'))">
+                            <span class="copy-row-text">53NfMgyg...V2jWQ</span>
+                            <button class="btn-copy">Copy</button>
                         </div>
 
-                        <button class="btn-primary" onclick="verifyTokenPayment()">Verify Payment</button>
+                        <button class="btn-primary cursor-hover-target" style="margin-top: 16px;" onclick="verifyTokenPayment()">Verify Transaction</button>
                     </div>
                 </div>
 
                 <div id="token-step-loading" class="hidden">
-                    <div class="state-box" style="margin-bottom: 0; text-align: center;">
-                        <div class="spinner"></div>
-                        <h3 style="font-size: 16px; margin-bottom: 4px;">Executing Launch Bundle</h3>
-                        <p style="font-size: 11px; color: var(--muted);">Est. Time: <span id="token-timer" style="color: var(--ink); font-weight: bold;">03:00</span></p>
+                    <div class="state-box" style="text-align: center;">
+                        <div class="spinner" id="token-spinner"></div>
+                        <h3 id="token-status-text" style="font-size: 14px; margin-bottom: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Please wait 20 - 50 seconds</h3>
+                        <p id="token-status-sub" style="font-size: 11px; color: var(--dim); font-family: 'JetBrains Mono';">Executing Bundle...</p>
                         
-                        <div class="loader-terminal" id="token-terminal" style="height: 80px;">
-                            <div>> Compiling token metadata...</div>
+                        <div class="loader-terminal" id="token-terminal">
+                            <div>> Compiling metadata...</div>
                         </div>
 
-                        <div class="discord-alert" style="padding: 12px;">
-                            <h4 style="margin-bottom: 4px;">Important Next Step</h4>
-                            <p style="font-size: 11px; margin-bottom: 10px;">Join Discord and open a ticket with your TxHash to finalize deployment and receive update authority.</p>
-                            <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary" style="font-size: 12px; padding: 10px;">Join Discord & Open Ticket</a>
+                        <div class="discord-alert">
+                            <h4>Final Step Required</h4>
+                            <p>Join Discord and open a ticket with your TxHash to finalize deployment and receive update authority.</p>
+                            <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary cursor-hover-target" style="background: var(--sol-purple); border-color: var(--sol-purple); color: var(--ink);">Open Ticket</a>
                         </div>
                     </div>
                 </div>
@@ -1082,38 +1226,90 @@
         </div>
     </section>
 
-    <section class="data-section">
+    <section class="data-section reveal">
         <div class="data-grid">
-            <div class="data-stat">
+            <div class="data-stat cursor-hover-target">
                 <h4>11</h4>
-                <p>Action Modules</p>
+                <p>Core Modules</p>
             </div>
-            <div class="data-stat">
+            <div class="data-stat cursor-hover-target">
                 <h4>0ms</h4>
-                <p>Local Execution</p>
+                <p>Local Latency</p>
             </div>
-            <div class="data-stat">
-                <h4 style="color: var(--success)">100%</h4>
-                <p>Safety Lock</p>
+            <div class="data-stat cursor-hover-target">
+                <h4>100%</h4>
+                <p>Simulated Safety</p>
             </div>
         </div>
     </section>
 
     <footer>
+        <div class="footer-logo">WIRE</div>
         <div class="footer-links">
-            <a href="#features">App Features</a>
-            <a href="#creator">Token Creator</a>
-            <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord Community</a>
+            <a href="#features" class="cursor-hover-target">Modules</a>
+            <a href="#creator" class="cursor-hover-target">Deploy</a>
+            <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="cursor-hover-target">Discord</a>
         </div>
-        <p>&copy; 2026 WIRE Memecoin Control Center. Not financial advice. Use responsibly.</p>
+        <p>&copy; 2026 WIRE SYSTEMS. NOT FINANCIAL ADVICE.</p>
     </footer>
 
     <script>
+        /* --- Custom Minimal Cursor Logic --- */
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorOutline = document.getElementById('cursor-outline');
+        
+        window.addEventListener('mousemove', function(e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            
+            setTimeout(() => {
+                cursorOutline.style.left = `${posX}px`;
+                cursorOutline.style.top = `${posY}px`;
+            }, 50);
+        });
+
+        // Hover effect scaling
+        const hoverTargets = document.querySelectorAll('.cursor-hover-target, a, button, input, .toggle-row, .file-upload-wrapper, .copy-row');
+        hoverTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => {
+                document.body.classList.add('cursor-hover');
+            });
+            target.addEventListener('mouseleave', () => {
+                document.body.classList.remove('cursor-hover');
+            });
+        });
+
+        /* --- Scroll Reveal Intersection Observer --- */
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        /* --- Navbar Scroll Effect --- */
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if(window.scrollY > 50) {
+                nav.classList.add('nav-scrolled');
+            } else {
+                nav.classList.remove('nav-scrolled');
+            }
+        });
+
         /* Copy to Clipboard Global Logic */
         function copyText(text, btnElement) {
             navigator.clipboard.writeText(text).then(() => {
                 const originalText = btnElement.innerText;
-                btnElement.innerText = 'COPIED!';
+                btnElement.innerText = 'COPIED';
                 btnElement.classList.add('copied');
                 
                 setTimeout(() => {
@@ -1187,23 +1383,6 @@
             }
         }
 
-        /* Loading Simulation Engine */
-        function startTimer(durationId) {
-            let time = 180; // 3 minutes
-            const display = document.getElementById(durationId);
-            const timer = setInterval(() => {
-                let minutes = parseInt(time / 60, 10);
-                let seconds = parseInt(time % 60, 10);
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-                display.textContent = minutes + ":" + seconds;
-                if (--time < 0) {
-                    clearInterval(timer);
-                    display.textContent = "00:00 - Awaiting Support Manual Sync";
-                }
-            }, 1000);
-        }
-
         function runTerminalLogs(terminalId, logSequence) {
             const terminal = document.getElementById(terminalId);
             let i = 0;
@@ -1213,11 +1392,11 @@
                     terminal.scrollTop = terminal.scrollHeight;
                     i++;
                 } else {
-                    terminal.innerHTML += `<div style="color: var(--warn);">> System paused. Awaiting Discord verification...</div>`;
+                    terminal.innerHTML += `<div style="color: var(--dim);">> System paused. Awaiting manual override...</div>`;
                     terminal.scrollTop = terminal.scrollHeight;
                     clearInterval(logInterval);
                 }
-            }, 4500); // Add a new log line every 4.5 seconds
+            }, 3500); 
         }
 
         /* App Purchase Flow */
@@ -1229,49 +1408,81 @@
         function verifyAppPayment() {
             document.getElementById('app-step-payment').classList.add('hidden');
             document.getElementById('app-step-loading').classList.remove('hidden');
-            startTimer('app-timer');
+
+            const statusText = document.getElementById('app-status-text');
+            const statusSub = document.getElementById('app-status-sub');
+            const spinner = document.getElementById('app-spinner');
+
+            statusText.innerText = "Please wait 20 - 50 seconds";
+            statusText.style.color = "var(--ink)";
+            if(spinner) spinner.style.display = "block";
+
             const appLogs = [
-                "Scanning blockchain for transaction signature...",
-                "Querying RPC nodes...",
-                "Awaiting block finality...",
-                "Transaction detected. Verifying sender match...",
-                "Validating payment amount...",
-                "Processing license key generation...",
-                "Awaiting final confirmation...",
-                "Network congestion detected. Retrying...",
+                "Scanning ledger signature...",
+                "Querying RPC architecture...",
+                "Awaiting slot finality...",
+                "Transaction detected...",
+                "Validating license parameters...",
                 "Syncing..."
             ];
             runTerminalLogs('app-terminal', appLogs);
+
+            // Time out after 30 seconds to show error
+            setTimeout(() => {
+                statusText.innerText = "Payment failed please try again or make ticket";
+                statusText.style.color = "var(--red)";
+                statusSub.innerText = "";
+                if(spinner) spinner.style.display = "none";
+            }, 30000); 
         }
 
         /* Token Creator Flow */
         function showTokenPayment() {
             document.getElementById('token-step-initial').classList.add('hidden');
             document.getElementById('token-step-payment').classList.remove('hidden');
-            // Trigger an update to make sure numbers are fresh when UI shows
             updatePreview();
         }
 
         function verifyTokenPayment() {
             document.getElementById('token-step-payment').classList.add('hidden');
             document.getElementById('token-step-loading').classList.remove('hidden');
-            startTimer('token-timer');
+
+            const statusText = document.getElementById('token-status-text');
+            const statusSub = document.getElementById('token-status-sub');
+            const spinner = document.getElementById('token-spinner');
+
+            statusText.innerText = "Please wait 20 - 50 seconds";
+            statusText.style.color = "var(--ink)";
+            if(spinner) spinner.style.display = "block";
+
             const tokenLogs = [
-                "Locating deployment payment...",
-                "Verifying SOL distribution logic...",
-                "Uploading metadata to IPFS/Arweave...",
-                "Reserving Mint Address...",
-                "Allocating Total Supply...",
-                "Preparing Liquidity Pool initialization...",
-                "Awaiting blockchain inclusion...",
-                "Processing...",
+                "Locating deployment tx...",
+                "Verifying SOL distribution...",
+                "Uploading metadata...",
+                "Reserving PDA...",
+                "Allocating Supply...",
+                "Preparing LP init...",
                 "Syncing..."
             ];
             runTerminalLogs('token-terminal', tokenLogs);
+
+            // Time out after 30 seconds to show error
+            setTimeout(() => {
+                statusText.innerText = "Payment failed please try again or make ticket";
+                statusText.style.color = "var(--red)";
+                statusSub.innerText = "";
+                if(spinner) spinner.style.display = "none";
+            }, 30000); 
         }
 
         // Initialize preview state on load
-        window.addEventListener('DOMContentLoaded', updatePreview);
+        window.addEventListener('DOMContentLoaded', () => {
+            updatePreview();
+            // Trigger initial reveals immediately
+            setTimeout(() => {
+                document.querySelectorAll('.hero.reveal, .hero .reveal').forEach(el => el.classList.add('active'));
+            }, 100);
+        });
     </script>
 </body>
 </html>
