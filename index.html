@@ -529,6 +529,85 @@
             border: 1px solid var(--line);
         }
 
+        /* Toggle Switches */
+        .toggle-group {
+            margin-top: 32px;
+            border-top: 1px solid var(--line);
+            padding-top: 24px;
+        }
+
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            padding: 16px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            transition: border-color 0.3s ease;
+        }
+
+        .toggle-row:hover {
+            border-color: var(--muted);
+        }
+
+        .toggle-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            color: var(--ink);
+        }
+
+        .toggle-info p {
+            font-size: 12px;
+            color: var(--success);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--line);
+            transition: .3s;
+            border-radius: 22px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: var(--muted);
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--success);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(18px);
+            background-color: var(--bg);
+        }
+
         /* Side Panel / Shared UI Components */
         .creator-preview-panel {
             background: var(--bg);
@@ -883,6 +962,43 @@
                     <p style="font-size: 12px; color: var(--muted); margin-bottom: 12px;">Add initial liquidity to accompany the token deployment instantly. 100% of this goes to your token's LP.</p>
                     <input type="number" id="liquidity-amount" class="form-control" placeholder="0.00 SOL" min="0" step="0.1" value="0" oninput="updatePreview()">
                 </div>
+
+                <div class="toggle-group">
+                    <label>Security & Authorities</label>
+                    
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>Revoke Mint Authority</h4>
+                            <p>+ 0.1 SOL</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="revoke-mint" onchange="updatePreview()" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>Revoke Freeze Authority</h4>
+                            <p>+ 0.1 SOL</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="revoke-freeze" onchange="updatePreview()" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>Burn Liquidity Pool</h4>
+                            <p>+ 0.1 SOL</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="burn-lp" onchange="updatePreview()" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div class="creator-preview-panel">
@@ -903,12 +1019,20 @@
                             <span id="summary-supply-text">1,000,000,000</span>
                         </div>
                         <div class="summary-row">
+                            <span>Base Launch Fee</span>
+                            <span>0.20 SOL</span>
+                        </div>
+                        <div class="summary-row">
                             <span>Liquidity Pool Input</span>
                             <span id="summary-liquidity-text">0.00 SOL</span>
                         </div>
+                        <div class="summary-row" id="summary-options-row" style="color: var(--muted);">
+                            <span>Security Options</span>
+                            <span id="summary-options-text">+ 0.30 SOL</span>
+                        </div>
                         <div class="summary-row total">
                             <span>Total Due Payment</span>
-                            <span id="summary-total-text">0.00 SOL</span>
+                            <span id="summary-total-text">0.50 SOL</span>
                         </div>
                     </div>
                 </div>
@@ -922,7 +1046,7 @@
                         <div class="step-label" style="color: var(--ink);">Deployment Payment Required</div>
                         
                         <div class="copy-row">
-                            <span id="token-dynamic-amount-display" class="copy-row-text" style="color: var(--success); font-size: 15px;">0.00 SOL</span>
+                            <span id="token-dynamic-amount-display" class="copy-row-text" style="color: var(--success); font-size: 15px;">0.50 SOL</span>
                             <button class="btn-copy" onclick="copyTokenAmount(this)">Copy Amount</button>
                         </div>
 
@@ -1002,8 +1126,8 @@
         }
 
         function copyTokenAmount(btnElement) {
-            const liquidity = parseFloat(document.getElementById('liquidity-amount').value) || 0;
-            copyText(liquidity.toFixed(2), btnElement); 
+            const totalText = document.getElementById('token-dynamic-amount-display').innerText.replace(' SOL', '');
+            copyText(totalText, btnElement); 
         }
 
         /* UI Logic for Token Creator Live Preview */
@@ -1013,16 +1137,32 @@
             const supply = document.getElementById('token-supply').value || '1,000,000,000';
             const liquidity = parseFloat(document.getElementById('liquidity-amount').value) || 0;
 
+            const baseLaunchFee = 0.20;
+            const revokeMint = document.getElementById('revoke-mint').checked ? 0.1 : 0;
+            const revokeFreeze = document.getElementById('revoke-freeze').checked ? 0.1 : 0;
+            const burnLp = document.getElementById('burn-lp').checked ? 0.1 : 0;
+
+            const totalOptionsFee = revokeMint + revokeFreeze + burnLp;
+            const total = baseLaunchFee + liquidity + totalOptionsFee;
+
             document.getElementById('preview-display-name').innerText = name;
             document.getElementById('preview-display-symbol').innerText = '$' + symbol.toUpperCase();
             document.getElementById('summary-supply-text').innerText = supply;
             
-            const liqText = liquidity.toFixed(2) + ' SOL';
-            document.getElementById('summary-liquidity-text').innerText = liqText;
-            document.getElementById('summary-total-text').innerText = liqText;
+            document.getElementById('summary-liquidity-text').innerText = liquidity.toFixed(2) + ' SOL';
+
+            if (totalOptionsFee > 0) {
+                document.getElementById('summary-options-row').style.display = 'flex';
+                document.getElementById('summary-options-text').innerText = '+ ' + totalOptionsFee.toFixed(2) + ' SOL';
+            } else {
+                document.getElementById('summary-options-row').style.display = 'none';
+            }
+
+            const totalText = total.toFixed(2) + ' SOL';
+            document.getElementById('summary-total-text').innerText = totalText;
             
             // Update the payment UI box dynamically
-            document.getElementById('token-dynamic-amount-display').innerText = liqText;
+            document.getElementById('token-dynamic-amount-display').innerText = totalText;
 
             const avatarBox = document.getElementById('preview-avatar-box');
             if (!avatarBox.querySelector('img')) {
@@ -1129,6 +1269,9 @@
             ];
             runTerminalLogs('token-terminal', tokenLogs);
         }
+
+        // Initialize preview state on load
+        window.addEventListener('DOMContentLoaded', updatePreview);
     </script>
 </body>
 </html>
