@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIRE | Memecoin Control Center</title>
+    <meta name="description" content="WIRE Memecoin Control Center - Premium wallet management and market tools for Solana traders.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --frame: #000000;
+            --card: #101010;
+            --card-hi: #171717;
+            --glass: #121212;
+            --glass-hi: #1e1e1e;
+            --line: #313131;
+            --soft-line: #222222;
+            --ink: #f7f7f7;
+            --muted: #9e9e9e;
+            --dim: #686868;
+            --success: #cffff0;
+            --warn: #fff0bd;
+            --error: #ffd5d5;
+            --red: #ff5f57;
+            --yellow: #ffbd2e;
+            --green: #28c840;
+            --accent: #ffffff;
+            --grid-color: rgba(255, 255, 255, 0.03);
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-sans);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--ink);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background-image: 
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+            background-size: 15vw 15vw;
+            pointer-events: none;
+        }
+
+        /* Utility */
+        .hidden { display: none !important; }
+
+        /* Nav */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 5%;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--soft-line);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo::before {
+            content: '';
+            display: block;
+            width: 12px;
+            height: 12px;
+            background: var(--ink);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--ink);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--ink);
+        }
+
+        .btn-primary {
+            background: var(--ink);
+            color: var(--bg);
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--ink);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--ink);
+            box-shadow: 0 0 20px rgba(247, 247, 247, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-copy {
+            background: var(--glass-hi);
+            border: 1px solid var(--soft-line);
+            color: var(--muted);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            color: var(--ink);
+            border-color: var(--muted);
+            background: var(--line);
+        }
+
+        .btn-copy.copied {
+            color: var(--success);
+            border-color: var(--success);
+            background: rgba(207, 255, 240, 0.05);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 140px 5% 60px;
+            position: relative;
+            background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, transparent 70%);
+        }
+
+        .hero-badge {
+            background: var(--glass-hi);
+            border: 1px solid var(--soft-line);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--success);
+            margin-bottom: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--green);
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            max-width: 900px;
+            background: linear-gradient(180deg, #ffffff 0%, #888888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.25rem);
+            color: var(--muted);
+            max-width: 600px;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--ink);
+            padding: 12px 32px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid var(--line);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass-hi);
+            border-color: var(--muted);
+            transform: translateY(-2px);
+        }
+
+        /* Mockup */
+        .mockup-container {
+            margin-top: 80px;
+            width: 100%;
+            max-width: 1000px;
+            background: var(--frame);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 100px rgba(247, 247, 247, 0.05);
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+
+        .mockup-header {
+            background: var(--bg);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--line);
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot.red { background: var(--red); }
+        .dot.yellow { background: var(--yellow); }
+        .dot.green { background: var(--green); }
+
+        .mockup-title {
+            margin-left: 12px;
+            font-size: 12px;
+            color: var(--dim);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .mockup-body {
+            padding: 40px;
+            background: var(--bg);
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 24px;
+        }
+
+        .mockup-sidebar {
+            background: var(--card);
+            border: 1px solid var(--soft-line);
+            border-radius: 4px;
+            padding: 24px;
+            text-align: left;
+        }
+
+        .mockup-main {
+            background: var(--glass);
+            border: 1px solid var(--soft-line);
+            border-radius: 4px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        .mockup-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .mockup-code span.success { color: var(--success); }
+        .mockup-code span.warn { color: var(--warn); }
+
+        /* Features Section */
+        .features {
+            padding: 100px 5%;
+            background: var(--bg);
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--muted);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--soft-line);
+            padding: 32px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--line);
+            background: var(--card-hi);
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: var(--dim);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        /* App Purchase Section */
+        .app-purchase-section {
+            padding: 100px 5%;
+            background: var(--frame);
+            border-top: 1px solid var(--line);
+            text-align: center;
+        }
+
+        .checkout-box {
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--card);
+            border: 1px solid var(--line);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            text-align: left;
+        }
+
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .checkout-header h2 { font-size: 2rem; margin-bottom: 8px; }
+        .checkout-header p { color: var(--muted); }
+
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--success);
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        /* Token Creator Studio Section */
+        .creator-section {
+            padding: 100px 5%;
+            background: var(--bg);
+            border-top: 1px solid var(--line);
+            position: relative;
+        }
+
+        .creator-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
+        }
+
+        .creator-form-panel {
+            background: var(--card);
+            border: 1px solid var(--line);
+            padding: 40px;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-control {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            padding: 14px;
+            color: var(--ink);
+            font-size: 14px;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--ink);
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            border: 2px dashed var(--line);
+            border-radius: 4px;
+            padding: 30px;
+            text-align: center;
+            background: var(--bg);
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .file-upload-wrapper:hover { border-color: var(--muted); }
+        .file-upload-wrapper input[type="file"] {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0; cursor: pointer;
+        }
+
+        .upload-preview-img {
+            width: 64px; height: 64px;
+            border-radius: 50%; object-fit: cover;
+            display: none; margin: 0 auto 12px;
+            border: 1px solid var(--line);
+        }
+
+        /* Side Panel / Shared UI Components */
+        .creator-preview-panel {
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .token-badge-preview {
+            display: flex; align-items: center; gap: 16px;
+            background: var(--card); padding: 20px;
+            border-radius: 6px; border: 1px solid var(--soft-line);
+            margin-bottom: 24px;
+        }
+
+        .token-badge-avatar {
+            width: 50px; height: 50px;
+            border-radius: 50%; background: var(--line);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; color: var(--dim); overflow: hidden;
+        }
+        .token-badge-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .order-summary {
+            background: var(--glass-hi);
+            border: 1px solid var(--soft-line);
+            padding: 24px; border-radius: 6px; margin-bottom: 24px;
+        }
+
+        .summary-row {
+            display: flex; justify-content: space-between;
+            margin-bottom: 12px; font-size: 14px;
+        }
+        .summary-row.total {
+            border-top: 1px solid var(--line);
+            padding-top: 12px; font-weight: 800;
+            font-size: 18px; color: var(--success);
+        }
+
+        /* Payment & Loading States */
+        .state-box {
+            background: var(--glass);
+            border: 1px solid var(--soft-line);
+            padding: 24px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .step-label {
+            font-size: 11px; color: var(--dim);
+            font-weight: 800; margin-bottom: 12px;
+            letter-spacing: 1px; text-transform: uppercase;
+        }
+
+        .copy-row {
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            background: var(--bg); 
+            padding: 12px 16px; 
+            border: 1px solid var(--line); 
+            border-radius: 4px; 
+            margin-bottom: 16px;
+        }
+
+        .copy-row-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--ink);
+            word-break: break-all;
+            padding-right: 12px;
+        }
+
+        /* Loader Animation Styles */
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid var(--success);
+            border-radius: 50%;
+            width: 30px; height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .loader-terminal {
+            background: var(--bg); border: 1px solid var(--line);
+            padding: 12px; border-radius: 4px; font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; color: var(--muted); height: 120px;
+            overflow-y: hidden; text-align: left; margin: 16px 0;
+            display: flex; flex-direction: column; justify-content: flex-end;
+        }
+        .loader-terminal div { margin-bottom: 4px; }
+
+        .discord-alert {
+            background: rgba(255, 189, 46, 0.05);
+            border: 1px solid var(--yellow);
+            padding: 16px; border-radius: 4px;
+            text-align: center; margin-top: 16px;
+        }
+        .discord-alert h4 { color: var(--yellow); font-size: 14px; margin-bottom: 8px;}
+        .discord-alert p { font-size: 12px; color: var(--muted); margin-bottom: 16px;}
+
+        /* Data Section */
+        .data-section {
+            padding: 100px 5%; background: var(--bg);
+            border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+        }
+
+        .data-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+            background: var(--line); max-width: 1000px;
+            margin: 0 auto; border: 1px solid var(--line);
+        }
+
+        .data-stat { background: var(--bg); padding: 40px; text-align: center; }
+        .data-stat h4 { font-size: 3rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; }
+        .data-stat p { color: var(--dim); font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
+
+        /* Footer */
+        footer { padding: 60px 5%; text-align: center; background: var(--bg); border-top: 1px solid var(--soft-line); }
+        .footer-links { margin-bottom: 20px; }
+        .footer-links a { color: var(--muted); text-decoration: none; margin: 0 12px; font-size: 0.9rem; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--ink); }
+        footer p { color: var(--dim); font-size: 0.9rem; }
+
+        /* Animations */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        @media (max-width: 900px) {
+            .creator-container { grid-template-columns: 1fr; }
+            .creator-preview-panel { position: relative; top: 0; }
+            .mockup-body { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .data-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grid-background"></div>
+
+    <nav>
+        <div class="logo">WIRE</div>
+        <div class="nav-links">
+            <a href="#features">App Features</a>
+            <a href="#app-purchase">Get Software</a>
+            <a href="#creator">Token Creator</a>
+        </div>
+        <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary" style="width:auto;">Join Discord</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-badge">RPC Connection: Active</div>
+        <h1>Memecoin Control Center.</h1>
+        <p>A polished, high-performance local dashboard for Solana memecoin traders. Manage wallets, deploy tokens with integrated liquidity, and execute complex market tools with absolute precision.</p>
+        
+        <div class="hero-actions">
+            <a href="#app-purchase" class="btn-primary" style="width: auto;">Purchase App</a>
+            <a href="#creator" class="btn-secondary">Launch Token</a>
+        </div>
+
+        <div class="mockup-container">
+            <div class="mockup-header">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+                <div class="mockup-title">WIRE / CONTROL SUITE</div>
+            </div>
+            <div class="mockup-body">
+                <div class="mockup-sidebar">
+                    <div style="font-size: 20px; font-weight: 800; margin-bottom: 24px;">WIRE</div>
+                    <div style="color: var(--dim); font-size: 10px; font-weight: 600; margin-bottom: 8px;">CONNECTED WALLET</div>
+                    <div style="font-family: 'JetBrains Mono'; font-size: 11px; margin-bottom: 16px;">8xT1...9pq2</div>
+                    <div style="color: var(--dim); font-size: 10px; font-weight: 600; margin-bottom: 8px;">SOL BALANCE</div>
+                    <div style="font-size: 24px; font-weight: 600;">14.50 SOL</div>
+                    
+                    <div style="margin-top: 40px; color: var(--dim); font-size: 9px; text-transform: uppercase; font-weight: 600;">System Status</div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+                        <div style="width: 8px; height: 8px; background: var(--green); border-radius: 50%; box-shadow: 0 0 5px var(--green);"></div>
+                        <span style="font-size: 10px; color: var(--muted);">Live Monitor</span>
+                    </div>
+                </div>
+                <div class="mockup-main">
+                    <div class="scanline"></div>
+                    <div style="color: var(--dim); font-size: 10px; font-weight: 600; margin-bottom: 16px;">ACTIVITY STREAM</div>
+                    <div class="mockup-code">
+                        [14:02:01] Dashboard ready. Core engine online.<br><br>
+                        [14:02:45] <span class="warn">Initiating simulation environment...</span><br>
+                        [14:02:45] Routing transactions through local validator<br>
+                        [14:02:46] Calculating optimal priority fees<br>
+                        [14:02:47] <span class="success">Network connection secured. Sub-millisecond latency achieved.</span><br><br>
+                        <span style="color: var(--ink)">> Awaiting command...</span><span style="animation: blink 1s step-end infinite;">_</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="section-header">
+            <h2>Market Operations Suite</h2>
+            <p>Advanced modules designed for snipers and market makers. Fully simulated before any real transaction hits the chain.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">[Sniper Bot]</div>
+                <h3>Launch Scanner</h3>
+                <p>Monitor new pairs with our scanner telemetry. Set triggers for liquidity events and prepare quotes with automated slippage tolerance.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">[Bundler]</div>
+                <h3>Sequence Builder</h3>
+                <p>Compile complex multi-transaction bundles. Sort transaction order, calculate priority tips, and archive launch previews.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">[Slow Sell]</div>
+                <h3>Tranche Exits</h3>
+                <p>Avoid dumping the chart. Configure duration, tranche slices, and market cap limits to simulate automated slow sell execution.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">[Distribute]</div>
+                <h3>Wallet Balancer</h3>
+                <p>Split your allocation plan across multiple buy wallets equally or by custom weight. Automatic dust and fee calculations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">[Pump]</div>
+                <h3>Momentum Campaign</h3>
+                <p>Load token profiles, render volume graphs, and simulate momentum feeds to gauge potential launch intensity.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">[Sweep]</div>
+                <h3>Withdraw All</h3>
+                <p>One-click emergency sweep route flow to pull all funds from connected public wallets securely without exposing private keys.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="app-purchase" class="app-purchase-section">
+        <div class="checkout-box">
+            <div class="checkout-header">
+                <h2>Get WIRE App</h2>
+                <p>Lifetime access to the full Market Operations Suite.</p>
+            </div>
+
+            <div id="app-step-initial">
+                <div class="price-tag">$29.99</div>
+                <ul style="color: var(--muted); font-size: 14px; margin-bottom: 24px; padding-left: 20px; line-height: 2;">
+                    <li>Access to all 11 execution modules</li>
+                    <li>Sub-millisecond local routing</li>
+                    <li>Lifetime updates & Discord role</li>
+                </ul>
+                <button class="btn-primary" onclick="showAppPayment()">Pay Now</button>
+            </div>
+
+            <div id="app-step-payment" class="hidden">
+                <div class="state-box">
+                    <div class="step-label">Payment Amount</div>
+                    <div class="copy-row">
+                        <span class="copy-row-text" style="color: var(--success); font-size: 15px;">$29.99</span>
+                        <button class="btn-copy" onclick="copyText('29.99', this)">Copy Amount</button>
+                    </div>
+
+                    <div class="step-label">Destination Wallet</div>
+                    <div class="copy-row">
+                        <span class="copy-row-text">53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ</span>
+                        <button class="btn-copy" onclick="copyText('53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ', this)">Copy Address</button>
+                    </div>
+                    
+                    <p style="font-size: 11px; color: var(--warn); text-align: center; margin-bottom: 16px;">Only click Verify after the transaction has been sent from your wallet.</p>
+                    <button class="btn-primary" onclick="verifyAppPayment()">Verify Payment</button>
+                </div>
+            </div>
+
+            <div id="app-step-loading" class="hidden text-center">
+                <div class="state-box" style="text-align: center;">
+                    <div class="spinner"></div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px;">Processing Blockchain Transaction</h3>
+                    <p style="font-size: 12px; color: var(--muted);">Estimated time remaining: <span id="app-timer" style="color: var(--ink); font-weight: bold;">03:00</span></p>
+                    
+                    <div class="loader-terminal" id="app-terminal">
+                        <div>> Initializing node connection...</div>
+                    </div>
+
+                    <div class="discord-alert">
+                        <h4>Action Required</h4>
+                        <p>While the blockchain processes your payment, join our Discord and open a support ticket to receive your software download link instantly.</p>
+                        <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary" style="background: var(--yellow); color: var(--bg); border: none;">Join Discord & Open Ticket</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="creator" class="creator-section">
+        <div class="section-header">
+            <h2>Solana Token Creator Studio</h2>
+            <p>Configure details, add initial liquidity pool configurations, and bundle token registration in a single click.</p>
+        </div>
+
+        <div class="creator-container">
+            <div class="creator-form-panel">
+                <div class="form-group">
+                    <label>Token Name</label>
+                    <input type="text" id="token-name" class="form-control" placeholder="e.g. Wire Coin" oninput="updatePreview()">
+                </div>
+
+                <div class="form-group">
+                    <label>Token Symbol</label>
+                    <input type="text" id="token-symbol" class="form-control" placeholder="e.g. WIRE" oninput="updatePreview()">
+                </div>
+
+                <div class="grid-2col">
+                    <div class="form-group">
+                        <label>Decimals</label>
+                        <input type="number" id="token-decimals" class="form-control" value="9" min="0" max="18" oninput="updatePreview()">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Supply</label>
+                        <input type="text" id="token-supply" class="form-control" value="1,000,000,000" oninput="updatePreview()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="token-desc" class="form-control" rows="3" placeholder="Describe your memecoin project..." oninput="updatePreview()"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Token Logo Image</label>
+                    <div class="file-upload-wrapper">
+                        <img id="upload-preview-element" class="upload-preview-img" src="" alt="Token Logo">
+                        <div id="upload-placeholder-text">
+                            <span style="display:block; font-size: 14px; font-weight:600; margin-bottom: 4px;">Click to upload image</span>
+                            <span style="display:block; font-size: 11px; color: var(--dim);">PNG, JPG, or GIF up to 5MB</span>
+                        </div>
+                        <input type="file" id="token-image-input" accept="image/*" onchange="handleImageUpload(event)">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>Add Liquidity Pool (SOL Amount)</label>
+                    <p style="font-size: 12px; color: var(--muted); margin-bottom: 12px;">Add initial liquidity to accompany the token deployment instantly. 100% of this goes to your token's LP.</p>
+                    <input type="number" id="liquidity-amount" class="form-control" placeholder="0.00 SOL" min="0" step="0.1" value="0" oninput="updatePreview()">
+                </div>
+            </div>
+
+            <div class="creator-preview-panel">
+                <div>
+                    <div class="step-label" style="margin-bottom: 16px;">Live Metadata Render Preview</div>
+                    
+                    <div class="token-badge-preview">
+                        <div class="token-badge-avatar" id="preview-avatar-box">W</div>
+                        <div>
+                            <h4 id="preview-display-name" style="font-size: 18px; font-weight: 800;">Wire Coin</h4>
+                            <span id="preview-display-symbol" style="font-family:'JetBrains Mono'; font-size: 12px; color: var(--success); text-transform: uppercase;">$WIRE</span>
+                        </div>
+                    </div>
+
+                    <div class="order-summary">
+                        <div class="summary-row">
+                            <span>Token Supply</span>
+                            <span id="summary-supply-text">1,000,000,000</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Liquidity Pool Input</span>
+                            <span id="summary-liquidity-text">0.00 SOL</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total Due Payment</span>
+                            <span id="summary-total-text">0.00 SOL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="token-step-initial">
+                    <button class="btn-primary" onclick="showTokenPayment()">Pay & Launch Token</button>
+                </div>
+
+                <div id="token-step-payment" class="hidden">
+                    <div class="state-box" style="margin-bottom: 0; border-color: var(--ink);">
+                        <div class="step-label" style="color: var(--ink);">Deployment Payment Required</div>
+                        
+                        <div class="copy-row">
+                            <span id="token-dynamic-amount-display" class="copy-row-text" style="color: var(--success); font-size: 15px;">0.00 SOL</span>
+                            <button class="btn-copy" onclick="copyTokenAmount(this)">Copy Amount</button>
+                        </div>
+
+                        <div class="step-label" style="color: var(--ink);">Destination Wallet</div>
+                        <div class="copy-row">
+                            <span class="copy-row-text">53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ</span>
+                            <button class="btn-copy" onclick="copyText('53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ', this)">Copy Address</button>
+                        </div>
+
+                        <button class="btn-primary" onclick="verifyTokenPayment()">Verify Payment</button>
+                    </div>
+                </div>
+
+                <div id="token-step-loading" class="hidden">
+                    <div class="state-box" style="margin-bottom: 0; text-align: center;">
+                        <div class="spinner"></div>
+                        <h3 style="font-size: 16px; margin-bottom: 4px;">Executing Launch Bundle</h3>
+                        <p style="font-size: 11px; color: var(--muted);">Est. Time: <span id="token-timer" style="color: var(--ink); font-weight: bold;">03:00</span></p>
+                        
+                        <div class="loader-terminal" id="token-terminal" style="height: 80px;">
+                            <div>> Compiling token metadata...</div>
+                        </div>
+
+                        <div class="discord-alert" style="padding: 12px;">
+                            <h4 style="margin-bottom: 4px;">Important Next Step</h4>
+                            <p style="font-size: 11px; margin-bottom: 10px;">Join Discord and open a ticket with your TxHash to finalize deployment and receive update authority.</p>
+                            <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary" style="font-size: 12px; padding: 10px;">Join Discord & Open Ticket</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="data-section">
+        <div class="data-grid">
+            <div class="data-stat">
+                <h4>11</h4>
+                <p>Action Modules</p>
+            </div>
+            <div class="data-stat">
+                <h4>0ms</h4>
+                <p>Local Execution</p>
+            </div>
+            <div class="data-stat">
+                <h4 style="color: var(--success)">100%</h4>
+                <p>Safety Lock</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#features">App Features</a>
+            <a href="#creator">Token Creator</a>
+            <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord Community</a>
+        </div>
+        <p>&copy; 2026 WIRE Memecoin Control Center. Not financial advice. Use responsibly.</p>
+    </footer>
+
+    <script>
+        /* Copy to Clipboard Global Logic */
+        function copyText(text, btnElement) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btnElement.innerText;
+                btnElement.innerText = 'COPIED!';
+                btnElement.classList.add('copied');
+                
+                setTimeout(() => {
+                    btnElement.innerText = originalText;
+                    btnElement.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        function copyTokenAmount(btnElement) {
+            const liquidity = parseFloat(document.getElementById('liquidity-amount').value) || 0;
+            copyText(liquidity.toFixed(2), btnElement); 
+        }
+
+        /* UI Logic for Token Creator Live Preview */
+        function updatePreview() {
+            const name = document.getElementById('token-name').value || 'Wire Coin';
+            const symbol = document.getElementById('token-symbol').value || 'WIRE';
+            const supply = document.getElementById('token-supply').value || '1,000,000,000';
+            const liquidity = parseFloat(document.getElementById('liquidity-amount').value) || 0;
+
+            document.getElementById('preview-display-name').innerText = name;
+            document.getElementById('preview-display-symbol').innerText = '$' + symbol.toUpperCase();
+            document.getElementById('summary-supply-text').innerText = supply;
+            
+            const liqText = liquidity.toFixed(2) + ' SOL';
+            document.getElementById('summary-liquidity-text').innerText = liqText;
+            document.getElementById('summary-total-text').innerText = liqText;
+            
+            // Update the payment UI box dynamically
+            document.getElementById('token-dynamic-amount-display').innerText = liqText;
+
+            const avatarBox = document.getElementById('preview-avatar-box');
+            if (!avatarBox.querySelector('img')) {
+                avatarBox.innerText = symbol.charAt(0).toUpperCase();
+            }
+        }
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgElement = document.getElementById('upload-preview-element');
+                    imgElement.src = e.target.result;
+                    imgElement.style.display = 'block';
+                    document.getElementById('upload-placeholder-text').style.display = 'none';
+
+                    const avatarBox = document.getElementById('preview-avatar-box');
+                    avatarBox.innerHTML = '<img src="' + e.target.result + '" alt="Token Preview">';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        /* Loading Simulation Engine */
+        function startTimer(durationId) {
+            let time = 180; // 3 minutes
+            const display = document.getElementById(durationId);
+            const timer = setInterval(() => {
+                let minutes = parseInt(time / 60, 10);
+                let seconds = parseInt(time % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                display.textContent = minutes + ":" + seconds;
+                if (--time < 0) {
+                    clearInterval(timer);
+                    display.textContent = "00:00 - Awaiting Support Manual Sync";
+                }
+            }, 1000);
+        }
+
+        function runTerminalLogs(terminalId, logSequence) {
+            const terminal = document.getElementById(terminalId);
+            let i = 0;
+            const logInterval = setInterval(() => {
+                if (i < logSequence.length) {
+                    terminal.innerHTML += `<div>> ${logSequence[i]}</div>`;
+                    terminal.scrollTop = terminal.scrollHeight;
+                    i++;
+                } else {
+                    terminal.innerHTML += `<div style="color: var(--warn);">> System paused. Awaiting Discord verification...</div>`;
+                    terminal.scrollTop = terminal.scrollHeight;
+                    clearInterval(logInterval);
+                }
+            }, 4500); // Add a new log line every 4.5 seconds
+        }
+
+        /* App Purchase Flow */
+        function showAppPayment() {
+            document.getElementById('app-step-initial').classList.add('hidden');
+            document.getElementById('app-step-payment').classList.remove('hidden');
+        }
+
+        function verifyAppPayment() {
+            document.getElementById('app-step-payment').classList.add('hidden');
+            document.getElementById('app-step-loading').classList.remove('hidden');
+            startTimer('app-timer');
+            const appLogs = [
+                "Scanning blockchain for transaction signature...",
+                "Querying RPC nodes...",
+                "Awaiting block finality...",
+                "Transaction detected. Verifying sender match...",
+                "Validating payment amount...",
+                "Processing license key generation...",
+                "Awaiting final confirmation...",
+                "Network congestion detected. Retrying...",
+                "Syncing..."
+            ];
+            runTerminalLogs('app-terminal', appLogs);
+        }
+
+        /* Token Creator Flow */
+        function showTokenPayment() {
+            document.getElementById('token-step-initial').classList.add('hidden');
+            document.getElementById('token-step-payment').classList.remove('hidden');
+            // Trigger an update to make sure numbers are fresh when UI shows
+            updatePreview();
+        }
+
+        function verifyTokenPayment() {
+            document.getElementById('token-step-payment').classList.add('hidden');
+            document.getElementById('token-step-loading').classList.remove('hidden');
+            startTimer('token-timer');
+            const tokenLogs = [
+                "Locating deployment payment...",
+                "Verifying SOL distribution logic...",
+                "Uploading metadata to IPFS/Arweave...",
+                "Reserving Mint Address...",
+                "Allocating Total Supply...",
+                "Preparing Liquidity Pool initialization...",
+                "Awaiting blockchain inclusion...",
+                "Processing...",
+                "Syncing..."
+            ];
+            runTerminalLogs('token-terminal', tokenLogs);
+        }
+    </script>
+</body>
+</html>
