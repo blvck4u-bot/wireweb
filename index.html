@@ -41,7 +41,7 @@
             box-sizing: border-box;
             font-family: var(--font-sans);
             scroll-behavior: smooth;
-            cursor: none; 
+            /* Custom cursor removed, defaults to auto */
         }
 
         body {
@@ -51,50 +51,6 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* --- Custom Minimal Cursor --- */
-        .cursor-dot {
-            width: 4px;
-            height: 4px;
-            background: var(--sol-green);
-            position: fixed;
-            top: 0; left: 0;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: width 0.2s, height 0.2s, background-color 0.2s;
-            box-shadow: 0 0 10px var(--sol-green);
-        }
-
-        .cursor-outline {
-            width: 32px;
-            height: 32px;
-            border: 1px solid rgba(20, 241, 149, 0.3);
-            position: fixed;
-            top: 0; left: 0;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9998;
-            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-                        height 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-                        border-color 0.3s,
-                        background-color 0.3s;
-        }
-
-        .cursor-hover .cursor-dot {
-            width: 0;
-            height: 0;
-        }
-        
-        .cursor-hover .cursor-outline {
-            width: 48px;
-            height: 48px;
-            background-color: rgba(20, 241, 149, 0.05);
-            border-color: var(--sol-green);
-            backdrop-filter: blur(2px);
         }
 
         /* --- Background Effects --- */
@@ -119,7 +75,6 @@
             width: 100vw;
             height: 100vh;
             transform: translate(-50%, -50%);
-            /* Subtle Solana-inspired atmospheric glow */
             background: radial-gradient(circle at 30% 30%, rgba(20, 241, 149, 0.04) 0%, transparent 40%),
                         radial-gradient(circle at 70% 70%, rgba(153, 69, 255, 0.03) 0%, transparent 40%);
             z-index: -3;
@@ -245,6 +200,7 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 0 15px rgba(255,255,255,0.1);
+            cursor: pointer;
         }
 
         .btn-primary:hover {
@@ -265,6 +221,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: var(--transition);
+            cursor: pointer;
         }
 
         .btn-copy:hover {
@@ -364,6 +321,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
         }
 
         .btn-secondary:hover {
@@ -577,7 +535,7 @@
             text-shadow: 0 0 20px rgba(20, 241, 149, 0.2);
         }
 
-        /* Token Creator Studio Section */
+        /* Token Creator Studio Section - SOFTENED THEME */
         .creator-section {
             padding: 140px 5%;
             background: var(--bg);
@@ -595,6 +553,10 @@
 
         .creator-form-panel {
             text-align: left;
+            background-color: #18181b; /* Soft dark gray */
+            padding: 48px;
+            border-radius: 8px;
+            border: 1px solid #27272a;
         }
 
         .form-group {
@@ -603,27 +565,27 @@
 
         .form-group label {
             display: block;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 700;
-            color: var(--muted);
+            color: #a1a1aa; /* Muted gray for labels */
             margin-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
         .form-control {
             width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid var(--line);
-            padding: 16px 0;
-            color: var(--ink);
+            background-color: #27272a; /* Muted input background */
+            border: 1px solid #3f3f46; /* Soft border */
+            border-radius: 6px;
+            padding: 14px 16px;
+            color: #f4f4f5; /* Off-white text */
             font-size: 16px;
             transition: var(--transition);
         }
         
         .form-control::placeholder {
-            color: var(--dim);
+            color: #71717a;
         }
 
         .form-control:focus {
@@ -639,17 +601,18 @@
 
         .file-upload-wrapper {
             position: relative;
-            border: 1px dashed var(--line);
+            border: 1px dashed #3f3f46;
             padding: 40px;
             text-align: center;
-            background: rgba(255,255,255,0.01);
+            background: #27272a;
+            border-radius: 6px;
             cursor: pointer;
             transition: var(--transition);
         }
 
         .file-upload-wrapper:hover { 
             border-color: var(--sol-green); 
-            background: rgba(20, 241, 149, 0.02);
+            background: rgba(20, 241, 149, 0.05);
         }
         
         .file-upload-wrapper input[type="file"] {
@@ -671,6 +634,7 @@
         .toggle-group {
             margin-top: 48px;
             padding-top: 32px;
+            border-top: 1px solid #27272a;
         }
 
         .toggle-row {
@@ -678,7 +642,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
-            border-bottom: 1px solid var(--line);
+            border-bottom: 1px solid #27272a;
             transition: var(--transition);
         }
 
@@ -686,7 +650,7 @@
             font-size: 14px;
             font-weight: 500;
             margin-bottom: 4px;
-            color: var(--ink);
+            color: #f4f4f5;
         }
 
         .toggle-info p {
@@ -708,7 +672,7 @@
             position: absolute;
             cursor: pointer;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: var(--line);
+            background-color: #3f3f46;
             transition: .4s;
             border-radius: 20px;
         }
@@ -720,7 +684,7 @@
             width: 12px;
             left: 4px;
             bottom: 4px;
-            background-color: var(--muted);
+            background-color: #a1a1aa;
             transition: .4s;
             border-radius: 50%;
         }
@@ -737,33 +701,33 @@
 
         /* Side Panel / Shared UI Components */
         .creator-preview-panel {
-            background: rgba(15, 15, 15, 0.5);
-            border: 1px solid var(--soft-line);
-            backdrop-filter: blur(20px);
+            background-color: #18181b; /* Soft dark gray */
+            border: 1px solid #27272a;
             padding: 48px;
-            border-radius: 4px;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             height: fit-content;
             position: sticky;
             top: 120px;
+            color: #e4e4e7;
         }
 
         .token-badge-preview {
             display: flex; align-items: center; gap: 20px;
             padding-bottom: 32px;
-            border-bottom: 1px solid var(--line);
+            border-bottom: 1px solid #27272a;
             margin-bottom: 32px;
         }
 
         .token-badge-avatar {
             width: 56px; height: 56px;
-            border-radius: 50%; background: var(--line);
+            border-radius: 50%; background: #27272a;
             display: flex; align-items: center; justify-content: center;
-            font-weight: 600; color: var(--dim); overflow: hidden;
+            font-weight: 600; color: #a1a1aa; overflow: hidden;
             font-size: 20px;
-            border: 1px solid var(--soft-line);
+            border: 1px solid #3f3f46;
         }
         .token-badge-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -774,14 +738,14 @@
         .summary-row {
             display: flex; justify-content: space-between;
             margin-bottom: 16px; font-size: 13px;
-            color: var(--muted);
+            color: #a1a1aa;
         }
         .summary-row span:last-child {
-            color: var(--ink);
+            color: #f4f4f5;
             font-family: 'JetBrains Mono', monospace;
         }
         .summary-row.total {
-            border-top: 1px solid var(--line);
+            border-top: 1px solid #27272a;
             padding-top: 24px; margin-top: 8px;
             font-weight: 600;
             font-size: 16px;
@@ -791,12 +755,12 @@
         /* Payment & Loading States */
         .state-box {
             padding: 32px 0 0 0;
-            border-top: 1px solid var(--line);
+            border-top: 1px solid #27272a;
             margin-bottom: 24px;
         }
 
         .step-label {
-            font-size: 10px; color: var(--dim);
+            font-size: 10px; color: #a1a1aa;
             font-weight: 700; margin-bottom: 16px;
             letter-spacing: 2px; text-transform: uppercase;
         }
@@ -805,12 +769,13 @@
             display: flex; 
             align-items: center; 
             justify-content: space-between; 
-            background: rgba(255,255,255,0.02); 
+            background: #27272a; 
             padding: 12px 16px; 
-            border: 1px solid var(--line); 
+            border: 1px solid #3f3f46; 
             margin-bottom: 20px;
-            border-radius: 2px;
+            border-radius: 6px;
             transition: var(--transition);
+            cursor: pointer;
         }
 
         .copy-row:hover {
@@ -821,7 +786,7 @@
         .copy-row-text {
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
-            color: var(--ink);
+            color: #f4f4f5;
             word-break: break-all;
             padding-right: 12px;
         }
@@ -839,24 +804,24 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         .loader-terminal {
-            background: rgba(0,0,0,0.6); border: 1px solid var(--line);
+            background: rgba(0,0,0,0.4); border: 1px solid #3f3f46;
             padding: 16px; font-family: 'JetBrains Mono', monospace;
             font-size: 10px; color: var(--sol-green); height: 100px;
             overflow-y: hidden; text-align: left; margin: 24px 0;
             display: flex; flex-direction: column; justify-content: flex-end;
             line-height: 2;
-            border-radius: 2px;
+            border-radius: 4px;
         }
 
         .discord-alert {
             background: rgba(153, 69, 255, 0.05);
             border: 1px solid rgba(153, 69, 255, 0.3);
             padding: 24px;
-            border-radius: 2px;
+            border-radius: 6px;
             text-align: center; margin-top: 24px;
         }
         .discord-alert h4 { color: var(--sol-purple); font-size: 12px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;}
-        .discord-alert p { font-size: 12px; color: var(--muted); margin-bottom: 20px;}
+        .discord-alert p { font-size: 12px; color: #a1a1aa; margin-bottom: 20px;}
 
         /* Data Section */
         .data-section {
@@ -889,27 +854,22 @@
             .mockup-body { grid-template-columns: 1fr; padding: 24px;}
             .nav-links { display: none; }
             .data-grid { grid-template-columns: 1fr; }
-            .cursor-dot, .cursor-outline { display: none; } 
-            * { cursor: auto; }
         }
     </style>
 </head>
 <body>
 
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-outline" id="cursor-outline"></div>
-
     <div class="ambient-glow"></div>
     <div class="grid-background"></div>
 
     <nav id="navbar">
-        <div class="logo cursor-hover-target">WIRE</div>
+        <div class="logo">WIRE</div>
         <div class="nav-links">
-            <a href="#features" class="cursor-hover-target">Modules</a>
-            <a href="#app-purchase" class="cursor-hover-target">License</a>
-            <a href="#creator" class="cursor-hover-target">Deploy</a>
+            <a href="#features">Modules</a>
+            <a href="#app-purchase">License</a>
+            <a href="#creator">Deploy</a>
         </div>
-        <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary cursor-hover-target" style="width:auto; padding: 10px 20px;">Join Discord</a>
+        <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary" style="width:auto; padding: 10px 20px;">Join Discord</a>
     </nav>
 
     <section class="hero reveal">
@@ -918,8 +878,8 @@
         <p class="reveal reveal-delay-3">A polished, high-performance local dashboard for Solana traders. Manage wallets, deploy tokens with integrated liquidity, and execute complex market tools with absolute precision.</p>
         
         <div class="hero-actions reveal reveal-delay-3">
-            <a href="#app-purchase" class="btn-primary cursor-hover-target" style="width: auto;">Purchase App</a>
-            <a href="#creator" class="btn-secondary cursor-hover-target">Launch Token</a>
+            <a href="#app-purchase" class="btn-primary" style="width: auto;">Purchase App</a>
+            <a href="#creator" class="btn-secondary">Launch Token</a>
         </div>
 
         <div class="mockup-container reveal reveal-delay-3">
@@ -966,32 +926,32 @@
         </div>
 
         <div class="features-grid">
-            <div class="feature-card reveal reveal-delay-1 cursor-hover-target">
+            <div class="feature-card reveal reveal-delay-1">
                 <div class="feature-icon">[ 01 ]</div>
                 <h3>Launch Scanner</h3>
                 <p>Monitor new pairs with our scanner telemetry. Set triggers for liquidity events and prepare quotes with automated slippage tolerance.</p>
             </div>
-            <div class="feature-card reveal reveal-delay-2 cursor-hover-target">
+            <div class="feature-card reveal reveal-delay-2">
                 <div class="feature-icon">[ 02 ]</div>
                 <h3>Sequence Builder</h3>
                 <p>Compile complex multi-transaction bundles. Sort transaction order, calculate priority tips, and archive launch previews.</p>
             </div>
-            <div class="feature-card reveal reveal-delay-3 cursor-hover-target">
+            <div class="feature-card reveal reveal-delay-3">
                 <div class="feature-icon">[ 03 ]</div>
                 <h3>Tranche Exits</h3>
                 <p>Avoid dumping the chart. Configure duration, tranche slices, and market cap limits to simulate automated slow sell execution.</p>
             </div>
-            <div class="feature-card reveal reveal-delay-1 cursor-hover-target">
+            <div class="feature-card reveal reveal-delay-1">
                 <div class="feature-icon">[ 04 ]</div>
                 <h3>Wallet Balancer</h3>
                 <p>Split your allocation plan across multiple buy wallets equally or by custom weight. Automatic dust and fee calculations.</p>
             </div>
-            <div class="feature-card reveal reveal-delay-2 cursor-hover-target">
+            <div class="feature-card reveal reveal-delay-2">
                 <div class="feature-icon">[ 05 ]</div>
                 <h3>Momentum Campaign</h3>
                 <p>Load token profiles, render volume graphs, and simulate momentum feeds to gauge potential launch intensity.</p>
             </div>
-            <div class="feature-card reveal reveal-delay-3 cursor-hover-target">
+            <div class="feature-card reveal reveal-delay-3">
                 <div class="feature-icon">[ 06 ]</div>
                 <h3>Withdraw All</h3>
                 <p>One-click emergency sweep route flow to pull all funds from connected public wallets securely without exposing private keys.</p>
@@ -1013,25 +973,25 @@
                     <li>Sub-millisecond local routing</li>
                     <li>Lifetime updates & Discord role</li>
                 </ul>
-                <button class="btn-primary cursor-hover-target" onclick="showAppPayment()">Initialize Payment</button>
+                <button class="btn-primary" onclick="showAppPayment()">Initialize Payment</button>
             </div>
 
             <div id="app-step-payment" class="hidden">
                 <div class="state-box" style="border: none; padding-top: 0;">
                     <div class="step-label">Payment Amount</div>
-                    <div class="copy-row cursor-hover-target" onclick="copyText('29.99', this.querySelector('.btn-copy'))">
+                    <div class="copy-row" onclick="copyText('29.99', this.querySelector('.btn-copy'))">
                         <span class="copy-row-text" style="color: var(--sol-green); font-size: 14px;">$29.99</span>
                         <button class="btn-copy">Copy</button>
                     </div>
 
                     <div class="step-label">Destination Wallet</div>
-                    <div class="copy-row cursor-hover-target" onclick="copyText('53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ', this.querySelector('.btn-copy'))">
+                    <div class="copy-row" onclick="copyText('53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ', this.querySelector('.btn-copy'))">
                         <span class="copy-row-text">53NfMgyg...V2jWQ</span>
                         <button class="btn-copy">Copy</button>
                     </div>
                     
                     <p style="font-size: 10px; color: var(--dim); text-align: center; margin-bottom: 24px; letter-spacing: 1px;">AWAITING BLOCKCHAIN CONFIRMATION</p>
-                    <button class="btn-primary cursor-hover-target" onclick="verifyAppPayment()">Verify Transaction</button>
+                    <button class="btn-primary" onclick="verifyAppPayment()">Verify Transaction</button>
                 </div>
             </div>
 
@@ -1048,7 +1008,7 @@
                     <div class="discord-alert">
                         <h4>Manual Sync Required</h4>
                         <p>While the blockchain processes your payment, join our Discord and open a ticket to receive your software key.</p>
-                        <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary cursor-hover-target" style="background: var(--sol-purple); border-color: var(--sol-purple); color: var(--ink);">Open Support Ticket</a>
+                        <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary" style="background: var(--sol-purple); border-color: var(--sol-purple); color: var(--ink);">Open Support Ticket</a>
                     </div>
                 </div>
             </div>
@@ -1066,37 +1026,37 @@
             <div class="creator-form-panel reveal reveal-delay-1">
                 <div class="form-group">
                     <label>Token Name</label>
-                    <input type="text" id="token-name" class="form-control cursor-hover-target" placeholder="Wire Coin" oninput="updatePreview()">
+                    <input type="text" id="token-name" class="form-control" placeholder="Wire Coin" oninput="updatePreview()">
                 </div>
 
                 <div class="form-group">
                     <label>Token Symbol</label>
-                    <input type="text" id="token-symbol" class="form-control cursor-hover-target" placeholder="WIRE" oninput="updatePreview()">
+                    <input type="text" id="token-symbol" class="form-control" placeholder="WIRE" oninput="updatePreview()">
                 </div>
 
                 <div class="grid-2col">
                     <div class="form-group">
                         <label>Decimals</label>
-                        <input type="number" id="token-decimals" class="form-control cursor-hover-target" value="9" min="0" max="18" oninput="updatePreview()">
+                        <input type="number" id="token-decimals" class="form-control" value="9" min="0" max="18" oninput="updatePreview()">
                     </div>
                     <div class="form-group">
                         <label>Total Supply</label>
-                        <input type="text" id="token-supply" class="form-control cursor-hover-target" value="1,000,000,000" oninput="updatePreview()">
+                        <input type="text" id="token-supply" class="form-control" value="1,000,000,000" oninput="updatePreview()">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Description</label>
-                    <input type="text" id="token-desc" class="form-control cursor-hover-target" placeholder="Project description..." oninput="updatePreview()">
+                    <input type="text" id="token-desc" class="form-control" placeholder="Project description..." oninput="updatePreview()">
                 </div>
 
                 <div class="form-group">
                     <label>Token Identity Image</label>
-                    <div class="file-upload-wrapper cursor-hover-target">
+                    <div class="file-upload-wrapper">
                         <img id="upload-preview-element" class="upload-preview-img" src="" alt="Token Logo">
                         <div id="upload-placeholder-text">
                             <span style="display:block; font-size: 12px; font-weight:700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; color: var(--sol-green);">Select Image</span>
-                            <span style="display:block; font-size: 10px; color: var(--dim);">PNG, JPG (Max 5MB)</span>
+                            <span style="display:block; font-size: 10px; color: #a1a1aa;">PNG, JPG (Max 5MB)</span>
                         </div>
                         <input type="file" id="token-image-input" accept="image/*" onchange="handleImageUpload(event)">
                     </div>
@@ -1104,13 +1064,13 @@
 
                 <div class="form-group" style="margin-bottom: 0;">
                     <label>Initial Liquidity (SOL)</label>
-                    <input type="number" id="liquidity-amount" class="form-control cursor-hover-target" placeholder="0.00" min="0" step="0.1" value="0" oninput="updatePreview()">
+                    <input type="number" id="liquidity-amount" class="form-control" placeholder="0.00" min="0" step="0.1" value="0" oninput="updatePreview()">
                 </div>
 
                 <div class="toggle-group">
                     <label style="margin-bottom: 24px;">Security Parameters</label>
                     
-                    <div class="toggle-row cursor-hover-target">
+                    <div class="toggle-row">
                         <div class="toggle-info">
                             <h4>Revoke Mint</h4>
                             <p>+ 0.10 SOL</p>
@@ -1121,7 +1081,7 @@
                         </label>
                     </div>
 
-                    <div class="toggle-row cursor-hover-target">
+                    <div class="toggle-row">
                         <div class="toggle-info">
                             <h4>Revoke Freeze</h4>
                             <p>+ 0.10 SOL</p>
@@ -1132,7 +1092,7 @@
                         </label>
                     </div>
 
-                    <div class="toggle-row cursor-hover-target" style="border-bottom: none;">
+                    <div class="toggle-row" style="border-bottom: none;">
                         <div class="toggle-info">
                             <h4>Burn LP</h4>
                             <p>+ 0.10 SOL</p>
@@ -1182,25 +1142,25 @@
                 </div>
 
                 <div id="token-step-initial">
-                    <button class="btn-primary cursor-hover-target" onclick="showTokenPayment()">Initialize Launch</button>
+                    <button class="btn-primary" onclick="showTokenPayment()">Initialize Launch</button>
                 </div>
 
                 <div id="token-step-payment" class="hidden">
                     <div class="state-box">
                         <div class="step-label">Required Deployment Funds</div>
                         
-                        <div class="copy-row cursor-hover-target" onclick="copyTokenAmount(this.querySelector('.btn-copy'))">
+                        <div class="copy-row" onclick="copyTokenAmount(this.querySelector('.btn-copy'))">
                             <span id="token-dynamic-amount-display" class="copy-row-text" style="color: var(--sol-green); font-size: 14px;">0.50 SOL</span>
                             <button class="btn-copy">Copy</button>
                         </div>
 
                         <div class="step-label">Routing Address</div>
-                        <div class="copy-row cursor-hover-target" onclick="copyText('53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ', this.querySelector('.btn-copy'))">
+                        <div class="copy-row" onclick="copyText('53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ', this.querySelector('.btn-copy'))">
                             <span class="copy-row-text">53NfMgyg...V2jWQ</span>
                             <button class="btn-copy">Copy</button>
                         </div>
 
-                        <button class="btn-primary cursor-hover-target" style="margin-top: 16px;" onclick="verifyTokenPayment()">Verify Transaction</button>
+                        <button class="btn-primary" style="margin-top: 16px;" onclick="verifyTokenPayment()">Verify Transaction</button>
                     </div>
                 </div>
 
@@ -1208,7 +1168,7 @@
                     <div class="state-box" style="text-align: center;">
                         <div class="spinner" id="token-spinner"></div>
                         <h3 id="token-status-text" style="font-size: 14px; margin-bottom: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Please wait 20 - 50 seconds</h3>
-                        <p id="token-status-sub" style="font-size: 11px; color: var(--dim); font-family: 'JetBrains Mono';">Executing Bundle...</p>
+                        <p id="token-status-sub" style="font-size: 11px; color: #a1a1aa; font-family: 'JetBrains Mono';">Executing Bundle...</p>
                         
                         <div class="loader-terminal" id="token-terminal">
                             <div>> Compiling metadata...</div>
@@ -1217,7 +1177,7 @@
                         <div class="discord-alert">
                             <h4>Final Step Required</h4>
                             <p>Join Discord and open a ticket with your TxHash to finalize deployment and receive update authority.</p>
-                            <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary cursor-hover-target" style="background: var(--sol-purple); border-color: var(--sol-purple); color: var(--ink);">Open Ticket</a>
+                            <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary" style="background: var(--sol-purple); border-color: var(--sol-purple); color: var(--ink);">Open Ticket</a>
                         </div>
                     </div>
                 </div>
@@ -1228,15 +1188,15 @@
 
     <section class="data-section reveal">
         <div class="data-grid">
-            <div class="data-stat cursor-hover-target">
+            <div class="data-stat">
                 <h4>11</h4>
                 <p>Core Modules</p>
             </div>
-            <div class="data-stat cursor-hover-target">
+            <div class="data-stat">
                 <h4>0ms</h4>
                 <p>Local Latency</p>
             </div>
-            <div class="data-stat cursor-hover-target">
+            <div class="data-stat">
                 <h4>100%</h4>
                 <p>Simulated Safety</p>
             </div>
@@ -1246,42 +1206,14 @@
     <footer>
         <div class="footer-logo">WIRE</div>
         <div class="footer-links">
-            <a href="#features" class="cursor-hover-target">Modules</a>
-            <a href="#creator" class="cursor-hover-target">Deploy</a>
-            <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="cursor-hover-target">Discord</a>
+            <a href="#features">Modules</a>
+            <a href="#creator">Deploy</a>
+            <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
         </div>
         <p>&copy; 2026 WIRE SYSTEMS. NOT FINANCIAL ADVICE.</p>
     </footer>
 
     <script>
-        /* --- Custom Minimal Cursor Logic --- */
-        const cursorDot = document.getElementById('cursor-dot');
-        const cursorOutline = document.getElementById('cursor-outline');
-        
-        window.addEventListener('mousemove', function(e) {
-            const posX = e.clientX;
-            const posY = e.clientY;
-            
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
-            
-            setTimeout(() => {
-                cursorOutline.style.left = `${posX}px`;
-                cursorOutline.style.top = `${posY}px`;
-            }, 50);
-        });
-
-        // Hover effect scaling
-        const hoverTargets = document.querySelectorAll('.cursor-hover-target, a, button, input, .toggle-row, .file-upload-wrapper, .copy-row');
-        hoverTargets.forEach(target => {
-            target.addEventListener('mouseenter', () => {
-                document.body.classList.add('cursor-hover');
-            });
-            target.addEventListener('mouseleave', () => {
-                document.body.classList.remove('cursor-hover');
-            });
-        });
-
         /* --- Scroll Reveal Intersection Observer --- */
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
