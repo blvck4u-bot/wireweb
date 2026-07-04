@@ -122,14 +122,19 @@
 
         .btn-copy { background: var(--glass); border: 1px solid var(--soft-line); color: var(--muted); padding: 8px 16px; border-radius: 2px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition); cursor: pointer; }
         .btn-copy:hover { color: var(--sol-green); border-color: var(--sol-green); background: rgba(20, 241, 149, 0.05); }
+        .btn-copy.copied { color: var(--bg); border-color: var(--sol-green); background: var(--sol-green); }
 
         /* Hero */
         .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 160px 5% 80px; position: relative; }
-        .hero-badge { background: rgba(255, 59, 48, 0.1); border: 1px solid rgba(255, 59, 48, 0.3); padding: 8px 16px; border-radius: 2px; font-size: 11px; font-family: 'JetBrains Mono', monospace; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--red); margin-bottom: 32px; display: inline-flex; align-items: center; gap: 8px; backdrop-filter: blur(10px); box-shadow: 0 0 20px rgba(255, 59, 48, 0.1); }
+        .hero-badge { background: rgba(255, 59, 48, 0.1); border: 1px solid rgba(255, 59, 48, 0.3); padding: 8px 16px; border-radius: 2px; font-size: 11px; font-family: 'JetBrains Mono', monospace; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--red); margin-bottom: 16px; display: inline-flex; align-items: center; gap: 8px; backdrop-filter: blur(10px); box-shadow: 0 0 20px rgba(255, 59, 48, 0.1); }
         .hero-badge .pulse { width: 8px; height: 8px; background: var(--red); border-radius: 50%; box-shadow: 0 0 12px var(--red); animation: pulse-red 1.5s infinite; }
 
         @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(255, 59, 48, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); } }
         @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(20, 241, 149, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(20, 241, 149, 0); } 100% { box-shadow: 0 0 0 0 rgba(20, 241, 149, 0); } }
+
+        .live-viewers { font-size: 11px; color: var(--muted); margin-bottom: 32px; font-family: 'JetBrains Mono', monospace; background: rgba(255,255,255,0.03); padding: 6px 12px; border-radius: 20px; border: 1px solid var(--soft-line);}
+        .live-viewers span.dot { color: var(--red); display: inline-block; animation: blink 2s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
         .hero h1 { font-size: clamp(3rem, 7vw, 6rem); font-weight: 800; letter-spacing: -2px; line-height: 1.05; margin-bottom: 24px; max-width: 1000px; color: var(--ink); }
         .hero p { font-size: clamp(1rem, 1.5vw, 1.15rem); color: var(--muted); max-width: 600px; margin-bottom: 48px; font-weight: 400; }
@@ -145,12 +150,16 @@
         /* Mockup */
         .mockup-container { margin-top: 100px; width: 100%; max-width: 1000px; background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--soft-line); border-radius: 8px; overflow: hidden; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255,255,255,0.05) inset; }
         .mockup-header { background: rgba(0, 0, 0, 0.5); padding: 16px 20px; display: flex; align-items: center; border-bottom: 1px solid var(--soft-line); gap: 8px; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 2px; }
-        .dot.red { background: var(--red); } .dot.yellow { background: var(--yellow); } .dot.green { background: var(--sol-green); }
+        .dot-mac { width: 10px; height: 10px; border-radius: 50%; margin-right: 2px; }
+        .dot-mac.red { background: var(--red); } .dot-mac.yellow { background: var(--yellow); } .dot-mac.green { background: var(--sol-green); }
         .mockup-title { margin-left: 16px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 2px; }
         .mockup-body { padding: 40px; display: grid; grid-template-columns: 280px 1fr; gap: 24px; }
         .mockup-sidebar { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--soft-line); border-radius: 4px; padding: 32px; text-align: left; }
         .mockup-main { background: rgba(0, 0, 0, 0.4); border: 1px solid var(--soft-line); border-radius: 4px; padding: 32px; position: relative; overflow: hidden; text-align: left; }
+        
+        .scanline { position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: rgba(20, 241, 149, 0.1); box-shadow: 0 0 20px rgba(20, 241, 149, 0.2); animation: scan 4s linear infinite; }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+
         .mockup-code { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 2.2; color: var(--muted); }
         .mockup-code span.success { color: var(--sol-green); text-shadow: 0 0 10px rgba(20, 241, 149, 0.3); }
 
@@ -185,6 +194,11 @@
         .fomo-text { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--red); margin-bottom: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
         .progress-bar { width: 100%; height: 4px; background: var(--line); overflow: hidden; border-radius: 2px; }
         .progress-fill { width: 88%; height: 100%; background: var(--red); transition: width 1s ease-in-out; box-shadow: 0 0 10px var(--red); }
+
+        .price-increase-timer { background: rgba(255, 204, 0, 0.05); border: 1px solid rgba(255, 204, 0, 0.2); padding: 16px; text-align: center; border-radius: 4px; margin-bottom: 24px; }
+        .price-increase-timer .timer-label { color: var(--yellow); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .price-increase-timer .timer-clock { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 800; color: var(--ink); text-shadow: 0 0 15px rgba(255, 204, 0, 0.3);}
+        .price-increase-timer .timer-sub { font-size: 10px; color: var(--muted); margin-top: 4px; font-family: 'Inter'; }
 
         .checkout-header { text-align: center; margin-bottom: 40px; }
         .checkout-header h2 { font-size: 2rem; margin-bottom: 8px; letter-spacing: -1px; }
@@ -280,8 +294,12 @@
     <section class="hero reveal">
         <div class="hero-badge reveal reveal-delay-1">
             <div class="pulse"></div>
-            [ ALERT: ONLY 12 LIFETIME LICENSES REMAINING ]
+            <span id="hero-badge-text">[ ONLY 12 LIFETIME LICENSES REMAINING ]</span>
         </div>
+        <div class="live-viewers reveal reveal-delay-2">
+            <span class="dot">●</span> <span id="live-viewers-count">84</span> traders are currently viewing this page
+        </div>
+        
         <h1 class="reveal reveal-delay-2">Memecoin<br>Control Center.</h1>
         <p class="reveal reveal-delay-3">A polished, high-performance local dashboard for Solana traders. Stop getting sniped by bots. Manage wallets, deploy tokens, and execute complex market tools with absolute precision.</p>
         
@@ -292,9 +310,9 @@
 
         <div class="mockup-container reveal reveal-delay-3">
             <div class="mockup-header">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
+                <div class="dot-mac red"></div>
+                <div class="dot-mac yellow"></div>
+                <div class="dot-mac green"></div>
                 <div class="mockup-title">WIRE_TERMINAL</div>
             </div>
             <div class="mockup-body">
@@ -423,13 +441,20 @@
 
     <section id="app-purchase" class="app-purchase-section reveal">
         <div class="checkout-box">
+            
+            <div class="price-increase-timer">
+                <div class="timer-label">Early Adopter Pricing Expires In:</div>
+                <div class="timer-clock" id="countdown-timer">00:00:00</div>
+                <div class="timer-sub">Price will increase to $99.99 when timer ends.</div>
+            </div>
+
             <div class="fomo-progress-wrapper">
                 <div class="fomo-text">
                     <span>Licenses Claimed</span>
-                    <span id="fomo-counter">488 / 500</span>
+                    <span id="fomo-counter-text">488 / 500</span>
                 </div>
                 <div class="progress-bar">
-                    <div class="progress-fill" id="fomo-fill"></div>
+                    <div class="progress-fill" id="fomo-fill-bar"></div>
                 </div>
                 <p style="text-align: center; font-size: 10px; color: var(--red); margin-top: 12px; text-transform: uppercase;">Beta access closes when capacity is reached.</p>
             </div>
@@ -713,23 +738,83 @@
             window.scrollY > 50 ? nav.classList.add('nav-scrolled') : nav.classList.remove('nav-scrolled');
         });
 
-        /* --- FOMO Elements (Counter & Toasts) --- */
-        let currentSpots = 12;
+        /* --- LocalStorage FOMO Logic --- */
+        
+        // 1. Licenses Counter
+        let currentSpots = localStorage.getItem('wire_licenses_left');
+        if (!currentSpots) {
+            currentSpots = 12; // Start at 12 on very first visit
+            localStorage.setItem('wire_licenses_left', currentSpots);
+        } else {
+            currentSpots = parseInt(currentSpots);
+        }
+
+        function updateSpotsUI() {
+            document.getElementById('fomo-counter-text').innerText = `${500 - currentSpots} / 500`;
+            document.getElementById('fomo-fill-bar').style.width = `${((500 - currentSpots) / 500) * 100}%`;
+            
+            const heroBadgeText = document.getElementById('hero-badge-text');
+            if (heroBadgeText) {
+                heroBadgeText.innerText = `[ ONLY ${currentSpots} LIFETIME LICENSES REMAINING ]`;
+            }
+        }
+
+        // Initialize UI with stored spots
+        updateSpotsUI();
+
+        // Randomly decrease spots (but don't go below 2)
         setInterval(() => {
-            if (currentSpots > 3) {
-                // Randomly drop spots every 10-25 seconds
+            if (currentSpots > 2) {
                 if(Math.random() > 0.6) {
                     currentSpots--;
-                    document.getElementById('fomo-counter').innerText = `${500 - currentSpots} / 500`;
-                    document.getElementById('fomo-fill').style.width = `${((500 - currentSpots) / 500) * 100}%`;
-                    
-                    // Update hero badge
-                    const badge = document.querySelector('.hero-badge');
-                    if (badge) badge.innerHTML = `<div class="pulse"></div> [ ALERT: ONLY ${currentSpots} LIFETIME LICENSES REMAINING ]`;
+                    localStorage.setItem('wire_licenses_left', currentSpots);
+                    updateSpotsUI();
                 }
             }
-        }, 8000);
+        }, 12000); 
 
+        // 2. Live Viewers Fluctuator
+        let viewers = Math.floor(Math.random() * (120 - 45 + 1)) + 45;
+        document.getElementById('live-viewers-count').innerText = viewers;
+        
+        setInterval(() => {
+            viewers += Math.floor(Math.random() * 9) - 3; // Fluctuate -3 to +5
+            if (viewers < 15) viewers = 15;
+            document.getElementById('live-viewers-count').innerText = viewers;
+        }, 4500);
+
+        // 3. Countdown Timer (Persisted)
+        let timerEnd = localStorage.getItem('wire_fomo_timer');
+        if (!timerEnd) {
+            // Set for roughly 2 hours from first load
+            timerEnd = new Date().getTime() + (2 * 60 * 60 * 1000) + (14 * 60 * 1000); 
+            localStorage.setItem('wire_fomo_timer', timerEnd);
+        } else {
+            timerEnd = parseInt(timerEnd);
+        }
+
+        setInterval(() => {
+            let now = new Date().getTime();
+            let distance = timerEnd - now;
+            
+            // If timer ended, reset to 15 mins to maintain urgency
+            if (distance < 0) {
+                timerEnd = now + (15 * 60 * 1000);
+                localStorage.setItem('wire_fomo_timer', timerEnd);
+                distance = timerEnd - now;
+            }
+
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown-timer').innerText = 
+                (hours < 10 ? "0" + hours : hours) + ":" + 
+                (minutes < 10 ? "0" + minutes : minutes) + ":" + 
+                (seconds < 10 ? "0" + seconds : seconds);
+        }, 1000);
+
+        /* --- Toast Notification System --- */
         function generateRandomWallet() {
             const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
             let str1 = '', str2 = '';
@@ -743,7 +828,7 @@
             const toast = document.createElement('div');
             toast.className = 'fomo-toast';
             
-            const actions = ['purchased a Lifetime License', 'deployed a token bundle', 'secured a Beta invite'];
+            const actions = ['purchased a Lifetime License', 'deployed a token bundle', 'secured a Beta invite', 'executed a multi-wallet snipe'];
             const randomAction = actions[Math.floor(Math.random() * actions.length)];
             
             toast.innerHTML = `
@@ -760,13 +845,13 @@
             setTimeout(() => {
                 toast.classList.remove('show');
                 setTimeout(() => toast.remove(), 500);
-            }, 4000);
+            }, 5000);
 
-            // Randomize next toast between 5 and 15 seconds
-            setTimeout(triggerFOMOToast, Math.floor(Math.random() * 10000) + 5000);
+            // Randomize next toast between 6 and 14 seconds
+            setTimeout(triggerFOMOToast, Math.floor(Math.random() * 8000) + 6000);
         }
 
-        /* Copy Logic */
+        /* --- UI Logic Functions --- */
         function copyText(text, btnElement) {
             navigator.clipboard.writeText(text).then(() => {
                 const originalText = btnElement.innerText;
@@ -784,7 +869,6 @@
             copyText(totalText, btnElement); 
         }
 
-        /* Token Creator Live Preview */
         function updatePreview() {
             const name = document.getElementById('token-name').value || 'Wire Coin';
             const symbol = document.getElementById('token-symbol').value || 'WIRE';
@@ -854,7 +938,7 @@
             }, 3500); 
         }
 
-        /* App Purchase Flow */
+        /* --- App & Token Payment Flow --- */
         function showAppPayment() {
             document.getElementById('app-step-initial').classList.add('hidden');
             document.getElementById('app-step-payment').classList.remove('hidden');
@@ -890,7 +974,6 @@
             }, 30000); 
         }
 
-        /* Token Creator Flow */
         function showTokenPayment() {
             document.getElementById('token-step-initial').classList.add('hidden');
             document.getElementById('token-step-payment').classList.remove('hidden');
@@ -933,6 +1016,7 @@
             updatePreview();
             setTimeout(() => {
                 document.querySelectorAll('.hero.reveal, .hero .reveal').forEach(el => el.classList.add('active'));
+                
                 // Start FOMO toasts after 3 seconds
                 setTimeout(triggerFOMOToast, 3000);
             }, 100);
