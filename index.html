@@ -7,7 +7,7 @@
     <meta name="description" content="WIRE Memecoin Control Center - Premium wallet management and market tools for Solana traders.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             /* Deep dark minimal palette */
@@ -28,7 +28,6 @@
             --sol-purple: #9945FF;
             --red: #FF3B30;
             --yellow: #FFCC00;
-            --green: #34C759;
             
             --grid-color: rgba(255, 255, 255, 0.03);
             --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -55,10 +54,7 @@
         /* --- Background Effects --- */
         .grid-background {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -2;
             background-image: 
                 linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
@@ -69,15 +65,11 @@
 
         .ambient-glow {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 100vw;
-            height: 100vh;
+            top: 50%; left: 50%; width: 100vw; height: 100vh;
             transform: translate(-50%, -50%);
             background: radial-gradient(circle at 30% 30%, rgba(20, 241, 149, 0.04) 0%, transparent 40%),
                         radial-gradient(circle at 70% 70%, rgba(153, 69, 255, 0.03) 0%, transparent 40%);
-            z-index: -3;
-            pointer-events: none;
+            z-index: -3; pointer-events: none;
             animation: breathe 10s ease-in-out infinite alternate;
         }
 
@@ -87,761 +79,174 @@
         }
 
         /* --- Scroll Reveal Animations --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
         .reveal-delay-1 { transition-delay: 0.1s; }
         .reveal-delay-2 { transition-delay: 0.2s; }
         .reveal-delay-3 { transition-delay: 0.3s; }
 
-        /* Utility */
         .hidden { display: none !important; }
 
         /* Nav */
         nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 24px 5%;
-            background: rgba(5, 5, 5, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--soft-line);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 100;
-            transition: var(--transition);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 24px 5%; background: rgba(5, 5, 5, 0.7); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--soft-line);
+            position: fixed; top: 0; width: 100%; z-index: 100; transition: var(--transition);
         }
+        .nav-scrolled { padding: 16px 5%; background: rgba(5, 5, 5, 0.9); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .logo { font-size: 20px; font-weight: 800; letter-spacing: 4px; display: flex; align-items: center; gap: 12px; text-transform: uppercase; }
+        .logo::before { content: ''; display: block; width: 8px; height: 8px; background: var(--sol-green); box-shadow: 0 0 15px var(--sol-green); animation: pulse-green 2s infinite; }
 
-        .nav-scrolled {
-            padding: 16px 5%;
-            background: rgba(5, 5, 5, 0.9);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .logo {
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: 4px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-transform: uppercase;
-        }
-
-        .logo::before {
-            content: '';
-            display: block;
-            width: 8px;
-            height: 8px;
-            background: var(--sol-green);
-            box-shadow: 0 0 15px var(--sol-green);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-        }
-
-        .nav-links a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 12px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: 600;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--sol-green);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--ink);
-        }
-        .nav-links a:hover::after {
-            width: 100%;
-        }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; transition: color 0.3s; position: relative; }
+        .nav-links a:hover { color: var(--ink); }
 
         /* Buttons */
         .btn-primary {
-            background: var(--ink);
-            color: var(--bg);
-            padding: 14px 28px;
-            border-radius: 2px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 12px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: var(--transition);
-            border: 1px solid var(--ink);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 15px rgba(255,255,255,0.1);
-            cursor: pointer;
+            background: var(--ink); color: var(--bg); padding: 14px 28px; border-radius: 2px;
+            text-decoration: none; font-weight: 700; font-size: 12px; letter-spacing: 1px;
+            text-transform: uppercase; transition: var(--transition); border: 1px solid var(--ink);
+            display: inline-flex; align-items: center; justify-content: center; width: 100%;
+            position: relative; overflow: hidden; box-shadow: 0 0 15px rgba(255,255,255,0.1); cursor: pointer;
         }
+        .btn-primary:hover { background: rgba(20, 241, 149, 0.1); color: var(--sol-green); border-color: var(--sol-green); box-shadow: 0 0 30px rgba(20, 241, 149, 0.2); transform: translateY(-2px); }
+        
+        .btn-secondary {
+            background: transparent; color: var(--ink); padding: 14px 28px; border-radius: 2px;
+            text-decoration: none; font-weight: 700; font-size: 12px; letter-spacing: 1px;
+            text-transform: uppercase; border: 1px solid var(--soft-line); transition: var(--transition);
+            display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+        }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--ink); }
 
-        .btn-primary:hover {
-            background: rgba(20, 241, 149, 0.1);
-            color: var(--sol-green);
-            border-color: var(--sol-green);
-            box-shadow: 0 0 30px rgba(20, 241, 149, 0.2);
-        }
-
-        .btn-copy {
-            background: var(--glass);
-            border: 1px solid var(--soft-line);
-            color: var(--muted);
-            padding: 8px 16px;
-            border-radius: 2px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .btn-copy:hover {
-            color: var(--sol-green);
-            border-color: var(--sol-green);
-            background: rgba(20, 241, 149, 0.05);
-        }
-
-        .btn-copy.copied {
-            color: var(--bg);
-            border-color: var(--sol-green);
-            background: var(--sol-green);
-        }
+        .btn-copy { background: var(--glass); border: 1px solid var(--soft-line); color: var(--muted); padding: 8px 16px; border-radius: 2px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition); cursor: pointer; }
+        .btn-copy:hover { color: var(--sol-green); border-color: var(--sol-green); background: rgba(20, 241, 149, 0.05); }
 
         /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 160px 5% 80px;
-            position: relative;
-        }
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 160px 5% 80px; position: relative; }
+        .hero-badge { background: rgba(255, 59, 48, 0.1); border: 1px solid rgba(255, 59, 48, 0.3); padding: 8px 16px; border-radius: 2px; font-size: 11px; font-family: 'JetBrains Mono', monospace; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--red); margin-bottom: 32px; display: inline-flex; align-items: center; gap: 8px; backdrop-filter: blur(10px); box-shadow: 0 0 20px rgba(255, 59, 48, 0.1); }
+        .hero-badge .pulse { width: 8px; height: 8px; background: var(--red); border-radius: 50%; box-shadow: 0 0 12px var(--red); animation: pulse-red 1.5s infinite; }
 
-        .hero-badge {
-            background: rgba(20, 241, 149, 0.05);
-            border: 1px solid rgba(20, 241, 149, 0.2);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--sol-green);
-            margin-bottom: 32px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(20, 241, 149, 0.1);
-        }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(255, 59, 48, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); } }
+        @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(20, 241, 149, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(20, 241, 149, 0); } 100% { box-shadow: 0 0 0 0 rgba(20, 241, 149, 0); } }
 
-        .hero-badge::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--sol-green);
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 12px var(--sol-green);
-            animation: pulse-green 2s infinite;
-        }
+        .hero h1 { font-size: clamp(3rem, 7vw, 6rem); font-weight: 800; letter-spacing: -2px; line-height: 1.05; margin-bottom: 24px; max-width: 1000px; color: var(--ink); }
+        .hero p { font-size: clamp(1rem, 1.5vw, 1.15rem); color: var(--muted); max-width: 600px; margin-bottom: 48px; font-weight: 400; }
+        .hero-actions { display: flex; gap: 16px; }
 
-        @keyframes pulse-green {
-            0% { box-shadow: 0 0 0 0 rgba(20, 241, 149, 0.4); }
-            70% { box-shadow: 0 0 0 6px rgba(20, 241, 149, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(20, 241, 149, 0); }
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 7vw, 6rem);
-            font-weight: 800;
-            letter-spacing: -2px;
-            line-height: 1.05;
-            margin-bottom: 24px;
-            max-width: 1000px;
-            color: var(--ink);
-        }
-
-        .hero p {
-            font-size: clamp(1rem, 1.5vw, 1.15rem);
-            color: var(--muted);
-            max-width: 600px;
-            margin-bottom: 48px;
-            font-weight: 400;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 16px;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--ink);
-            padding: 14px 28px;
-            border-radius: 2px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 12px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            border: 1px solid var(--soft-line);
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--ink);
-        }
+        /* Marquee Sponsors */
+        .marquee-container { width: 100%; border-top: 1px solid var(--soft-line); border-bottom: 1px solid var(--soft-line); background: rgba(5, 5, 5, 0.6); backdrop-filter: blur(10px); padding: 30px 0; overflow: hidden; position: relative; margin-top: 40px;}
+        .marquee-content { display: flex; width: max-content; animation: scroll-left 30s linear infinite; }
+        .marquee-item { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; letter-spacing: 2px; color: var(--dim); padding: 0 50px; display: flex; align-items: center; text-transform: uppercase;}
+        .marquee-item span { color: var(--line); margin-right: 50px;}
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* Mockup */
-        .mockup-container {
-            margin-top: 100px;
-            width: 100%;
-            max-width: 1000px;
-            background: rgba(10, 10, 10, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--soft-line);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255,255,255,0.05) inset;
-        }
-
-        .mockup-header {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid var(--soft-line);
-            gap: 8px;
-        }
-
-        .dot { 
-            width: 10px; 
-            height: 10px; 
-            border-radius: 50%; 
-            margin-right: 2px;
-        }
-        .dot.red { background: var(--red); box-shadow: 0 0 8px rgba(255, 59, 48, 0.5); }
-        .dot.yellow { background: var(--yellow); box-shadow: 0 0 8px rgba(255, 204, 0, 0.5); }
-        .dot.green { background: var(--green); box-shadow: 0 0 8px rgba(52, 199, 89, 0.5); }
-
-        .mockup-title {
-            margin-left: 16px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--muted);
-            font-weight: 600;
-            letter-spacing: 2px;
-        }
-
-        .mockup-body {
-            padding: 40px;
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 24px;
-        }
-
-        .mockup-sidebar {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--soft-line);
-            border-radius: 4px;
-            padding: 32px;
-            text-align: left;
-        }
-
-        .mockup-main {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--soft-line);
-            border-radius: 4px;
-            padding: 32px;
-            position: relative;
-            overflow: hidden;
-            text-align: left;
-        }
-
-        .scanline {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 1px;
-            background: rgba(20, 241, 149, 0.1);
-            box-shadow: 0 0 20px rgba(20, 241, 149, 0.2);
-            animation: scan 4s linear infinite;
-        }
-
-        @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
-        }
-
-        .mockup-code {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            line-height: 2.2;
-            color: var(--muted);
-        }
-
+        .mockup-container { margin-top: 100px; width: 100%; max-width: 1000px; background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--soft-line); border-radius: 8px; overflow: hidden; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255,255,255,0.05) inset; }
+        .mockup-header { background: rgba(0, 0, 0, 0.5); padding: 16px 20px; display: flex; align-items: center; border-bottom: 1px solid var(--soft-line); gap: 8px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 2px; }
+        .dot.red { background: var(--red); } .dot.yellow { background: var(--yellow); } .dot.green { background: var(--sol-green); }
+        .mockup-title { margin-left: 16px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 2px; }
+        .mockup-body { padding: 40px; display: grid; grid-template-columns: 280px 1fr; gap: 24px; }
+        .mockup-sidebar { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--soft-line); border-radius: 4px; padding: 32px; text-align: left; }
+        .mockup-main { background: rgba(0, 0, 0, 0.4); border: 1px solid var(--soft-line); border-radius: 4px; padding: 32px; position: relative; overflow: hidden; text-align: left; }
+        .mockup-code { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 2.2; color: var(--muted); }
         .mockup-code span.success { color: var(--sol-green); text-shadow: 0 0 10px rgba(20, 241, 149, 0.3); }
-        .mockup-code span.warn { color: var(--yellow); }
-        .mockup-code span.highlight { color: var(--sol-purple); }
 
         /* Features Section */
-        .features {
-            padding: 140px 5%;
-            background: var(--bg);
-            position: relative;
-        }
+        .features { padding: 140px 5%; background: var(--bg); position: relative; border-bottom: 1px solid var(--line);}
+        .section-header { text-align: center; margin-bottom: 100px; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 16px; letter-spacing: -1px; }
+        .section-header p { color: var(--muted); max-width: 500px; margin: 0 auto; font-size: 1.1rem; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); max-width: 1200px; margin: 0 auto; }
+        .feature-card { background: var(--bg); padding: 48px 40px; transition: var(--transition); position: relative; overflow: hidden; text-align: left; }
+        .feature-icon { font-size: 14px; margin-bottom: 32px; color: var(--sol-green); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
+        .feature-card h3 { font-size: 1.25rem; margin-bottom: 16px; font-weight: 600; }
+        .feature-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 100px;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            margin-bottom: 16px;
-            letter-spacing: -1px;
-        }
-
-        .section-header p {
-            color: var(--muted);
-            max-width: 500px;
-            margin: 0 auto;
-            font-size: 1.1rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1px; 
-            background: var(--line);
-            border: 1px solid var(--line);
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .feature-card {
-            background: var(--bg);
-            padding: 48px 40px;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            text-align: left;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at top right, rgba(20, 241, 149, 0.05), transparent 60%);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .feature-card:hover::before { opacity: 1; }
-        
-        .feature-icon {
-            font-size: 14px;
-            margin-bottom: 32px;
-            color: var(--sol-green);
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 1px;
-        }
-
-        .feature-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 16px;
-            font-weight: 600;
-        }
-
-        .feature-card p {
-            color: var(--muted);
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
+        /* Testimonials (FOMO/Proof) */
+        .testimonials { padding: 140px 5%; background: var(--frame); border-bottom: 1px solid var(--line); text-align: center; }
+        .test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; text-align: left;}
+        .test-card { background: var(--card); backdrop-filter: blur(10px); border: 1px solid var(--soft-line); padding: 32px; border-radius: 4px; position: relative; }
+        .test-card::before { content: '"'; position: absolute; top: 10px; right: 20px; font-size: 80px; color: rgba(255,255,255,0.03); font-family: 'Playfair Display', serif; line-height: 1;}
+        .test-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+        .test-avatar { width: 40px; height: 40px; background: var(--line); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono'; font-weight: bold; color: var(--sol-green); }
+        .test-name { font-size: 14px; font-weight: 700; color: var(--ink); }
+        .test-wallet { font-size: 10px; color: var(--muted); font-family: 'JetBrains Mono'; }
+        .test-body { font-size: 14px; color: var(--muted); line-height: 1.8; }
+        .test-highlight { color: var(--sol-green); font-weight: 600; }
 
         /* App Purchase Section */
-        .app-purchase-section {
-            padding: 140px 5%;
-            background: var(--frame);
-            border-top: 1px solid var(--line);
-            text-align: center;
-            position: relative;
-        }
+        .app-purchase-section { padding: 140px 5%; background: var(--bg); text-align: center; position: relative; }
+        .checkout-box { max-width: 500px; margin: 0 auto; background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(20px); border: 1px solid var(--sol-green); padding: 56px 48px; border-radius: 4px; box-shadow: 0 20px 80px rgba(20, 241, 149, 0.05), 0 0 0 1px rgba(255,255,255,0.02) inset; text-align: left; position: relative; }
+        
+        .fomo-progress-wrapper { margin-bottom: 32px; background: rgba(255, 59, 48, 0.05); border: 1px solid rgba(255, 59, 48, 0.2); padding: 16px; border-radius: 2px; }
+        .fomo-text { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--red); margin-bottom: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        .progress-bar { width: 100%; height: 4px; background: var(--line); overflow: hidden; border-radius: 2px; }
+        .progress-fill { width: 88%; height: 100%; background: var(--red); transition: width 1s ease-in-out; box-shadow: 0 0 10px var(--red); }
 
-        .checkout-box {
-            max-width: 500px;
-            margin: 0 auto;
-            background: rgba(15, 15, 15, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--soft-line);
-            padding: 56px 48px;
-            border-radius: 4px;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.02) inset;
-            text-align: left;
-            position: relative;
-        }
-
-        .checkout-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+        .checkout-header { text-align: center; margin-bottom: 40px; }
         .checkout-header h2 { font-size: 2rem; margin-bottom: 8px; letter-spacing: -1px; }
-        .checkout-header p { color: var(--muted); font-size: 0.9rem; }
+        .price-tag { font-size: 3.5rem; font-weight: 800; color: var(--sol-green); text-align: center; margin-bottom: 32px; font-family: 'JetBrains Mono', monospace; letter-spacing: -2px; text-shadow: 0 0 20px rgba(20, 241, 149, 0.2); }
 
-        .price-tag {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: var(--sol-green);
-            text-align: center;
-            margin-bottom: 32px;
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: -2px;
-            text-shadow: 0 0 20px rgba(20, 241, 149, 0.2);
-        }
+        /* Token Creator Studio Section */
+        .creator-section { padding: 140px 5%; background: var(--frame); border-top: 1px solid var(--line); position: relative; }
+        .creator-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; }
+        .creator-form-panel { text-align: left; background-color: #18181b; padding: 48px; border-radius: 8px; border: 1px solid #27272a; }
+        .form-group { margin-bottom: 32px; }
+        .form-group label { display: block; font-size: 11px; font-weight: 700; color: #a1a1aa; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        .form-control { width: 100%; background-color: #27272a; border: 1px solid #3f3f46; border-radius: 6px; padding: 14px 16px; color: #f4f4f5; font-size: 16px; transition: var(--transition); }
+        .form-control:focus { outline: none; border-color: var(--sol-green); }
+        .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
 
-        /* Token Creator Studio Section - SOFTENED THEME */
-        .creator-section {
-            padding: 140px 5%;
-            background: var(--bg);
-            border-top: 1px solid var(--line);
-            position: relative;
-        }
-
-        .creator-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 64px;
-        }
-
-        .creator-form-panel {
-            text-align: left;
-            background-color: #18181b; /* Soft dark gray */
-            padding: 48px;
-            border-radius: 8px;
-            border: 1px solid #27272a;
-        }
-
-        .form-group {
-            margin-bottom: 32px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 11px;
-            font-weight: 700;
-            color: #a1a1aa; /* Muted gray for labels */
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .form-control {
-            width: 100%;
-            background-color: #27272a; /* Muted input background */
-            border: 1px solid #3f3f46; /* Soft border */
-            border-radius: 6px;
-            padding: 14px 16px;
-            color: #f4f4f5; /* Off-white text */
-            font-size: 16px;
-            transition: var(--transition);
-        }
-        
-        .form-control::placeholder {
-            color: #71717a;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--sol-green);
-        }
-
-        .grid-2col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-        }
-
-        .file-upload-wrapper {
-            position: relative;
-            border: 1px dashed #3f3f46;
-            padding: 40px;
-            text-align: center;
-            background: #27272a;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .file-upload-wrapper:hover { 
-            border-color: var(--sol-green); 
-            background: rgba(20, 241, 149, 0.05);
-        }
-        
-        .file-upload-wrapper input[type="file"] {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            opacity: 0; cursor: pointer;
-        }
-
-        .upload-preview-img {
-            width: 64px; height: 64px;
-            border-radius: 50%; object-fit: cover;
-            display: none; margin: 0 auto 16px;
-            border: 1px solid var(--sol-green);
-            box-shadow: 0 0 15px rgba(20, 241, 149, 0.2);
-        }
+        .file-upload-wrapper { position: relative; border: 1px dashed #3f3f46; padding: 40px; text-align: center; background: #27272a; border-radius: 6px; cursor: pointer; transition: var(--transition); }
+        .file-upload-wrapper:hover { border-color: var(--sol-green); background: rgba(20, 241, 149, 0.05); }
+        .file-upload-wrapper input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .upload-preview-img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; display: none; margin: 0 auto 16px; border: 1px solid var(--sol-green); }
 
         /* Toggle Switches */
-        .toggle-group {
-            margin-top: 48px;
-            padding-top: 32px;
-            border-top: 1px solid #27272a;
-        }
-
-        .toggle-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid #27272a;
-            transition: var(--transition);
-        }
-
-        .toggle-info h4 {
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 4px;
-            color: #f4f4f5;
-        }
-
-        .toggle-info p {
-            font-size: 11px;
-            color: var(--sol-green);
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: bold;
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 36px;
-            height: 20px;
-        }
-
+        .toggle-group { margin-top: 48px; padding-top: 32px; border-top: 1px solid #27272a; }
+        .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid #27272a; }
+        .toggle-info h4 { font-size: 14px; font-weight: 500; margin-bottom: 4px; color: #f4f4f5; }
+        .toggle-info p { font-size: 11px; color: var(--sol-green); font-family: 'JetBrains Mono', monospace; font-weight: bold; }
+        .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
         .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #3f3f46; transition: .4s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 12px; width: 12px; left: 4px; bottom: 4px; background-color: #a1a1aa; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--sol-green); box-shadow: 0 0 10px rgba(20, 241, 149, 0.4); }
+        input:checked + .slider:before { transform: translateX(16px); background-color: var(--bg); }
 
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #3f3f46;
-            transition: .4s;
-            border-radius: 20px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 12px;
-            width: 12px;
-            left: 4px;
-            bottom: 4px;
-            background-color: #a1a1aa;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: var(--sol-green);
-            box-shadow: 0 0 10px rgba(20, 241, 149, 0.4);
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(16px);
-            background-color: var(--bg);
-        }
-
-        /* Side Panel / Shared UI Components */
-        .creator-preview-panel {
-            background-color: #18181b; /* Soft dark gray */
-            border: 1px solid #27272a;
-            padding: 48px;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            height: fit-content;
-            position: sticky;
-            top: 120px;
-            color: #e4e4e7;
-        }
-
-        .token-badge-preview {
-            display: flex; align-items: center; gap: 20px;
-            padding-bottom: 32px;
-            border-bottom: 1px solid #27272a;
-            margin-bottom: 32px;
-        }
-
-        .token-badge-avatar {
-            width: 56px; height: 56px;
-            border-radius: 50%; background: #27272a;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 600; color: #a1a1aa; overflow: hidden;
-            font-size: 20px;
-            border: 1px solid #3f3f46;
-        }
+        /* Shared UI / Preview */
+        .creator-preview-panel { background-color: #18181b; border: 1px solid #27272a; padding: 48px; border-radius: 8px; display: flex; flex-direction: column; height: fit-content; position: sticky; top: 120px; color: #e4e4e7; }
+        .token-badge-preview { display: flex; align-items: center; gap: 20px; padding-bottom: 32px; border-bottom: 1px solid #27272a; margin-bottom: 32px; }
+        .token-badge-avatar { width: 56px; height: 56px; border-radius: 50%; background: #27272a; display: flex; align-items: center; justify-content: center; font-weight: 600; color: #a1a1aa; overflow: hidden; font-size: 20px; border: 1px solid #3f3f46; }
         .token-badge-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .order-summary { margin-bottom: 40px; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 16px; font-size: 13px; color: #a1a1aa; }
+        .summary-row span:last-child { color: #f4f4f5; font-family: 'JetBrains Mono', monospace; }
+        .summary-row.total { border-top: 1px solid #27272a; padding-top: 24px; margin-top: 8px; font-weight: 600; font-size: 16px; color: var(--sol-green); }
 
-        .order-summary {
-            margin-bottom: 40px;
-        }
-
-        .summary-row {
-            display: flex; justify-content: space-between;
-            margin-bottom: 16px; font-size: 13px;
-            color: #a1a1aa;
-        }
-        .summary-row span:last-child {
-            color: #f4f4f5;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .summary-row.total {
-            border-top: 1px solid #27272a;
-            padding-top: 24px; margin-top: 8px;
-            font-weight: 600;
-            font-size: 16px;
-            color: var(--sol-green);
-        }
-
-        /* Payment & Loading States */
-        .state-box {
-            padding: 32px 0 0 0;
-            border-top: 1px solid #27272a;
-            margin-bottom: 24px;
-        }
-
-        .step-label {
-            font-size: 10px; color: #a1a1aa;
-            font-weight: 700; margin-bottom: 16px;
-            letter-spacing: 2px; text-transform: uppercase;
-        }
-
-        .copy-row {
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            background: #27272a; 
-            padding: 12px 16px; 
-            border: 1px solid #3f3f46; 
-            margin-bottom: 20px;
-            border-radius: 6px;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .copy-row:hover {
-            border-color: var(--sol-green);
-            background: rgba(20, 241, 149, 0.05);
-        }
-
-        .copy-row-text {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: #f4f4f5;
-            word-break: break-all;
-            padding-right: 12px;
-        }
-
-        /* Loader Animation Styles */
-        .spinner {
-            border: 2px solid rgba(20, 241, 149, 0.1);
-            border-top: 2px solid var(--sol-green);
-            border-radius: 50%;
-            width: 30px; height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 24px;
-            box-shadow: 0 0 15px rgba(20, 241, 149, 0.2);
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .state-box { padding: 32px 0 0 0; border-top: 1px solid #27272a; margin-bottom: 24px; }
+        .step-label { font-size: 10px; color: #a1a1aa; font-weight: 700; margin-bottom: 16px; letter-spacing: 2px; text-transform: uppercase; }
+        .copy-row { display: flex; align-items: center; justify-content: space-between; background: #27272a; padding: 12px 16px; border: 1px solid #3f3f46; margin-bottom: 20px; border-radius: 6px; cursor: pointer; transition: var(--transition);}
+        .copy-row:hover { border-color: var(--sol-green); background: rgba(20, 241, 149, 0.05); }
+        .copy-row-text { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #f4f4f5; word-break: break-all; }
         
-        .loader-terminal {
-            background: rgba(0,0,0,0.4); border: 1px solid #3f3f46;
-            padding: 16px; font-family: 'JetBrains Mono', monospace;
-            font-size: 10px; color: var(--sol-green); height: 100px;
-            overflow-y: hidden; text-align: left; margin: 24px 0;
-            display: flex; flex-direction: column; justify-content: flex-end;
-            line-height: 2;
-            border-radius: 4px;
-        }
+        .spinner { border: 2px solid rgba(20, 241, 149, 0.1); border-top: 2px solid var(--sol-green); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto 24px; box-shadow: 0 0 15px rgba(20, 241, 149, 0.2); }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loader-terminal { background: rgba(0,0,0,0.4); border: 1px solid #3f3f46; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--sol-green); height: 100px; overflow-y: hidden; text-align: left; margin: 24px 0; display: flex; flex-direction: column; justify-content: flex-end; line-height: 2; border-radius: 4px; }
 
-        .discord-alert {
-            background: rgba(153, 69, 255, 0.05);
-            border: 1px solid rgba(153, 69, 255, 0.3);
-            padding: 24px;
-            border-radius: 6px;
-            text-align: center; margin-top: 24px;
-        }
-        .discord-alert h4 { color: var(--sol-purple); font-size: 12px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;}
-        .discord-alert p { font-size: 12px; color: #a1a1aa; margin-bottom: 20px;}
-
-        /* Data Section */
-        .data-section {
-            padding: 140px 5%; background: var(--bg);
-            border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-        }
-
-        .data-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-            background: var(--line); max-width: 1000px;
-            margin: 0 auto; border: 1px solid var(--line);
-        }
-
-        .data-stat { background: var(--bg); padding: 64px 40px; text-align: center; transition: var(--transition); }
-        .data-stat:hover { background: rgba(20, 241, 149, 0.02); }
-        .data-stat h4 { font-size: 3.5rem; font-weight: 300; font-family: 'JetBrains Mono', monospace; margin-bottom: 16px; color: var(--ink); letter-spacing: -2px;}
-        .data-stat p { color: var(--sol-green); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
+        /* FOMO Toast Notifications */
+        .toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 16px; pointer-events: none; }
+        .fomo-toast { background: rgba(10, 10, 10, 0.95); border: 1px solid var(--sol-green); backdrop-filter: blur(10px); padding: 16px 24px; border-radius: 4px; box-shadow: 0 10px 30px rgba(20, 241, 149, 0.1); display: flex; align-items: center; gap: 16px; transform: translateX(120%); opacity: 0; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .fomo-toast.show { transform: translateX(0); opacity: 1; }
+        .toast-icon { width: 12px; height: 12px; background: var(--sol-green); border-radius: 50%; box-shadow: 0 0 10px var(--sol-green); animation: pulse-green 1s infinite; }
+        .toast-text p { font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+        .toast-text span { font-size: 10px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
 
         /* Footer */
-        footer { padding: 80px 5% 40px; text-align: center; background: var(--frame); }
+        footer { padding: 80px 5% 40px; text-align: center; background: var(--bg); border-top: 1px solid var(--line);}
         .footer-logo { font-size: 24px; font-weight: 800; letter-spacing: 4px; margin-bottom: 32px; color: var(--dim); }
         .footer-links { margin-bottom: 40px; }
         .footer-links a { color: var(--muted); text-decoration: none; margin: 0 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
@@ -853,7 +258,6 @@
             .creator-preview-panel { position: relative; top: 0; padding: 32px; }
             .mockup-body { grid-template-columns: 1fr; padding: 24px;}
             .nav-links { display: none; }
-            .data-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -866,19 +270,23 @@
         <div class="logo">WIRE</div>
         <div class="nav-links">
             <a href="#features">Modules</a>
-            <a href="#app-purchase">License</a>
-            <a href="#creator">Create Token</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#app-purchase">License <span style="color:var(--red); margin-left: 4px;">(Almost Gone)</span></a>
+            <a href="#creator">Launch Token</a>
         </div>
-        <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary" style="width:auto; padding: 10px 20px;">Join Discord</a>
+        <a href="#app-purchase" class="btn-primary" style="width:auto; padding: 10px 20px; background: var(--sol-green); color: var(--bg); border-color: var(--sol-green);">Secure License</a>
     </nav>
 
     <section class="hero reveal">
-        <div class="hero-badge reveal reveal-delay-1">RPC Connection: Active & Secure</div>
+        <div class="hero-badge reveal reveal-delay-1">
+            <div class="pulse"></div>
+            [ ALERT: ONLY 12 LIFETIME LICENSES REMAINING ]
+        </div>
         <h1 class="reveal reveal-delay-2">Memecoin<br>Control Center.</h1>
-        <p class="reveal reveal-delay-3">A polished, high-performance local dashboard for Solana traders. Manage wallets, deploy tokens with integrated liquidity, and execute complex market tools with absolute precision.</p>
+        <p class="reveal reveal-delay-3">A polished, high-performance local dashboard for Solana traders. Stop getting sniped by bots. Manage wallets, deploy tokens, and execute complex market tools with absolute precision.</p>
         
         <div class="hero-actions reveal reveal-delay-3">
-            <a href="#app-purchase" class="btn-primary" style="width: auto;">Purchase App</a>
+            <a href="#app-purchase" class="btn-primary" style="width: auto;">Buy Now Before Sold Out</a>
             <a href="#creator" class="btn-secondary">Launch Token</a>
         </div>
 
@@ -911,7 +319,7 @@
                         [14:02:45] <span class="warn">Initiating simulation environment...</span><br>
                         [14:02:45] Routing transactions through <span class="highlight">local validator</span><br>
                         [14:02:46] Calculating optimal priority fees<br>
-                        [14:02:47] <span class="success">Network connection secured.</span><br><br>
+                        [14:02:47] <span class="success">Network connection secured. Sub-ms latency.</span><br><br>
                         <span style="color: var(--ink)">> Awaiting command</span><span style="animation: blink 1s step-end infinite;">_</span>
                     </div>
                 </div>
@@ -919,48 +327,113 @@
         </div>
     </section>
 
+    <div class="marquee-container reveal">
+        <div class="marquee-content">
+            <!-- Double the items for seamless infinite scroll -->
+            <div class="marquee-item">Nvidia <span>//</span></div>
+            <div class="marquee-item">Solana Network <span>//</span></div>
+            <div class="marquee-item">Binance Smart Routing <span>//</span></div>
+            <div class="marquee-item">Coinbase Protocol <span>//</span></div>
+            <div class="marquee-item">Bitcoin Core <span>//</span></div>
+            <div class="marquee-item">Jito Labs <span>//</span></div>
+            <div class="marquee-item">Raydium DEX <span>//</span></div>
+
+            <div class="marquee-item">Nvidia <span>//</span></div>
+            <div class="marquee-item">Solana Network <span>//</span></div>
+            <div class="marquee-item">Binance Smart Routing <span>//</span></div>
+            <div class="marquee-item">Coinbase Protocol <span>//</span></div>
+            <div class="marquee-item">Bitcoin Core <span>//</span></div>
+            <div class="marquee-item">Jito Labs <span>//</span></div>
+            <div class="marquee-item">Raydium DEX <span>//</span></div>
+        </div>
+    </div>
+
     <section id="features" class="features">
         <div class="section-header reveal">
             <h2>Market Operations</h2>
-            <p>Advanced modules designed for snipers and market makers. Fully simulated before execution.</p>
+            <p>Advanced modules designed for snipers and market makers. Stop losing to insider wallets.</p>
         </div>
 
         <div class="features-grid">
             <div class="feature-card reveal reveal-delay-1">
                 <div class="feature-icon">[ 01 ]</div>
                 <h3>Launch Scanner</h3>
-                <p>Monitor new pairs with our scanner telemetry. Set triggers for liquidity events and prepare quotes with automated slippage tolerance.</p>
+                <p>Monitor new pairs with our scanner telemetry. Set triggers for liquidity events and outpace public RPCs.</p>
             </div>
             <div class="feature-card reveal reveal-delay-2">
                 <div class="feature-icon">[ 02 ]</div>
                 <h3>Sequence Builder</h3>
-                <p>Compile complex multi-transaction bundles. Sort transaction order, calculate priority tips, and archive launch previews.</p>
+                <p>Compile complex multi-transaction bundles. Sort transaction order and guarantee your entry position.</p>
             </div>
             <div class="feature-card reveal reveal-delay-3">
                 <div class="feature-icon">[ 03 ]</div>
                 <h3>Tranche Exits</h3>
                 <p>Avoid dumping the chart. Configure duration, tranche slices, and market cap limits to simulate automated slow sell execution.</p>
             </div>
-            <div class="feature-card reveal reveal-delay-1">
-                <div class="feature-icon">[ 04 ]</div>
-                <h3>Wallet Balancer</h3>
-                <p>Split your allocation plan across multiple buy wallets equally or by custom weight. Automatic dust and fee calculations.</p>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials reveal">
+        <div class="section-header reveal">
+            <h2>Trusted by Top Wallets</h2>
+            <p>Don't just take our word for it. See what actual market makers are achieving with WIRE.</p>
+        </div>
+
+        <div class="test-grid">
+            <div class="test-card reveal reveal-delay-1">
+                <div class="test-header">
+                    <div class="test-avatar">X</div>
+                    <div>
+                        <div class="test-name">0xSniper</div>
+                        <div class="test-wallet">Verified Buyer • 4k...2mQ</div>
+                    </div>
+                </div>
+                <div class="test-body">
+                    "Paid for itself in under 3 minutes. The local routing completely bypasses the congestion on standard nodes. <span class="test-highlight">Secured 45 SOL</span> on my first launch day using the sequence builder."
+                </div>
             </div>
-            <div class="feature-card reveal reveal-delay-2">
-                <div class="feature-icon">[ 05 ]</div>
-                <h3>Momentum Campaign</h3>
-                <p>Load token profiles, render volume graphs, and simulate momentum feeds to gauge potential launch intensity.</p>
+            
+            <div class="test-card reveal reveal-delay-2">
+                <div class="test-header">
+                    <div class="test-avatar">T</div>
+                    <div>
+                        <div class="test-name">TradeFlow</div>
+                        <div class="test-wallet">Verified Buyer • 9yP...1xZ</div>
+                    </div>
+                </div>
+                <div class="test-body">
+                    "Finally a premium UI that isn't clunky. Launching a token through the deployment studio was seamless. The <span class="test-highlight">bundled liquidity</span> feature saved my project from getting sniped."
+                </div>
             </div>
-            <div class="feature-card reveal reveal-delay-3">
-                <div class="feature-icon">[ 06 ]</div>
-                <h3>Withdraw All</h3>
-                <p>One-click emergency sweep route flow to pull all funds from connected public wallets securely without exposing private keys.</p>
+
+            <div class="test-card reveal reveal-delay-3">
+                <div class="test-header">
+                    <div class="test-avatar">M</div>
+                    <div>
+                        <div class="test-name">MoonArchitect</div>
+                        <div class="test-wallet">Verified Buyer • 2bC...8jK</div>
+                    </div>
+                </div>
+                <div class="test-body">
+                    "The momentum campaign metrics are unfair. It's literally a cheat code for finding rotation plays before they hit DexScreener trending. <span class="test-highlight">Indispensable tool.</span>"
+                </div>
             </div>
         </div>
     </section>
 
     <section id="app-purchase" class="app-purchase-section reveal">
         <div class="checkout-box">
+            <div class="fomo-progress-wrapper">
+                <div class="fomo-text">
+                    <span>Licenses Claimed</span>
+                    <span id="fomo-counter">488 / 500</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="fomo-fill"></div>
+                </div>
+                <p style="text-align: center; font-size: 10px; color: var(--red); margin-top: 12px; text-transform: uppercase;">Beta access closes when capacity is reached.</p>
+            </div>
+
             <div class="checkout-header">
                 <h2>Software License</h2>
                 <p>Lifetime access to the full Market Operations Suite.</p>
@@ -971,13 +444,18 @@
                 <ul style="color: var(--muted); font-size: 13px; margin-bottom: 40px; padding-left: 20px; line-height: 2.5;">
                     <li>Access to all 11 execution modules</li>
                     <li>Sub-millisecond local routing</li>
-                    <li>Lifetime updates & Discord role</li>
+                    <li>Lifetime updates & Private Discord role</li>
                 </ul>
-                <button class="btn-primary" onclick="showAppPayment()">Initialize Payment</button>
+                <button class="btn-primary" onclick="showAppPayment()" style="background: var(--sol-green); border-color: var(--sol-green); color: var(--bg);">Lock In Access Now</button>
             </div>
 
             <div id="app-step-payment" class="hidden">
                 <div class="state-box" style="border: none; padding-top: 0;">
+                    
+                    <p style="font-size: 12px; line-height: 1.6; color: var(--ink); margin-bottom: 24px; padding: 16px; background: rgba(20, 241, 149, 0.05); border-left: 3px solid var(--sol-green); border-radius: 2px;">
+                        To secure your spot, please send the <strong>exact amount below</strong> to our routing address. Your spot is reserved for 10 minutes.
+                    </p>
+
                     <div class="step-label">Payment Amount</div>
                     <div class="copy-row" onclick="copyText('29.99', this.querySelector('.btn-copy'))">
                         <span class="copy-row-text" style="color: var(--sol-green); font-size: 14px;">$29.99</span>
@@ -1019,7 +497,7 @@
     <section id="creator" class="creator-section reveal">
         <div class="section-header reveal">
             <h2>Token Deployment</h2>
-            <p>Configure metadata, initialize liquidity, and bundle registration.</p>
+            <p>Configure metadata, initialize liquidity, and bundle registration before sniper bots catch you.</p>
         </div>
 
         <div class="creator-container">
@@ -1206,70 +684,98 @@
         </div>
     </section>
 
-    <section class="data-section reveal">
-        <div class="data-grid">
-            <div class="data-stat">
-                <h4>11</h4>
-                <p>Core Modules</p>
-            </div>
-            <div class="data-stat">
-                <h4>0ms</h4>
-                <p>Local Latency</p>
-            </div>
-            <div class="data-stat">
-                <h4>100%</h4>
-                <p>Simulated Safety</p>
-            </div>
-        </div>
-    </section>
-
     <footer>
         <div class="footer-logo">WIRE</div>
         <div class="footer-links">
             <a href="#features">Modules</a>
-            <a href="#creator">Deploy</a>
+            <a href="#app-purchase">License</a>
             <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
         </div>
         <p>&copy; 2026 WIRE SYSTEMS. NOT FINANCIAL ADVICE.</p>
     </footer>
 
+    <!-- FOMO Toasts Container -->
+    <div class="toast-container" id="toast-container"></div>
+
     <script>
-        /* --- Scroll Reveal Intersection Observer --- */
+        /* --- Scroll Reveal --- */
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
+                if(entry.isIntersecting) entry.target.classList.add('active');
             });
         }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
-        document.querySelectorAll('.reveal').forEach(el => {
-            revealObserver.observe(el);
-        });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
         /* --- Navbar Scroll Effect --- */
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if(window.scrollY > 50) {
-                nav.classList.add('nav-scrolled');
-            } else {
-                nav.classList.remove('nav-scrolled');
-            }
+            window.scrollY > 50 ? nav.classList.add('nav-scrolled') : nav.classList.remove('nav-scrolled');
         });
 
-        /* Copy to Clipboard Global Logic */
+        /* --- FOMO Elements (Counter & Toasts) --- */
+        let currentSpots = 12;
+        setInterval(() => {
+            if (currentSpots > 3) {
+                // Randomly drop spots every 10-25 seconds
+                if(Math.random() > 0.6) {
+                    currentSpots--;
+                    document.getElementById('fomo-counter').innerText = `${500 - currentSpots} / 500`;
+                    document.getElementById('fomo-fill').style.width = `${((500 - currentSpots) / 500) * 100}%`;
+                    
+                    // Update hero badge
+                    const badge = document.querySelector('.hero-badge');
+                    if (badge) badge.innerHTML = `<div class="pulse"></div> [ ALERT: ONLY ${currentSpots} LIFETIME LICENSES REMAINING ]`;
+                }
+            }
+        }, 8000);
+
+        function generateRandomWallet() {
+            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+            let str1 = '', str2 = '';
+            for(let i=0; i<4; i++) str1 += chars.charAt(Math.floor(Math.random() * chars.length));
+            for(let i=0; i<4; i++) str2 += chars.charAt(Math.floor(Math.random() * chars.length));
+            return `${str1}...${str2}`;
+        }
+
+        function triggerFOMOToast() {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'fomo-toast';
+            
+            const actions = ['purchased a Lifetime License', 'deployed a token bundle', 'secured a Beta invite'];
+            const randomAction = actions[Math.floor(Math.random() * actions.length)];
+            
+            toast.innerHTML = `
+                <div class="toast-icon"></div>
+                <div class="toast-text">
+                    <p>Wallet ${generateRandomWallet()}</p>
+                    <span>Just ${randomAction}.</span>
+                </div>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
+
+            // Randomize next toast between 5 and 15 seconds
+            setTimeout(triggerFOMOToast, Math.floor(Math.random() * 10000) + 5000);
+        }
+
+        /* Copy Logic */
         function copyText(text, btnElement) {
             navigator.clipboard.writeText(text).then(() => {
                 const originalText = btnElement.innerText;
                 btnElement.innerText = 'COPIED';
                 btnElement.classList.add('copied');
-                
                 setTimeout(() => {
                     btnElement.innerText = originalText;
                     btnElement.classList.remove('copied');
                 }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
             });
         }
 
@@ -1278,7 +784,7 @@
             copyText(totalText, btnElement); 
         }
 
-        /* UI Logic for Token Creator Live Preview */
+        /* Token Creator Live Preview */
         function updatePreview() {
             const name = document.getElementById('token-name').value || 'Wire Coin';
             const symbol = document.getElementById('token-symbol').value || 'WIRE';
@@ -1296,7 +802,6 @@
             document.getElementById('preview-display-name').innerText = name;
             document.getElementById('preview-display-symbol').innerText = '$' + symbol.toUpperCase();
             document.getElementById('summary-supply-text').innerText = supply;
-            
             document.getElementById('summary-liquidity-text').innerText = liquidity.toFixed(2) + ' SOL';
 
             if (totalOptionsFee > 0) {
@@ -1308,8 +813,6 @@
 
             const totalText = total.toFixed(2) + ' SOL';
             document.getElementById('summary-total-text').innerText = totalText;
-            
-            // Update the payment UI box dynamically
             document.getElementById('token-dynamic-amount-display').innerText = totalText;
 
             const avatarBox = document.getElementById('preview-avatar-box');
@@ -1379,7 +882,6 @@
             ];
             runTerminalLogs('app-terminal', appLogs);
 
-            // Time out after 30 seconds to show error
             setTimeout(() => {
                 statusText.innerText = "Payment failed please try again or make ticket";
                 statusText.style.color = "var(--red)";
@@ -1418,7 +920,6 @@
             ];
             runTerminalLogs('token-terminal', tokenLogs);
 
-            // Time out after 30 seconds to show error
             setTimeout(() => {
                 statusText.innerText = "Payment failed please try again or make ticket";
                 statusText.style.color = "var(--red)";
@@ -1427,12 +928,13 @@
             }, 30000); 
         }
 
-        // Initialize preview state on load
+        // Initialize state on load
         window.addEventListener('DOMContentLoaded', () => {
             updatePreview();
-            // Trigger initial reveals immediately
             setTimeout(() => {
                 document.querySelectorAll('.hero.reveal, .hero .reveal').forEach(el => el.classList.add('active'));
+                // Start FOMO toasts after 3 seconds
+                setTimeout(triggerFOMOToast, 3000);
             }, 100);
         });
     </script>
