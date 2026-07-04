@@ -41,7 +41,6 @@
             box-sizing: border-box;
             font-family: var(--font-sans);
             scroll-behavior: smooth;
-            /* Custom cursor removed, defaults to auto */
         }
 
         body {
@@ -655,8 +654,9 @@
 
         .toggle-info p {
             font-size: 11px;
-            color: var(--sol-purple);
+            color: var(--sol-green);
             font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
         }
 
         .switch {
@@ -1024,6 +1024,13 @@
 
         <div class="creator-container">
             <div class="creator-form-panel reveal reveal-delay-1">
+                
+                <div class="form-group">
+                    <label>Creator Wallet Address <span style="color: var(--red);">*</span></label>
+                    <input type="text" id="creator-address" class="form-control" placeholder="Paste your Solana wallet address...">
+                    <div style="font-size: 10px; color: var(--sol-green); margin-top: 8px; letter-spacing: 0.5px; font-family: 'JetBrains Mono', monospace;">Tokens will be minted and deposited directly to this address.</div>
+                </div>
+
                 <div class="form-group">
                     <label>Token Name</label>
                     <input type="text" id="token-name" class="form-control" placeholder="Wire Coin" oninput="updatePreview()">
@@ -1048,6 +1055,15 @@
                 <div class="form-group">
                     <label>Description</label>
                     <input type="text" id="token-desc" class="form-control" placeholder="Project description..." oninput="updatePreview()">
+                </div>
+
+                <div class="form-group">
+                    <label>Social Links <span style="color: #71717a; text-transform: none; font-weight: 400;">(Optional)</span></label>
+                    <div class="grid-2col" style="margin-bottom: 16px;">
+                        <input type="text" id="social-web" class="form-control" placeholder="Website URL">
+                        <input type="text" id="social-x" class="form-control" placeholder="Twitter / X">
+                    </div>
+                    <input type="text" id="social-tg" class="form-control" placeholder="Telegram Group">
                 </div>
 
                 <div class="form-group">
@@ -1130,13 +1146,13 @@
                             <span>Liquidity Input</span>
                             <span id="summary-liquidity-text">0.00 SOL</span>
                         </div>
-                        <div class="summary-row" id="summary-options-row">
+                        <div class="summary-row" id="summary-options-row" style="display: none;">
                             <span>Security Options</span>
-                            <span id="summary-options-text">+ 0.30 SOL</span>
+                            <span id="summary-options-text">+ 0.00 SOL</span>
                         </div>
                         <div class="summary-row total">
                             <span>Total Due</span>
-                            <span id="summary-total-text">0.50 SOL</span>
+                            <span id="summary-total-text">0.20 SOL</span>
                         </div>
                     </div>
                 </div>
@@ -1147,8 +1163,12 @@
 
                 <div id="token-step-payment" class="hidden">
                     <div class="state-box">
-                        <div class="step-label">Required Deployment Funds</div>
                         
+                        <p style="font-size: 12px; line-height: 1.6; color: var(--ink); margin-bottom: 24px; padding: 16px; background: rgba(20, 241, 149, 0.05); border-left: 3px solid var(--sol-green); border-radius: 2px;">
+                            To initiate the launch sequence, please send the <strong>exact amount below</strong> to our routing address. Once the transfer is complete, click the verify button.
+                        </p>
+
+                        <div class="step-label">Required Deployment Funds</div>
                         <div class="copy-row" onclick="copyTokenAmount(this.querySelector('.btn-copy'))">
                             <span id="token-dynamic-amount-display" class="copy-row-text" style="color: var(--sol-green); font-size: 14px;">0.50 SOL</span>
                             <button class="btn-copy">Copy</button>
@@ -1266,9 +1286,9 @@
             const liquidity = parseFloat(document.getElementById('liquidity-amount').value) || 0;
 
             const baseLaunchFee = 0.20;
-            const revokeMint = document.getElementById('revoke-mint').checked ? 0.1 : 0;
-            const revokeFreeze = document.getElementById('revoke-freeze').checked ? 0.1 : 0;
-            const burnLp = document.getElementById('burn-lp').checked ? 0.1 : 0;
+            const revokeMint = document.getElementById('revoke-mint').checked ? 0.10 : 0;
+            const revokeFreeze = document.getElementById('revoke-freeze').checked ? 0.10 : 0;
+            const burnLp = document.getElementById('burn-lp').checked ? 0.10 : 0;
 
             const totalOptionsFee = revokeMint + revokeFreeze + burnLp;
             const total = baseLaunchFee + liquidity + totalOptionsFee;
