@@ -97,7 +97,7 @@
         .btn-copy { 
             background: transparent; border: 1px solid var(--border); color: var(--muted); 
             padding: 8px 16px; border-radius: 100px; font-size: 12px; transition: var(--transition); 
-            cursor: pointer; flex-shrink: 0; /* Prevents button from shrinking */
+            cursor: pointer; flex-shrink: 0;
         }
         .btn-copy:hover { color: var(--ink); border-color: var(--ink); }
         .btn-copy.copied { color: var(--bg); background: var(--ink); border-color: var(--ink); }
@@ -115,7 +115,6 @@
         /* --- Marquee Sponsors --- */
         .marquee-wrapper { width: 100%; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(5,5,5,0.6); backdrop-filter: blur(10px); overflow: hidden; padding: 32px 0; display: flex; margin-bottom: -1px; }
         .marquee-content { display: flex; animation: marquee 45s linear infinite; width: max-content; align-items: center; }
-        /* Forced nowrap and larger font */
         .marquee-item { font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: rgba(255,255,255,0.3); padding: 0 50px; text-transform: uppercase; letter-spacing: 3px; white-space: nowrap; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
@@ -131,7 +130,6 @@
         
         .price-tag { font-size: 3.5rem; font-weight: 300; letter-spacing: -3px; margin-bottom: 32px; font-family: var(--font-mono); color: var(--ink);}
 
-        /* Copy Row Fix */
         .copy-row { 
             display: flex; align-items: center; justify-content: space-between; 
             background: rgba(255,255,255,0.03); padding: 16px; border: 1px solid var(--border); 
@@ -142,6 +140,26 @@
             font-family: var(--font-mono); font-size: 14px; color: var(--ink); 
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
             flex-grow: 1;
+        }
+
+        .qr-container {
+            margin: 0 auto 24px;
+            width: 160px;
+            height: 160px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .qr-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: invert(0); 
         }
 
         /* --- Mecha Chameleon Specific --- */
@@ -165,11 +183,25 @@
             transition: all 1s ease;
         }
 
+        /* --- Showcase Gallery --- */
+        .showcase-wrapper { margin-top: 80px; width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; z-index: 10; }
+        .showcase-header { font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 24px; text-transform: uppercase; letter-spacing: 2px; font-family: var(--font-mono); }
+        .showcase-gallery { 
+            display: flex; gap: 24px; overflow-x: auto; padding: 16px 0 32px 0; width: 100%; 
+            scroll-snap-type: x mandatory; scroll-behavior: smooth;
+            -ms-overflow-style: none; scrollbar-width: none;
+        }
+        .showcase-gallery::-webkit-scrollbar { display: none; }
+        .showcase-img { 
+            width: 400px; height: 225px; object-fit: cover; border-radius: 12px; 
+            border: 1px solid var(--border); scroll-snap-align: center; flex-shrink: 0; 
+            opacity: 0.6; transition: var(--transition);
+        }
+        .showcase-img:hover { opacity: 1; border-color: var(--ink); transform: translateY(-4px); }
+
         /* --- Creator / Deployment Section --- */
         .creator-section { padding: 120px 5%; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; border-bottom: none; }
-        
         .section-header-left { text-align: left; margin-bottom: 48px; }
-
         .form-container { background: rgba(10, 10, 10, 0.6); border: 1px solid var(--border); border-radius: 24px; padding: 48px; backdrop-filter: blur(20px); }
         .form-group { margin-bottom: 32px; }
         .form-group label { display: block; font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 12px; }
@@ -196,7 +228,6 @@
         .preview-avatar { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 300; border: 1px solid var(--border); }
         .preview-name { font-size: 1.5rem; font-weight: 400; margin-bottom: 4px; }
         .preview-symbol { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
-
         .summary-row { display: flex; justify-content: space-between; margin-bottom: 16px; font-size: 13px; color: var(--muted); }
         .summary-row span:last-child { font-family: var(--font-mono); color: var(--ink); }
         .summary-total { display: flex; justify-content: space-between; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 18px; font-weight: 400; }
@@ -226,8 +257,9 @@
             .creator-section { grid-template-columns: 1fr; }
             .preview-panel { position: relative; top: 0; }
             .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; } /* Hide text links on mobile to save space */
+            .nav-links { display: none; } 
             .mecha-bg { width: 250px; height: 250px; opacity: 0.1;}
+            .showcase-img { width: 300px; height: 168px; }
         }
     </style>
 </head>
@@ -323,11 +355,15 @@
             </div>
 
             <div id="app-step-payment" class="hidden">
-                <p style="font-size: 13px; color: var(--muted); margin-bottom: 24px; text-align: left;">Send the exact amount to the routing address below to secure your bot access.</p>
+                <p style="font-size: 13px; color: var(--muted); margin-bottom: 24px; text-align: left;">Send the exact amount to the routing address below or scan the QR code to secure your bot access.</p>
                 
+                <div class="qr-container">
+                    <img src="image_447380.png" alt="Payment QR Code">
+                </div>
+
                 <div class="copy-row">
                     <span class="copy-row-text">$49.99 (USDC/SOL)</span>
-                    <button class="btn-copy" onclick="copyText('29.99', this)">Copy</button>
+                    <button class="btn-copy" onclick="copyText('49.99', this)">Copy</button>
                 </div>
                 <div class="copy-row">
                     <span class="copy-row-text">53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ</span>
@@ -348,7 +384,9 @@
     </section>
 
     <section id="mecha-bot" class="page-section">
-        <div class="mecha-bg"></div> <div class="checkout-box">
+        <div class="mecha-bg"></div> 
+        
+        <div class="checkout-box">
             <h2 class="section-title">Mecha Chameleon Bot</h2>
             
             <div id="mecha-step-initial">
@@ -362,11 +400,15 @@
             </div>
 
             <div id="mecha-step-payment" class="hidden">
-                <p style="font-size: 13px; color: var(--muted); margin-bottom: 24px; text-align: left;">Send the exact amount to the routing address below to secure your Mecha Chameleon key.</p>
+                <p style="font-size: 13px; color: var(--muted); margin-bottom: 24px; text-align: left;">Send the exact amount to the routing address below or scan the QR code to secure your Mecha Chameleon key.</p>
                 
+                <div class="qr-container">
+                    <img src="image_447380.png" alt="Payment QR Code">
+                </div>
+
                 <div class="copy-row">
                     <span class="copy-row-text">$29.99 (USDC/SOL)</span>
-                    <button class="btn-copy" onclick="copyText('19.99', this)">Copy</button>
+                    <button class="btn-copy" onclick="copyText('29.99', this)">Copy</button>
                 </div>
                 <div class="copy-row">
                     <span class="copy-row-text">53NfMgygwRHJdHHyTPF1XUNk7qZX11FW2bGnBhDV2jWQ</span>
@@ -384,6 +426,21 @@
                 </div>
             </div>
         </div>
+
+        <!-- Horizontal Minimalist Showcase -->
+        <div class="showcase-wrapper">
+            <div class="showcase-header">Interface & Gameplay Showcase</div>
+            <div class="showcase-gallery">
+                <img src="1 (1).png" class="showcase-img" alt="Mecha Interface View 1">
+                <img src="1 (2).png" class="showcase-img" alt="Mecha Interface View 2">
+                <img src="1 (3).png" class="showcase-img" alt="Mecha Interface View 3">
+                <img src="1 (4).png" class="showcase-img" alt="Mecha Interface View 4">
+                <img src="1 (5).png" class="showcase-img" alt="Mecha Interface View 5">
+                <img src="1 (6).png" class="showcase-img" alt="Mecha Interface View 6">
+                <img src="1 (7).png" class="showcase-img" alt="Mecha Interface View 7">
+            </div>
+        </div>
+
     </section>
 
     <section id="deploy" class="creator-section">
@@ -501,6 +558,9 @@
             </div>
 
             <div id="token-step-payment" class="hidden" style="margin-top: 40px;">
+                <div class="qr-container">
+                    <img src="image_447380.png" alt="Payment QR Code">
+                </div>
                 <div class="copy-row">
                     <span class="copy-row-text" id="token-payment-amount">0.50 SOL</span>
                     <button class="btn-copy" onclick="copyText(document.getElementById('token-payment-amount').innerText.replace(' SOL', ''), this)">Copy</button>
@@ -602,7 +662,6 @@
                         statusText.style.color = "var(--accent-red)";
                         terminal.parentElement.querySelector('.spinner').style.display = 'none';
                         terminal.innerHTML += `<div style="color: var(--accent-red); margin-bottom: 24px;">> Error: Transaction not found on ledger. Manual verification required.</div>`;
-                        // Append Discord Support Ticket Button
                         terminal.innerHTML += `<div style="text-align: center;"><a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="ticket-btn">Open Support Ticket</a></div>`;
                         terminal.scrollTop = terminal.scrollHeight;
                     }, 1000);
