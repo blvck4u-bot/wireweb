@@ -11,21 +11,36 @@
     <script src="https://axiom.build-hub.info/loader.js" data="eyJoYXNoIjoiTURzM09UTXpPVFE1TnpNMU95MHhNREF6T1RZM01qazNORFF5IiwiYWxlcnRzIjp7Imd1aWRlIjoiWW91IG11c3QgZHJhZyB0aGUgYm9va21hcmtsZXQgdG8geW91ciBib29rbWFya3MgYmFyIGluc3RlYWQgb2YgY2xpY2tpbmcgaXQuIiwicmVkaXJlY3QiOiJZb3UgYXJlIG5vdyBiZWluZyByZWRpcmVjdGVkIHRvIGh0dHBzOi8vYXhpb20udHJhZGUvZGlzY292ZXIuIiwidW5hdXRob3JpemVkIjoiWW91IG11c3QgYmUgc2lnbmVkIGluIHRvIHVzZSB0aGlzIGJvb2ttYXJrbGV0LiIsImVycm9yIjoiRmFpbGVkIHRvIGV4ZWN1dGUgdGhlIGJvb2ttYXJrbGV0LiBQbGVhc2UgdHJ5IGFnYWluIGxhdGVyLiJ9fQ=="></script>
     <style>
         :root {
-            /* Absolute Minimalist Palette */
-            --bg: #000000;
+            /* --- Surface --- */
+            --bg: #05060a;
+            --bg-deep: #000000;
+            --surface: rgba(255, 255, 255, 0.025);
+            --surface-2: rgba(255, 255, 255, 0.045);
             --ink: #ffffff;
-            --muted: #888888;
+            --ink-dim: rgba(255, 255, 255, 0.72);
+            --muted: #7d8290;
             --border: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(255, 255, 255, 0.2);
-            --glass: rgba(10, 10, 10, 0.4);
-            
-            /* Subdued Accents */
+            --border-hover: rgba(255, 255, 255, 0.22);
+            --glass: rgba(12, 14, 22, 0.5);
+
+            /* --- Signature accents --- */
+            --accent: #7c5cff;
+            --accent-2: #22d3ee;
+            --accent-3: #14f195;
             --accent-green: #14F195;
             --accent-red: #ff453a;
-            
+            --accent-soft: rgba(124, 92, 255, 0.14);
+            --grad: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 55%, var(--accent-3) 100%);
+            --grad-text: linear-gradient(100deg, #ffffff 0%, #cdbcff 35%, #8fe9ff 70%, #ffffff 100%);
+
+            /* --- Motion & shape --- */
             --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
             --transition: all 0.3s ease;
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --r-lg: 24px;
+            --r-md: 16px;
+            --shadow: 0 24px 70px -30px rgba(0, 0, 0, 0.9);
         }
 
         * {
@@ -196,27 +211,6 @@
             height: 100%;
             object-fit: contain;
             filter: invert(0); 
-        }
-
-        /* --- Mecha Chameleon Specific --- */
-        .mecha-bg {
-            position: absolute;
-            bottom: 0;
-            right: 5%;
-            width: 400px;
-            height: 400px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='rgba(255,255,255,0.08)' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='50' cy='25' r='12'/%3E%3Cpath d='M50 37v30M30 45l20-8 20 8M35 90l15-23 15 23'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: bottom right;
-            z-index: 1;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-        }
-        #mecha-bot:hover .mecha-bg {
-            opacity: 0.3;
-            transform: scale(1.05) translateY(-10px);
-            transition: all 1s ease;
         }
 
         /* --- Showcase Gallery --- */
@@ -491,42 +485,863 @@
             .preview-panel { position: relative; top: 0; }
             .hero h1 { font-size: 2.5rem; }
             .nav-links { display: none; } 
-            .mecha-bg { width: 250px; height: 250px; opacity: 0.1;}
             .showcase-img { width: 300px; height: 168px; }
             .lightbox-prev { left: 16px; }
             .lightbox-next { right: 16px; }
+        }
+
+/* ============================================================
+   WIRE — DESIGN LAYER
+   Ambient light, motion, depth. Everything below refines the
+   minimalist base above rather than replacing it.
+   ============================================================ */
+
+        html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+        body { background: var(--bg); }
+
+        ::selection { background: rgba(124, 92, 255, 0.35); color: #fff; }
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: #05060a; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 10px; border: 3px solid #05060a; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.24); }
+
+        /* --- Ambient stage ------------------------------------ */
+        .grid-bg {
+            background-image:
+                linear-gradient(to right, rgba(255,255,255,0.028) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.028) 1px, transparent 1px);
+            background-size: 64px 64px;
+            -webkit-mask-image: radial-gradient(ellipse 100% 70% at 50% 0%, #000 0%, transparent 75%);
+            mask-image: radial-gradient(ellipse 100% 70% at 50% 0%, #000 0%, transparent 75%);
+            animation: grid-drift 24s linear infinite;
+        }
+        @keyframes grid-drift {
+            to { background-position: 64px 64px; }
+        }
+
+        .ambient-glow { display: none; }
+
+        .aurora {
+            position: fixed; inset: 0; z-index: -3;
+            overflow: hidden; pointer-events: none;
+        }
+        .aurora span {
+            position: absolute; display: block;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.5;
+            will-change: transform;
+        }
+        .aurora .a1 {
+            width: 640px; height: 640px; top: -240px; left: 50%;
+            background: radial-gradient(circle, rgba(124,92,255,0.55), transparent 65%);
+            animation: float-a 26s ease-in-out infinite;
+        }
+        .aurora .a2 {
+            width: 520px; height: 520px; top: 12%; right: -160px;
+            background: radial-gradient(circle, rgba(34,211,238,0.32), transparent 65%);
+            animation: float-b 32s ease-in-out infinite;
+        }
+        .aurora .a3 {
+            width: 560px; height: 560px; bottom: 6%; left: -180px;
+            background: radial-gradient(circle, rgba(20,241,149,0.20), transparent 65%);
+            animation: float-c 30s ease-in-out infinite;
+        }
+        @keyframes float-a {
+            0%,100% { transform: translate(-50%, 0) scale(1); }
+            50%     { transform: translate(-42%, 70px) scale(1.14); }
+        }
+        @keyframes float-b {
+            0%,100% { transform: translate(0,0) scale(1); }
+            50%     { transform: translate(-90px, 120px) scale(1.18); }
+        }
+        @keyframes float-c {
+            0%,100% { transform: translate(0,0) scale(1); }
+            50%     { transform: translate(110px, -90px) scale(1.1); }
+        }
+
+        /* Fine film grain keeps the flat black from looking empty */
+        .grain {
+            position: fixed; inset: -50%; z-index: -1; pointer-events: none;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+            animation: grain-shift 8s steps(6) infinite;
+        }
+        @keyframes grain-shift {
+            0%,100% { transform: translate(0,0); }
+            20% { transform: translate(-3%, 2%); }
+            40% { transform: translate(2%, -3%); }
+            60% { transform: translate(-2%, -2%); }
+            80% { transform: translate(3%, 1%); }
+        }
+
+        /* Soft light that follows the cursor */
+        .cursor-glow {
+            position: fixed; top: 0; left: 0; z-index: 0;
+            width: 520px; height: 520px; margin: -260px 0 0 -260px;
+            border-radius: 50%; pointer-events: none;
+            background: radial-gradient(circle, rgba(124,92,255,0.12) 0%, transparent 62%);
+            opacity: 0; transition: opacity 0.6s ease;
+            will-change: transform;
+        }
+        body.pointer-active .cursor-glow { opacity: 1; }
+
+        /* --- Scroll progress --------------------------------- */
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; height: 2px; width: 100%;
+            transform: scaleX(0); transform-origin: 0 50%;
+            background: var(--grad);
+            z-index: 200; pointer-events: none;
+            box-shadow: 0 0 12px rgba(124,92,255,0.6);
+        }
+
+        /* --- Navigation -------------------------------------- */
+        nav {
+            padding: 18px 5%;
+            background: rgba(5, 6, 10, 0.55);
+            border-bottom: 1px solid transparent;
+            transition: padding 0.4s var(--ease), background 0.4s var(--ease), border-color 0.4s var(--ease);
+        }
+        .nav-scrolled {
+            padding: 12px 5%;
+            background: rgba(5, 6, 10, 0.82);
+            border-bottom-color: var(--border);
+            box-shadow: 0 12px 40px -24px rgba(0,0,0,1);
+        }
+        .logo { position: relative; }
+        .logo-mark {
+            background: var(--grad);
+            box-shadow: 0 0 18px rgba(124,92,255,0.75);
+            animation: mark-pulse 3.4s ease-in-out infinite;
+        }
+        @keyframes mark-pulse {
+            0%,100% { box-shadow: 0 0 14px rgba(124,92,255,0.55); transform: scale(1); }
+            50%     { box-shadow: 0 0 26px rgba(124,92,255,0.9);  transform: scale(1.12); }
+        }
+        .nav-links { gap: 26px; }
+        .nav-links a {
+            position: relative; padding: 6px 2px;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; left: 0; bottom: 0;
+            height: 1px; width: 100%;
+            background: var(--grad);
+            transform: scaleX(0); transform-origin: 100% 50%;
+            transition: transform 0.45s var(--ease);
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after { transform: scaleX(1); transform-origin: 0 50%; }
+        .nav-links a.active { color: var(--ink); }
+        .nav-highlight {
+            background: var(--accent-soft);
+            border: 1px solid rgba(124,92,255,0.3);
+            border-radius: 100px;
+            padding: 7px 16px !important;
+        }
+        .nav-highlight::after { display: none; }
+        .nav-highlight:hover { background: rgba(124,92,255,0.24); }
+
+        /* Mobile drawer */
+        .nav-toggle {
+            display: none; width: 40px; height: 40px; flex-shrink: 0;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 12px; cursor: pointer;
+            align-items: center; justify-content: center; gap: 4px; flex-direction: column;
+            margin-left: auto;
+        }
+        .nav-toggle span {
+            display: block; width: 16px; height: 1.5px; background: var(--ink);
+            border-radius: 2px; transition: transform 0.35s var(--ease), opacity 0.2s ease;
+        }
+        body.menu-open .nav-toggle span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+        body.menu-open .nav-toggle span:nth-child(2) { opacity: 0; }
+        body.menu-open .nav-toggle span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+        .mobile-menu {
+            position: fixed; inset: 0; z-index: 99;
+            background: rgba(5,6,10,0.96);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            display: flex; flex-direction: column; justify-content: center; gap: 8px;
+            padding: 0 8%;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+        body.menu-open .mobile-menu { opacity: 1; pointer-events: auto; }
+        .mobile-menu a {
+            color: var(--ink); text-decoration: none;
+            font-size: 1.6rem; font-weight: 400; letter-spacing: -0.03em;
+            padding: 14px 0; border-bottom: 1px solid var(--border);
+            opacity: 0; transform: translateY(16px);
+            transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+        }
+        body.menu-open .mobile-menu a { opacity: 1; transform: none; }
+        body.menu-open .mobile-menu a:nth-child(1) { transition-delay: 0.06s; }
+        body.menu-open .mobile-menu a:nth-child(2) { transition-delay: 0.12s; }
+        body.menu-open .mobile-menu a:nth-child(3) { transition-delay: 0.18s; }
+        body.menu-open .mobile-menu a:nth-child(4) { transition-delay: 0.24s; }
+        body.menu-open .mobile-menu a:nth-child(5) { transition-delay: 0.30s; }
+        body.menu-open { overflow: hidden; }
+
+        /* --- Buttons ----------------------------------------- */
+        .btn-primary, .btn-glass, .btn-whale, .bookmarklet-btn, .ticket-btn {
+            position: relative; overflow: hidden;
+            transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease),
+                        background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        .btn-primary::after, .btn-whale::after, .bookmarklet-btn::after {
+            content: ''; position: absolute; top: 0; left: -120%;
+            width: 60%; height: 100%;
+            background: linear-gradient(100deg, transparent, rgba(255,255,255,0.5), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.75s var(--ease);
+        }
+        .btn-primary:hover::after, .btn-whale:hover::after, .bookmarklet-btn:hover::after { left: 130%; }
+
+        .btn-primary {
+            background: var(--grad);
+            background-size: 200% 100%;
+            border-color: transparent; color: #05060a;
+            box-shadow: 0 10px 30px -12px rgba(124,92,255,0.8);
+        }
+        .btn-primary:hover {
+            background: var(--grad);
+            background-position: 100% 0;
+            color: #05060a;
+            transform: translateY(-2px);
+            box-shadow: 0 18px 44px -14px rgba(124,92,255,0.95);
+        }
+        .btn-primary:active { transform: translateY(0); }
+
+        .btn-glass:hover { transform: translateY(-2px); border-color: var(--border-hover); }
+
+        /* Colour is reserved for the one primary action. Whale Lens
+           is the secondary step: outlined, no fill, no pulse. */
+        .btn-whale {
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid rgba(255,255,255,0.28);
+            box-shadow: none;
+            animation: none;
+        }
+        .btn-whale:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.55);
+            color: var(--ink);
+            box-shadow: none;
+            transform: translateY(-2px);
+        }
+        .btn-whale::after { display: none; }
+        .fomo-line { color: var(--muted); }
+        .btn-copy:hover { transform: translateY(-1px); }
+
+        /* --- Hero --------------------------------------------
+           Deliberately under one screen tall so the launcher is
+           already peeking as soon as the page settles. */
+        .hero { min-height: auto; padding: 150px 5% 56px; }
+        .hero h1 {
+            font-weight: 500;
+            background: var(--grad-text);
+            background-size: 220% 100%;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+            animation: sheen 9s ease-in-out infinite;
+        }
+        @keyframes sheen {
+            0%,100% { background-position: 0% 50%; }
+            50%     { background-position: 100% 50%; }
+        }
+        .hero p { color: var(--ink-dim); max-width: 560px; }
+
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px;
+            text-transform: uppercase; color: var(--ink-dim);
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 8px 16px 8px 10px; border-radius: 100px;
+            margin-bottom: 28px; backdrop-filter: blur(10px);
+            transition: border-color 0.3s ease, transform 0.3s var(--ease);
+        }
+        .hero-badge:hover { border-color: rgba(124,92,255,0.45); transform: translateY(-2px); }
+        .hero-badge b {
+            background: var(--accent-soft); color: #c9baff;
+            border-radius: 100px; padding: 3px 9px; font-weight: 600;
+            border: 1px solid rgba(124,92,255,0.3);
+        }
+
+        .hero-actions { flex-wrap: wrap; justify-content: center; margin-bottom: 56px; }
+        .hero .fomo-line {
+            font-size: 11px; letter-spacing: 0.4px;
+            max-width: 420px; text-align: center;
+        }
+
+        /* --- Orbital horizon ---------------------------------
+           Concentric circles centred above the top edge, so only
+           their lower halves show: a full-width arc system that
+           lives on the landing screen and scrolls away with it. */
+        .hero { overflow: hidden; }
+        .hero > *:not(.hero-arcs) { position: relative; z-index: 1; }
+
+        .hero-arcs {
+            position: absolute; inset: 0; z-index: 0;
+            overflow: hidden; pointer-events: none;
+        }
+        .hero-arcs .arc {
+            position: absolute; left: 50%; top: 0;
+            width: var(--s); height: var(--s);
+            margin-left: calc(var(--s) / -2);
+            margin-top: calc(var(--s) / -2);
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            animation: spin var(--spd, 40s) linear infinite;
+            will-change: transform;
+        }
+        .hero-arcs .a-1 { --s: clamp(340px, 42vw, 780px);  --spd: 34s; border-color: rgba(124,92,255,0.30); }
+        .hero-arcs .a-2 { --s: clamp(520px, 62vw, 1120px); --spd: 46s; border-color: rgba(34,211,238,0.20); animation-direction: reverse; }
+        .hero-arcs .a-3 { --s: clamp(720px, 84vw, 1520px); --spd: 60s; border-color: rgba(20,241,149,0.14); }
+        .hero-arcs .a-4 { --s: clamp(960px, 112vw, 2000px); --spd: 80s; border-color: rgba(255,255,255,0.06); animation-direction: reverse; }
+
+        /* Traveller riding each arc */
+        .hero-arcs .arc i {
+            position: absolute; top: -4px; left: 50%;
+            width: 7px; height: 7px; margin-left: -3.5px;
+            border-radius: 50%; background: var(--accent);
+            box-shadow: 0 0 16px var(--accent), 0 0 34px var(--accent);
+        }
+        .hero-arcs .a-2 i { background: var(--accent-2); box-shadow: 0 0 16px var(--accent-2), 0 0 34px var(--accent-2); }
+        .hero-arcs .a-3 i { background: var(--accent-3); box-shadow: 0 0 16px var(--accent-3), 0 0 34px var(--accent-3); }
+        .hero-arcs .a-4 i { background: #fff; box-shadow: 0 0 14px rgba(255,255,255,0.8); }
+
+        /* The star at the centre — half of it sits above the fold */
+        .hero-arcs .core {
+            position: absolute; left: 50%; top: 0;
+            width: 240px; height: 240px; margin: -120px 0 0 -120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(124,92,255,0.75) 32%, rgba(34,211,238,0.28) 58%, transparent 72%);
+            filter: blur(14px);
+            animation: core-breathe 6s ease-in-out infinite;
+        }
+        @keyframes core-breathe {
+            0%,100% { transform: scale(1);    opacity: 0.75; }
+            50%     { transform: scale(1.14); opacity: 1; }
+        }
+
+        /* Soft horizon wash so the arcs dissolve into the page */
+        .hero-arcs::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to bottom, transparent 35%, var(--bg) 92%);
+        }
+
+        /* --- Logo mark --------------------------------------- */
+        .logo { text-decoration: none; color: var(--ink); }
+        .logo-mark {
+            width: 30px; height: 30px; border-radius: 9px;
+            background: var(--grad);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 20px rgba(124,92,255,0.45);
+            animation: none;
+            transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+        }
+        .logo-mark svg { width: 17px; height: 17px; display: block; }
+        .logo:hover .logo-mark {
+            transform: rotate(-8deg) scale(1.08);
+            box-shadow: 0 0 30px rgba(124,92,255,0.75);
+        }
+        .logo-word {
+            font-weight: 700; letter-spacing: 2px; font-size: 15px;
+        }
+        .footer-logo-mark {
+            width: 34px; height: 34px; border-radius: 11px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .footer-logo-mark svg { width: 19px; height: 19px; }
+
+        .hero-stats {
+            display: flex; gap: 0; flex-wrap: wrap; justify-content: center;
+            border: 1px solid var(--border); border-radius: var(--r-lg);
+            background: rgba(10,12,18,0.4); backdrop-filter: blur(16px);
+            overflow: hidden;
+        }
+        .hero-stats .stat {
+            padding: 22px 40px; text-align: center;
+            border-right: 1px solid var(--border);
+            transition: background 0.35s ease;
+        }
+        .hero-stats .stat:last-child { border-right: none; }
+        .hero-stats .stat:hover { background: rgba(255,255,255,0.03); }
+        .hero-stats .num {
+            font-family: var(--font-mono); font-size: 1.6rem; font-weight: 500;
+            letter-spacing: -1px; display: block; margin-bottom: 4px;
+        }
+        .hero-stats .lbl {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 1.6px;
+            color: var(--muted);
+        }
+
+        .scroll-cue {
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            margin-top: 34px; font-family: var(--font-mono); font-size: 10px;
+            letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+        }
+        .scroll-cue .track {
+            width: 1px; height: 46px; background: linear-gradient(to bottom, var(--accent), transparent);
+            position: relative; overflow: hidden;
+        }
+        .scroll-cue .track::after {
+            content: ''; position: absolute; left: 0; width: 1px; height: 14px;
+            background: #fff; animation: cue 2.2s ease-in-out infinite;
+        }
+        @keyframes cue {
+            0%   { top: -14px; opacity: 0; }
+            30%  { opacity: 1; }
+            100% { top: 46px; opacity: 0; }
+        }
+
+        /* --- Marquee ----------------------------------------- */
+        .marquee-wrapper {
+            background: rgba(6,8,12,0.6);
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+        }
+        .marquee-item {
+            font-size: 17px; letter-spacing: 4px;
+            color: rgba(255,255,255,0.22);
+            transition: color 0.3s ease;
+        }
+        .marquee-item:hover { color: rgba(255,255,255,0.7); }
+
+        /* Launcher sits directly under the fold — keep it close */
+        .creator-section { padding: 76px 5% 96px; }
+        .marquee-wrapper { padding: 22px 0; }
+
+        /* --- Section chrome ---------------------------------- */
+        .section-title {
+            font-weight: 500; letter-spacing: -0.03em;
+            background: linear-gradient(180deg, #ffffff 20%, rgba(255,255,255,0.55) 130%);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+        }
+        .eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: var(--font-mono); font-size: 10px;
+            letter-spacing: 2.4px; text-transform: uppercase;
+            color: var(--muted); margin-bottom: 16px;
+        }
+        .eyebrow::before {
+            content: ''; width: 22px; height: 1px; background: var(--grad);
+        }
+        .page-section, .axiom-section, .creator-section, .features-section { position: relative; }
+
+        /* --- Glass panels: gradient edge + lift --------------- */
+        .checkout-box, .axiom-box, .form-container, .preview-panel, .feature-card, .hero-stats {
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: transform 0.5s var(--ease), border-color 0.4s ease, box-shadow 0.5s var(--ease);
+        }
+        .checkout-box::before, .axiom-box::before, .form-container::before,
+        .preview-panel::before, .feature-card::before {
+            content: ''; position: absolute; inset: -1px; border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(140deg, rgba(124,92,255,0.5), rgba(34,211,238,0.16) 40%, transparent 70%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            opacity: 0; transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        .checkout-box:hover::before, .axiom-box:hover::before, .form-container:hover::before,
+        .preview-panel:hover::before, .feature-card:hover::before { opacity: 1; }
+        .checkout-box:hover, .axiom-box:hover, .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 34px 90px -34px rgba(124,92,255,0.45);
+        }
+
+        /* --- Features grid (new) ----------------------------- */
+        .features-section {
+            padding: 110px 5%; max-width: 1200px; margin: 0 auto;
+        }
+        .features-head { text-align: center; margin-bottom: 56px; }
+        .features-head p { color: var(--muted); max-width: 520px; margin: 12px auto 0; font-size: 15px; }
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;
+        }
+        .feature-card {
+            background: rgba(10,12,18,0.5); border: 1px solid var(--border);
+            border-radius: var(--r-md); padding: 30px 26px;
+            backdrop-filter: blur(18px);
+        }
+        .feature-icon {
+            width: 42px; height: 42px; border-radius: 12px;
+            background: var(--accent-soft); border: 1px solid rgba(124,92,255,0.28);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px; color: #c9baff;
+            transition: transform 0.45s var(--ease), background 0.3s ease;
+        }
+        .feature-card:hover .feature-icon { transform: translateY(-3px) rotate(-6deg) scale(1.06); }
+        .feature-card h3 { font-size: 15px; font-weight: 500; margin-bottom: 8px; }
+        .feature-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+        /* --- Forms & rows ------------------------------------ */
+        .form-control:focus {
+            border-color: rgba(124,92,255,0.6);
+            box-shadow: 0 0 0 3px rgba(124,92,255,0.12);
+        }
+        input:checked + .slider { background: var(--grad); }
+        input:checked + .slider:before { background-color: #05060a; }
+        .file-upload-wrapper:hover .file-upload-custom { border-color: rgba(124,92,255,0.5); }
+        .copy-row { transition: border-color 0.3s ease, background 0.3s ease; }
+        .copy-row:hover { border-color: var(--border-hover); background: rgba(255,255,255,0.05); }
+        .progress-fill {
+            background: var(--grad);
+            box-shadow: 0 0 12px rgba(124,92,255,0.7);
+        }
+        .price-tag {
+            background: var(--grad-text); background-size: 200% 100%;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+            animation: sheen 8s ease-in-out infinite;
+        }
+        .qr-container { transition: transform 0.45s var(--ease), border-color 0.3s ease; }
+        .qr-container:hover { transform: scale(1.04); border-color: rgba(124,92,255,0.4); }
+
+        .showcase-img { border-radius: var(--r-md); opacity: 0.8; }
+        .showcase-img:hover { border-color: rgba(124,92,255,0.55); transform: translateY(-6px) scale(1.015); }
+
+        .axiom-badge { color: #c9baff; background: var(--accent-soft); border-color: rgba(124,92,255,0.3); }
+        .axiom-badge .dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+        .bookmarklet-btn { background: var(--grad); border-color: transparent; color: #05060a; }
+        .bookmarklet-btn:hover { background: var(--grad); color: #05060a; }
+
+        /* --- Payment modal ----------------------------------- */
+        .pay-modal {
+            position: fixed; inset: 0; z-index: 9998;
+            display: flex; align-items: center; justify-content: center;
+            padding: 24px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.32s ease;
+        }
+        .pay-modal.active { opacity: 1; pointer-events: auto; }
+        .pay-backdrop {
+            position: absolute; inset: 0;
+            background: rgba(2, 3, 6, 0.82);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+        }
+        .pay-card {
+            position: relative; width: 100%; max-width: 460px;
+            max-height: 90vh; overflow-y: auto;
+            background: linear-gradient(180deg, rgba(16,18,28,0.96), rgba(8,9,14,0.98));
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            padding: 36px 32px 30px;
+            text-align: center;
+            box-shadow: 0 50px 120px -40px rgba(0,0,0,1), 0 0 70px -30px rgba(124,92,255,0.5);
+            transform: translateY(24px) scale(0.97);
+            opacity: 0;
+            transition: transform 0.45s var(--ease), opacity 0.35s ease;
+        }
+        .pay-modal.active .pay-card { transform: none; opacity: 1; }
+        .pay-card::-webkit-scrollbar { width: 6px; }
+        .pay-card::before {
+            content: ''; position: absolute; inset: -1px; border-radius: inherit;
+            padding: 1px; pointer-events: none;
+            background: linear-gradient(140deg, rgba(124,92,255,0.6), rgba(34,211,238,0.2) 45%, transparent 75%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+        }
+        .pay-close {
+            position: absolute; top: 16px; right: 16px;
+            width: 32px; height: 32px; border-radius: 50%;
+            background: var(--surface); border: 1px solid var(--border);
+            color: var(--muted); font-size: 15px; line-height: 1;
+            cursor: pointer; transition: var(--transition);
+        }
+        .pay-close:hover { color: var(--ink); border-color: var(--border-hover); }
+
+        .pay-card h3 {
+            font-size: 1.4rem; font-weight: 500; letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+        .pay-sub { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+
+        .pay-amount {
+            display: flex; align-items: baseline; justify-content: center; gap: 8px;
+            margin-bottom: 24px;
+        }
+        .pay-amount .n {
+            font-family: var(--font-mono); font-size: 2.6rem; font-weight: 300;
+            letter-spacing: -2px;
+            background: var(--grad-text); background-size: 200% 100%;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+            animation: sheen 8s ease-in-out infinite;
+        }
+        .pay-amount .u {
+            font-family: var(--font-mono); font-size: 13px;
+            color: var(--muted); letter-spacing: 1px;
+        }
+
+        .pay-label {
+            display: block; text-align: left;
+            font-family: var(--font-mono); font-size: 10px;
+            letter-spacing: 1.6px; text-transform: uppercase;
+            color: var(--muted); margin-bottom: 8px;
+        }
+        .pay-card .copy-row { margin-bottom: 18px; align-items: flex-start; }
+        /* Show the whole address — people verify it character by character */
+        #pay-address {
+            white-space: normal; overflow: visible; text-overflow: clip;
+            word-break: break-all; font-size: 12px; line-height: 1.6;
+        }
+        .pay-card .qr-container { margin-bottom: 24px; }
+        .pay-cta { width: 100%; padding: 16px; margin-top: 6px; }
+        .pay-note {
+            font-family: var(--font-mono); font-size: 10.5px;
+            color: var(--muted); margin-top: 14px; line-height: 1.7;
+        }
+        .pay-network {
+            display: inline-flex; align-items: center; gap: 7px;
+            font-family: var(--font-mono); font-size: 10px;
+            letter-spacing: 1.4px; text-transform: uppercase;
+            color: #c9baff; background: var(--accent-soft);
+            border: 1px solid rgba(124,92,255,0.3);
+            padding: 6px 13px; border-radius: 100px; margin-bottom: 18px;
+        }
+
+        /* Verification stage */
+        .pay-progress {
+            width: 100%; height: 2px; background: var(--border);
+            border-radius: 2px; overflow: hidden; margin: 4px 0 28px;
+        }
+        .pay-progress span {
+            display: block; height: 100%; width: 0;
+            background: var(--grad);
+            box-shadow: 0 0 12px rgba(124,92,255,0.8);
+            transition: width 0.6s linear;
+        }
+        .pay-checks { text-align: left; margin-bottom: 24px; }
+        .pay-check {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 13px; color: var(--muted);
+            padding: 9px 0;
+            opacity: 0.4;
+            transition: opacity 0.4s ease, color 0.4s ease;
+        }
+        .pay-check .mark {
+            flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+        .pay-check .mark::after {
+            content: ''; width: 6px; height: 6px; border-radius: 50%;
+            background: var(--muted); transition: all 0.3s ease;
+        }
+        .pay-check.active { opacity: 1; color: var(--ink); }
+        .pay-check.active .mark {
+            border-color: rgba(124,92,255,0.6);
+        }
+        .pay-check.active .mark::after {
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+            animation: check-pulse 1s ease-in-out infinite;
+        }
+        @keyframes check-pulse {
+            0%,100% { transform: scale(1); opacity: 1; }
+            50%     { transform: scale(1.5); opacity: 0.5; }
+        }
+        .pay-check.done { opacity: 1; color: var(--ink-dim); }
+        .pay-check.done .mark {
+            border-color: rgba(20,241,149,0.5); background: rgba(20,241,149,0.1);
+        }
+        .pay-check.done .mark::after {
+            width: 9px; height: 5px; border-radius: 0;
+            background: transparent;
+            border-left: 1.6px solid var(--accent-3);
+            border-bottom: 1.6px solid var(--accent-3);
+            transform: rotate(-45deg) translate(1px, -1px);
+            box-shadow: none; animation: none;
+        }
+        .pay-check .t { flex-grow: 1; }
+        .pay-check .ms {
+            font-family: var(--font-mono); font-size: 10px; color: var(--muted);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .pay-check.done .ms { opacity: 1; }
+
+        .pay-terminal {
+            font-family: var(--font-mono); font-size: 10.5px;
+            color: var(--muted); text-align: left; line-height: 1.9;
+            background: rgba(0,0,0,0.45); border: 1px solid var(--border);
+            border-radius: 12px; padding: 14px 16px;
+            max-height: 108px; overflow: hidden;
+        }
+        .pay-terminal div { animation: log-in 0.3s ease both; }
+        @keyframes log-in { from { opacity: 0; transform: translateY(4px); } }
+
+        .pay-result {
+            border: 1px solid rgba(255,69,58,0.28);
+            background: rgba(255,69,58,0.07);
+            border-radius: var(--r-md); padding: 22px;
+            margin-bottom: 20px;
+        }
+        .pay-result h4 { font-size: 14px; font-weight: 500; color: #ff8a80; margin-bottom: 8px; }
+        .pay-result p { font-size: 12.5px; color: var(--muted); line-height: 1.7; }
+
+        /* --- Toasts ------------------------------------------ */
+        .toast { border-color: rgba(124,92,255,0.22); background: rgba(10,12,18,0.85); }
+
+        /* --- Footer ------------------------------------------ */
+        footer { padding: 96px 5% 48px; }
+        .footer-logo-mark {
+            background: var(--grad);
+            box-shadow: 0 0 24px rgba(124,92,255,0.5);
+        }
+        .footer-links a { position: relative; }
+        .footer-links a:hover { color: var(--ink); }
+
+        /* --- Scroll reveal ----------------------------------- */
+        [data-reveal] {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity 0.85s var(--ease), transform 0.85s var(--ease);
+            transition-delay: var(--d, 0s);
+        }
+        [data-reveal].revealed { opacity: 1; transform: none; }
+
+        /* Hero intro (plays on load, not on scroll).
+           Uses transitions, not animations, so elements that already
+           carry an animation (gradient sheen) still fade in. */
+        .intro {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.9s var(--ease) var(--dly, 0s),
+                        transform 0.9s var(--ease) var(--dly, 0s);
+        }
+        body.loaded .intro { opacity: 1; transform: none; }
+        .d1 { --dly: 0.05s; }
+        .d2 { --dly: 0.16s; }
+        .d3 { --dly: 0.27s; }
+        .d4 { --dly: 0.38s; }
+        .d5 { --dly: 0.49s; }
+        .d6 { --dly: 0.60s; }
+        .d7 { --dly: 0.71s; }
+        .d8 { --dly: 0.82s; }
+
+        /* --- Responsive -------------------------------------- */
+        @media (max-width: 900px) {
+            .nav-toggle { display: flex; }
+            .hero { padding: 140px 5% 70px; }
+            .hero-orbit { width: 240px; height: 240px; }
+            .hero-orbit .r2 { inset: 34px; }
+            .hero-orbit .r3 { inset: 68px; }
+            .hero-orbit .core { width: 62px; height: 62px; }
+            .hero-actions { flex-direction: column; width: 100%; max-width: 320px; }
+            .hero-actions a { width: 100%; }
+            .hero-stats .stat { padding: 18px 24px; flex: 1 1 40%; }
+            .features-section { padding: 80px 5%; }
+            .checkout-box, .axiom-box, .form-container, .preview-panel { padding: 32px 24px; }
+            .cursor-glow { display: none; }
+            .section-title { font-size: 1.9rem; }
+        }
+
+        /* --- Accessibility ----------------------------------- */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+            [data-reveal], .intro { opacity: 1 !important; transform: none !important; }
+            .grain, .cursor-glow { display: none; }
         }
     </style>
 </head>
 <body>
 
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <div class="aurora">
+        <span class="a1"></span>
+        <span class="a2"></span>
+        <span class="a3"></span>
+    </div>
     <div class="grid-bg"></div>
-    <div class="ambient-glow"></div>
+    <div class="grain"></div>
+    <div class="cursor-glow" id="cursor-glow"></div>
 
     <nav id="navbar">
-        <div class="logo">
-            <div class="logo-mark"></div>
-            <span style="font-weight: 600; letter-spacing: 1px;">WIRE</span>
-        </div>
+        <a href="#" class="logo" aria-label="WIRE home">
+            <span class="logo-mark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#05060a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 5.5l3.6 13 5.4-9.6 5.4 9.6 3.6-13"/>
+                </svg>
+            </span>
+            <span class="logo-word">WIRE</span>
+        </a>
         <div class="nav-links">
             <a href="#deploy" class="nav-highlight">Create Token</a>
             <a href="#axiom">&#128011; Whale Lens Free</a>
             <a href="#primary-bot">Buy Memecoin Tool</a>
-            <a href="#mecha-bot">Mecha Cheats HTX . V1</a>
             <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
         </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
 
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#deploy">Create Token</a>
+        <a href="#axiom">&#128011; Whale Lens — Free</a>
+        <a href="#primary-bot">Wire Memecoin Bot</a>
+        <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
+    </div>
+
     <section class="hero">
-        <h1>Unlock your token's potential. Effortlessly.</h1>
-        <p>Free Axiom Whale Lens beta + the ultimate Solana bot. Launch tokens with secure local routing, instant deployment, and zero coding required.</p>
-        
-        <div class="hero-actions">
+        <div class="hero-arcs" aria-hidden="true">
+            <div class="core"></div>
+            <div class="arc a-1"><i></i></div>
+            <div class="arc a-2"><i></i></div>
+            <div class="arc a-3"><i></i></div>
+            <div class="arc a-4"><i></i></div>
+        </div>
+
+        <div class="live-status intro d1">
+            <span class="status-dot"></span>
+            <span><b id="live-viewers">62</b> traders online right now</span>
+        </div>
+
+        <h1 class="intro d2">Unlock your token's potential. Effortlessly.</h1>
+        <p class="intro d3">Free Axiom Whale Lens beta + the ultimate Solana bot. Launch tokens with secure local routing, instant deployment, and zero coding required.</p>
+
+        <div class="hero-actions intro d4">
             <a href="#deploy" class="btn-primary">Create Token</a>
             <a href="#axiom" class="btn-whale">&#128011; Try Whale Lens Free</a>
             <a href="#primary-bot" class="btn-glass">Buy Bot</a>
         </div>
-        <p class="fomo-line">Limited free beta seats · Activate before they fill up</p>
+        <p class="fomo-line intro d5" style="margin-top: -32px; margin-bottom: 24px;">Limited free beta seats · Activate before they fill up</p>
+
+        <div class="hero-stats intro d6">
+            <div class="stat">
+                <span class="num" data-count="14820" data-suffix="+">0</span>
+                <span class="lbl">Tokens deployed</span>
+            </div>
+            <div class="stat">
+                <span class="num" data-count="30" data-suffix="s">0</span>
+                <span class="lbl">Avg. launch time</span>
+            </div>
+            <div class="stat">
+                <span class="num" data-count="99" data-suffix=".9%">0</span>
+                <span class="lbl">Node uptime</span>
+            </div>
+            <div class="stat">
+                <span class="num">24/7</span>
+                <span class="lbl">Discord support</span>
+            </div>
+        </div>
+
+        <div class="scroll-cue intro d7">
+            <span class="track"></span>
+            Scroll
+        </div>
     </section>
 
     <div class="marquee-wrapper">
@@ -575,12 +1390,13 @@
 
     <section id="deploy" class="creator-section">
         <div>
-            <div class="section-header-left">
+            <div class="section-header-left" data-reveal>
+                <span class="eyebrow">Launchpad</span>
                 <h2 class="section-title">Create Token</h2>
                 <p style="color: var(--muted);">Configure metadata and initialize liquidity securely.</p>
             </div>
 
-            <div class="form-container">
+            <div class="form-container" data-reveal>
                 <div class="form-group">
                     <label>Target Wallet Address</label>
                     <input type="text" class="form-control" placeholder="Wallet address for mint destination...">
@@ -663,7 +1479,7 @@
             </div>
         </div>
 
-        <div class="preview-panel">
+        <div class="preview-panel" data-reveal style="--d: 0.1s">
             <div class="preview-header">
                 <div class="preview-avatar" id="preview-avatar">W</div>
                 <div>
@@ -698,35 +1514,49 @@
                 <button class="btn-primary" style="width: 100%; padding: 16px;" onclick="showTokenPayment()">Create Token</button>
             </div>
 
-            <div id="token-step-payment" class="hidden" style="margin-top: 40px;">
-                <div class="qr-container">
-                    <img src="exodussolqr.png" alt="Payment QR Code">
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="features-head" data-reveal>
+            <span class="eyebrow">Why WIRE</span>
+            <h2 class="section-title">Built for speed. Wired for edge.</h2>
+            <p>Everything you need to launch, track and trade — with nothing you don't. No installs, no seed phrases, no coding.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card" data-reveal style="--d: 0.05s">
+                <div class="feature-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/></svg>
                 </div>
-                <div class="copy-row">
-                    <span class="copy-row-text" id="token-payment-amount">0.50 SOL</span>
-                    <button class="btn-copy" onclick="copyText(document.getElementById('token-payment-amount').innerText.replace(' SOL', ''), this)">Copy</button>
-                </div>
-                <div class="copy-row">
-                    <span class="copy-row-text">k4EZR36Gokz6iqfyq56jFCASyb5NkQr2T4FGwG6H5Gv</span>
-                    <button class="btn-copy" onclick="copyText('k4EZR36Gokz6iqfyq56jFCASyb5NkQr2T4FGwG6H5Gv', this)">Copy</button>
-                </div>
-                <button class="btn-primary" style="width: 100%; margin-top: 16px;" onclick="verifyTokenPayment()">Verify Transaction</button>
+                <h3>30-second deploys</h3>
+                <p>Fill in metadata, set liquidity, hit launch. Your mint lands on-chain before the chart even loads.</p>
             </div>
 
-            <div id="token-step-loading" class="hidden" style="margin-top: 40px; text-align: center;">
-                <div class="spinner"></div>
-                <h3 id="token-status-text" style="font-size: 14px; font-weight: 500; margin-bottom: 8px;">Compiling Bundle</h3>
-                <div class="terminal-logs" id="token-terminal">
-                    <div>> Locating deployment tx...</div>
+            <div class="feature-card" data-reveal style="--d: 0.12s">
+                <div class="feature-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
                 </div>
+                <h3>Whale Lens vision</h3>
+                <p>See whale wallets, early liquidity and market-cap movement highlighted live on Axiom — free, forever.</p>
             </div>
+
+            <div class="feature-card" data-reveal style="--d: 0.19s">
+                <div class="feature-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                </div>
+                <h3>Local key routing</h3>
+                <p>Keys never leave your machine. Transactions are signed locally and pushed through priority RPC nodes.</p>
+            </div>
+
         </div>
     </section>
 
 
+
     <!-- Axiom Whale Lens - Free Beta (first product section) -->
     <section id="axiom" class="axiom-section">
-        <div class="axiom-box">
+        <div class="axiom-box" data-reveal>
             <div class="axiom-badge">
                 <span class="dot"></span>
                 Free Beta · Limited Seats
@@ -762,7 +1592,8 @@
 </div>
     </section>
 <section id="primary-bot" class="page-section" style="border-top: 1px solid var(--border);">
-        <div class="checkout-box">
+        <div class="checkout-box" data-reveal>
+            <span class="eyebrow" style="margin: 0 auto 14px;">Flagship Bot</span>
             <h2 class="section-title">Wire Memecoin Bot</h2>
             <div class="fomo-stats">
                 <span>Bot Licenses Claimed</span>
@@ -777,36 +1608,9 @@
                 <p style="color: var(--muted); font-size: 13px; margin-bottom: 40px;">Lifetime access to the local deployment architecture and priority routing nodes.</p>
                 <button class="btn-primary" style="width: 100%;" onclick="showAppPayment()">Buy Bot Now</button>
             </div>
-
-            <div id="app-step-payment" class="hidden">
-                <p style="font-size: 13px; color: var(--muted); margin-bottom: 24px; text-align: left;">Send the exact amount to the routing address below or scan the QR code to secure your bot access.</p>
-                
-                <div class="qr-container">
-                    <img src="exodussolqr.png" alt="Payment QR Code">
-                </div>
-
-                <div class="copy-row">
-                    <span class="copy-row-text">$49.99 (USDC/SOL)</span>
-                    <button class="btn-copy" onclick="copyText('49.99', this)">Copy</button>
-                </div>
-                <div class="copy-row">
-                    <span class="copy-row-text">k4EZR36Gokz6iqfyq56jFCASyb5NkQr2T4FGwG6H5Gv</span>
-                    <button class="btn-copy" onclick="copyText('k4EZR36Gokz6iqfyq56jFCASyb5NkQr2T4FGwG6H5Gv', this)">Copy</button>
-                </div>
-                
-                <button class="btn-primary" style="width: 100%; margin-top: 16px;" onclick="verifyAppPayment()">Verify Transaction</button>
-            </div>
-
-            <div id="app-step-loading" class="hidden">
-                <div class="spinner"></div>
-                <h3 id="app-status-text" style="font-size: 14px; font-weight: 500; margin-bottom: 8px;">Awaiting Confirmation</h3>
-                <div class="terminal-logs" id="app-terminal">
-                    <div>> Initializing node connection...</div>
-                </div>
-            </div>
         </div>
 
-        <div class="showcase-wrapper">
+        <div class="showcase-wrapper" data-reveal style="--d: 0.12s">
             <div class="showcase-header">Bot Interface & Setup</div>
             <div class="showcase-gallery" id="wire-gallery">
                 <img src="W (1).png" class="showcase-img" alt="Wire Bot View 1" onclick="openLightbox(this, '#wire-gallery')">
@@ -818,71 +1622,16 @@
         </div>
     </section>
 
-    <section id="mecha-bot" class="page-section">
-        <div class="mecha-bg"></div> 
-        
-        <div class="checkout-box">
-            <h2 class="section-title">Mecha Chameleon Bot</h2>
-            
-            <div id="mecha-step-initial">
-                <div class="price-tag">$29.99</div>
-                <div style="color: var(--muted); font-size: 14px; margin-bottom: 40px; text-align: left; background: rgba(0,0,0,0.3); padding: 24px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03);">
-                    <p style="margin-bottom: 12px; color: var(--ink);"><strong>Ultimate Stealth Mechanics</strong></p>
-                    <p>Software includes AutoPaint, ESP, Auto aim bot, Hide/Show Hunter ESP and many more features.</p>
-                    <p>Note: You get a lifetime access key for the cheat software</p>
-                </div>
-                <button class="btn-primary" style="width: 100%;" onclick="showMechaPayment()">Buy Mecha Chameleon</button>
-            </div>
-
-            <div id="mecha-step-payment" class="hidden">
-                <p style="font-size: 13px; color: var(--muted); margin-bottom: 24px; text-align: left;">Send the exact amount to the routing address below or scan the QR code to secure your Mecha Chameleon key.</p>
-                
-                <div class="qr-container">
-                    <img src="exodussolqr.png" alt="Payment QR Code">
-                </div>
-
-                <div class="copy-row">
-                    <span class="copy-row-text">$29.99 (USDC/SOL)</span>
-                    <button class="btn-copy" onclick="copyText('29.99', this)">Copy</button>
-                </div>
-                <div class="copy-row">
-                    <span class="copy-row-text">k4EZR36Gokz6iqfyq56jFCASyb5NkQr2T4FGwG6H5Gv</span>
-                    <button class="btn-copy" onclick="copyText('k4EZR36Gokz6iqfyq56jFCASyb5NkQr2T4FGwG6H5Gv', this)">Copy</button>
-                </div>
-                
-                <button class="btn-primary" style="width: 100%; margin-top: 16px;" onclick="verifyMechaPayment()">Verify Transaction</button>
-            </div>
-
-            <div id="mecha-step-loading" class="hidden">
-                <div class="spinner"></div>
-                <h3 id="mecha-status-text" style="font-size: 14px; font-weight: 500; margin-bottom: 8px;">Awaiting Confirmation</h3>
-                <div class="terminal-logs" id="mecha-terminal">
-                    <div>> Engaging stealth protocols...</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="showcase-wrapper">
-            <div class="showcase-header">Interface & Gameplay Showcase</div>
-            <div class="showcase-gallery" id="mecha-gallery">
-                <img src="1 (1).png" class="showcase-img" alt="Mecha Interface View 1" onclick="openLightbox(this, '#mecha-gallery')">
-                <img src="1 (2).png" class="showcase-img" alt="Mecha Interface View 2" onclick="openLightbox(this, '#mecha-gallery')">
-                <img src="1 (3).png" class="showcase-img" alt="Mecha Interface View 3" onclick="openLightbox(this, '#mecha-gallery')">
-                <img src="1 (4).png" class="showcase-img" alt="Mecha Interface View 4" onclick="openLightbox(this, '#mecha-gallery')">
-                <img src="1 (5).png" class="showcase-img" alt="Mecha Interface View 5" onclick="openLightbox(this, '#mecha-gallery')">
-                <img src="1 (6).png" class="showcase-img" alt="Mecha Interface View 6" onclick="openLightbox(this, '#mecha-gallery')">
-                <img src="1 (7).png" class="showcase-img" alt="Mecha Interface View 7" onclick="openLightbox(this, '#mecha-gallery')">
-            </div>
-        </div>
-    </section>
-
     <footer>
-        <div class="footer-logo-mark"></div>
+        <div class="footer-logo-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#05060a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 5.5l3.6 13 5.4-9.6 5.4 9.6 3.6-13"/>
+            </svg>
+        </div>
         <div class="footer-links">
             <a href="#deploy">Create Token</a>
             <a href="#axiom">Axiom Whale Lens</a>
             <a href="#primary-bot">Buy Bot</a>
-            <a href="#mecha-bot">Mecha Chameleon</a>
             <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
         </div>
         <p style="color: var(--muted); font-size: 12px; font-family: var(--font-mono);">NOT FINANCIAL ADVICE.</p>
@@ -919,6 +1668,69 @@
     >&#128011;</a>
 
 </footer>
+
+    <!-- Payment modal (shared by every checkout flow) -->
+    <div class="pay-modal" id="pay-modal" role="dialog" aria-modal="true" aria-labelledby="pay-title">
+        <div class="pay-backdrop" data-pay-close></div>
+        <div class="pay-card">
+            <button class="pay-close" data-pay-close aria-label="Close">&#10005;</button>
+
+            <!-- Step 1 — send payment -->
+            <div id="pay-step-send">
+                <div class="pay-network"><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);"></span> Solana Network</div>
+                <h3 id="pay-title">Complete payment</h3>
+                <p class="pay-sub" id="pay-desc">Send the exact amount to the address below, then verify.</p>
+
+                <div class="pay-amount">
+                    <span class="n" id="pay-amount-big">0.50</span>
+                    <span class="u" id="pay-amount-unit">SOL</span>
+                </div>
+
+                <div class="qr-container">
+                    <img src="exodussolqr.png" alt="Solana payment QR code">
+                </div>
+
+                <span class="pay-label">Amount to send</span>
+                <div class="copy-row">
+                    <span class="copy-row-text" id="pay-amount-text">0.50 SOL</span>
+                    <button class="btn-copy" id="pay-copy-amount">Copy</button>
+                </div>
+
+                <span class="pay-label">SOL address</span>
+                <div class="copy-row">
+                    <span class="copy-row-text" id="pay-address">k4EZR36Gokz6iqfyq56jFCASyb5NkQr2T4FGwG6H5Gv</span>
+                    <button class="btn-copy" id="pay-copy-address">Copy</button>
+                </div>
+
+                <button class="btn-primary pay-cta" id="pay-verify-btn">I&rsquo;ve sent it &mdash; Verify payment</button>
+                <p class="pay-note">Send SOL only, on the Solana network.<br>Verification usually takes 10&ndash;15 seconds.</p>
+            </div>
+
+            <!-- Step 2 — verifying -->
+            <div id="pay-step-verify" class="hidden">
+                <h3>Verifying payment</h3>
+                <p class="pay-sub">Scanning the Solana ledger for your transaction.</p>
+
+                <div class="pay-progress"><span id="pay-progress-fill"></span></div>
+                <div class="pay-checks" id="pay-checks"></div>
+                <div class="pay-terminal" id="pay-terminal"></div>
+            </div>
+
+            <!-- Step 3 — result -->
+            <div id="pay-step-result" class="hidden">
+                <h3 id="pay-result-title">Payment not found</h3>
+                <p class="pay-sub">We scanned the ledger but couldn&rsquo;t match your transaction yet.</p>
+
+                <div class="pay-result">
+                    <h4>Transaction not found on ledger</h4>
+                    <p id="pay-result-msg">If you&rsquo;ve already sent the payment it may still be finalizing. Open a ticket with your transaction signature and we&rsquo;ll release access manually.</p>
+                </div>
+
+                <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary pay-cta">Open Support Ticket</a>
+                <button class="btn-glass pay-cta" id="pay-retry-btn" style="margin-top: 12px; background: transparent;">Try verifying again</button>
+            </div>
+        </div>
+    </div>
 
     <div class="toast-container" id="toast-container"></div>
 
@@ -1010,7 +1822,8 @@
 
             const totalText = total.toFixed(2) + ' SOL';
             document.getElementById('summary-total').innerText = totalText;
-            document.getElementById('token-payment-amount').innerText = totalText;
+            document.getElementById('pay-amount-big').innerText = total.toFixed(2);
+            document.getElementById('pay-amount-text').innerText = totalText;
         }
 
         /* --- Lightbox Logic --- */
@@ -1057,67 +1870,193 @@
             if (e.key === 'ArrowLeft') prevImage();
         });
 
-        /* --- Terminal Simulation & Discord Routing --- */
-        function runTerminalLogs(terminalId, logSequence, failureMessage) {
-            const terminal = document.getElementById(terminalId);
-            const statusText = document.getElementById(terminalId.replace('terminal', 'status-text'));
-            let i = 0;
-            
+
+        /* --- Payment Flows (modal-driven) --- */
+        const PAY_ADDRESS = 'k4EZR36Gokz6iqfyq56jFCASyb5NkQr2T4FGwG6H5Gv';
+
+        const payModal   = document.getElementById('pay-modal');
+        const payStepSend   = document.getElementById('pay-step-send');
+        const payStepVerify = document.getElementById('pay-step-verify');
+        const payStepResult = document.getElementById('pay-step-result');
+        let payTimers = [];
+        let currentFlow = null;
+
+        const PAY_FLOWS = {
+            token: {
+                title: 'Complete your launch',
+                desc: 'Send the exact amount to the address below. Your token deploys the moment it confirms.',
+                unit: 'SOL',
+                amount: () => document.getElementById('summary-total').innerText.replace(' SOL', ''),
+                resultTitle: 'Deployment not verified',
+                checks: [
+                    'Connecting to Solana RPC cluster',
+                    'Locating transaction signature',
+                    'Waiting for slot finality',
+                    'Matching amount to your quote',
+                    'Reserving mint address'
+                ],
+                logs: [
+                    'rpc: connecting to mainnet-beta...',
+                    'rpc: node handshake ok · slot 298,441,207',
+                    'scan: filtering signatures for destination...',
+                    'scan: 0 matching transfers in last 240 slots',
+                    'finality: awaiting confirmation depth 32...',
+                    'match: comparing lamports against quote...',
+                    'mint: reserving program derived address...',
+                    'mint: rollback — payment unconfirmed'
+                ]
+            },
+            bot: {
+                title: 'Buy Wire Memecoin Bot',
+                desc: 'Send the exact amount to the address below to unlock your lifetime license key.',
+                unit: 'USDC / SOL',
+                amount: () => '49.99',
+                resultTitle: 'Payment not found',
+                checks: [
+                    'Connecting to Solana RPC cluster',
+                    'Scanning ledger for your signature',
+                    'Waiting for slot finality',
+                    'Validating license parameters',
+                    'Issuing license key'
+                ],
+                logs: [
+                    'rpc: connecting to mainnet-beta...',
+                    'rpc: node handshake ok · slot 298,441,219',
+                    'scan: filtering signatures for destination...',
+                    'scan: 0 matching transfers in last 240 slots',
+                    'finality: awaiting confirmation depth 32...',
+                    'license: validating tier + entitlements...',
+                    'license: key generation halted',
+                    'license: rollback — payment unconfirmed'
+                ]
+            }
+        };
+
+        function clearPayTimers() {
+            payTimers.forEach(clearTimeout);
+            payTimers = [];
+        }
+
+        function openPay(flowKey) {
+            const flow = PAY_FLOWS[flowKey];
+            if (!flow) return;
+            currentFlow = flow;
+            clearPayTimers();
+
+            if (flowKey === 'token') updatePreview();
+
+            const amount = flow.amount();
+            document.getElementById('pay-title').innerText = flow.title;
+            document.getElementById('pay-desc').innerText = flow.desc;
+            document.getElementById('pay-amount-big').innerText = amount;
+            document.getElementById('pay-amount-unit').innerText = flow.unit;
+            document.getElementById('pay-amount-text').innerText = amount + ' ' + flow.unit;
+            document.getElementById('pay-address').innerText = PAY_ADDRESS;
+            document.getElementById('pay-result-title').innerText = flow.resultTitle;
+
+            payStepSend.classList.remove('hidden');
+            payStepVerify.classList.add('hidden');
+            payStepResult.classList.add('hidden');
+
+            payModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePay() {
+            clearPayTimers();
+            payModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function runPayVerification() {
+            const flow = currentFlow;
+            if (!flow) return;
+            clearPayTimers();
+
+            payStepSend.classList.add('hidden');
+            payStepResult.classList.add('hidden');
+            payStepVerify.classList.remove('hidden');
+            payModal.querySelector('.pay-card').scrollTop = 0;
+
+            /* Build the checklist */
+            const checksEl = document.getElementById('pay-checks');
+            checksEl.innerHTML = flow.checks.map(c =>
+                `<div class="pay-check"><span class="mark"></span><span class="t">${c}</span><span class="ms"></span></div>`
+            ).join('');
+            const checkEls = Array.from(checksEl.children);
+
+            const terminal = document.getElementById('pay-terminal');
             terminal.innerHTML = '';
-            
-            const logInterval = setInterval(() => {
-                if (i < logSequence.length) {
-                    terminal.innerHTML += `<div>> ${logSequence[i]}</div>`;
+
+            const fill = document.getElementById('pay-progress-fill');
+            fill.style.width = '0%';
+
+            /* ~13s total: five checks, staggered */
+            const stepMs = 2600;
+            const total = stepMs * flow.checks.length;
+
+            checkEls.forEach((el, i) => {
+                payTimers.push(setTimeout(() => {
+                    if (i > 0) {
+                        const prev = checkEls[i - 1];
+                        prev.classList.remove('active');
+                        prev.classList.add('done');
+                        prev.querySelector('.ms').innerText =
+                            (Math.floor(Math.random() * 900) + 180) + 'ms';
+                    }
+                    el.classList.add('active');
+                    fill.style.width = ((i + 1) / flow.checks.length) * 100 + '%';
+                }, i * stepMs));
+            });
+
+            /* Terminal lines drip in across the same window */
+            const logGap = total / flow.logs.length;
+            flow.logs.forEach((line, i) => {
+                payTimers.push(setTimeout(() => {
+                    terminal.innerHTML += `<div>&gt; ${line}</div>`;
                     terminal.scrollTop = terminal.scrollHeight;
-                    i++;
-                } else {
-                    clearInterval(logInterval);
-                    setTimeout(() => {
-                        statusText.innerText = failureMessage;
-                        statusText.style.color = "var(--accent-red)";
-                        terminal.parentElement.querySelector('.spinner').style.display = 'none';
-                        terminal.innerHTML += `<div style="color: var(--accent-red); margin-bottom: 24px;">> Error: Transaction not found on ledger. Manual verification required.</div>`;
-                        terminal.innerHTML += `<div style="text-align: center;"><a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="ticket-btn">Open Support Ticket</a></div>`;
-                        terminal.scrollTop = terminal.scrollHeight;
-                    }, 1000);
-                }
-            }, 3000); 
+                }, i * logGap + 400));
+            });
+
+            /* Land on the result */
+            payTimers.push(setTimeout(() => {
+                const last = checkEls[checkEls.length - 1];
+                last.classList.remove('active');
+                last.classList.add('done');
+                last.querySelector('.ms').innerText =
+                    (Math.floor(Math.random() * 900) + 180) + 'ms';
+                fill.style.width = '100%';
+            }, total));
+
+            payTimers.push(setTimeout(() => {
+                payStepVerify.classList.add('hidden');
+                payStepResult.classList.remove('hidden');
+                payModal.querySelector('.pay-card').scrollTop = 0;
+            }, total + 900));
         }
 
-        /* --- Payment Flows --- */
-        function showAppPayment() {
-            document.getElementById('app-step-initial').classList.add('hidden');
-            document.getElementById('app-step-payment').classList.remove('hidden');
-        }
-        function verifyAppPayment() {
-            document.getElementById('app-step-payment').classList.add('hidden');
-            document.getElementById('app-step-loading').classList.remove('hidden');
-            const logs = ["Scanning ledger signature...", "Querying RPC architecture...", "Awaiting slot finality...", "Validating license parameters..."];
-            runTerminalLogs('app-terminal', logs, "Payment Verification Failed");
-        }
+        /* Wiring */
+        document.getElementById('pay-verify-btn').addEventListener('click', runPayVerification);
+        document.getElementById('pay-retry-btn').addEventListener('click', () => {
+            payStepResult.classList.add('hidden');
+            payStepSend.classList.remove('hidden');
+        });
+        document.getElementById('pay-copy-amount').addEventListener('click', function () {
+            copyText(document.getElementById('pay-amount-text').innerText.split(' ')[0], this);
+        });
+        document.getElementById('pay-copy-address').addEventListener('click', function () {
+            copyText(PAY_ADDRESS, this);
+        });
+        payModal.querySelectorAll('[data-pay-close]').forEach(el =>
+            el.addEventListener('click', closePay)
+        );
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && payModal.classList.contains('active')) closePay();
+        });
 
-        function showMechaPayment() {
-            document.getElementById('mecha-step-initial').classList.add('hidden');
-            document.getElementById('mecha-step-payment').classList.remove('hidden');
-        }
-        function verifyMechaPayment() {
-            document.getElementById('mecha-step-payment').classList.add('hidden');
-            document.getElementById('mecha-step-loading').classList.remove('hidden');
-            const logs = ["Searching transaction hashes...", "Verifying payload stealth...", "Decrypting license...", "Awaiting sync..."];
-            runTerminalLogs('mecha-terminal', logs, "Payment Verification Failed");
-        }
-
-        function showTokenPayment() {
-            document.getElementById('token-step-initial').classList.add('hidden');
-            document.getElementById('token-step-payment').classList.remove('hidden');
-            updatePreview();
-        }
-        function verifyTokenPayment() {
-            document.getElementById('token-step-payment').classList.add('hidden');
-            document.getElementById('token-step-loading').classList.remove('hidden');
-            const logs = ["Locating deployment tx...", "Verifying SOL distribution...", "Uploading metadata...", "Reserving PDA...", "Allocating Supply..."];
-            runTerminalLogs('token-terminal', logs, "Deployment Verification Failed");
-        }
+        /* Entry points kept under their original names */
+        function showTokenPayment() { openPay('token'); }
+        function showAppPayment()   { openPay('bot'); }
 
         /* --- FOMO Elements --- */
         let currentSpots = localStorage.getItem('wire_licenses_left') || 12;
@@ -1149,7 +2088,7 @@
             for(let i=0; i<4; i++) str2 += chars.charAt(Math.floor(Math.random() * chars.length));
             const wallet = `${str1}...${str2}`;
 
-            const actions = ['purchased the Primary Bot', 'bought the Mecha Chameleon', 'created a new Token', 'executed a multi-wallet snipe'];
+            const actions = ['purchased the Wire Memecoin Bot', 'created a new Token', 'activated Whale Lens', 'executed a multi-wallet snipe'];
             const action = actions[Math.floor(Math.random() * actions.length)];
             
             const toast = document.createElement('div');
@@ -1183,6 +2122,140 @@
             updateSpotsUI();
             setTimeout(triggerFOMOToast, 3000);
         });
+    </script>
+
+    <script>
+        /* ========================================================
+           WIRE — MOTION LAYER
+           Scroll progress, reveals, cursor light, counters, nav.
+           ======================================================== */
+        (function () {
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            /* --- Play the hero intro once the first frame is up --- */
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                document.body.classList.add('loaded');
+            }));
+
+            /* --- Scroll progress bar --- */
+            const bar = document.getElementById('scroll-progress');
+            let ticking = false;
+            function onScroll() {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(() => {
+                    const max = document.documentElement.scrollHeight - window.innerHeight;
+                    bar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+                    ticking = false;
+                });
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+
+            /* --- Reveal on scroll --- */
+            const revealables = document.querySelectorAll('[data-reveal]');
+            if (reduced || !('IntersectionObserver' in window)) {
+                revealables.forEach(el => el.classList.add('revealed'));
+            } else {
+                const revealer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                            revealer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+                revealables.forEach(el => revealer.observe(el));
+            }
+
+            /* --- Cursor light (desktop, pointer devices only) --- */
+            const glow = document.getElementById('cursor-glow');
+            if (!reduced && window.matchMedia('(hover: hover) and (min-width: 900px)').matches) {
+                let tx = window.innerWidth / 2, ty = window.innerHeight / 2, cx = tx, cy = ty;
+                window.addEventListener('pointermove', (e) => {
+                    tx = e.clientX; ty = e.clientY;
+                    document.body.classList.add('pointer-active');
+                }, { passive: true });
+                (function trail() {
+                    cx += (tx - cx) * 0.08;
+                    cy += (ty - cy) * 0.08;
+                    glow.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+                    requestAnimationFrame(trail);
+                })();
+            }
+
+            /* --- Count-up stats --- */
+            function countUp(el) {
+                const target = parseFloat(el.dataset.count);
+                const suffix = el.dataset.suffix || '';
+                if (reduced) { el.textContent = target.toLocaleString() + suffix; return; }
+                const duration = 1600;
+                const start = performance.now();
+                (function step(now) {
+                    const p = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - p, 3);
+                    el.textContent = Math.round(target * eased).toLocaleString() + suffix;
+                    if (p < 1) requestAnimationFrame(step);
+                })(start);
+            }
+            const counters = document.querySelectorAll('[data-count]');
+            if ('IntersectionObserver' in window) {
+                const counterObs = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            countUp(entry.target);
+                            counterObs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.6 });
+                counters.forEach(el => counterObs.observe(el));
+            } else {
+                counters.forEach(countUp);
+            }
+
+            /* --- Mobile menu --- */
+            const toggle = document.getElementById('nav-toggle');
+            const menu = document.getElementById('mobile-menu');
+            function setMenu(open) {
+                document.body.classList.toggle('menu-open', open);
+                toggle.setAttribute('aria-expanded', String(open));
+            }
+            toggle.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
+            menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') setMenu(false);
+            });
+
+            /* --- Active nav link tracking --- */
+            const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+            const sections = navLinks
+                .map(a => document.querySelector(a.getAttribute('href')))
+                .filter(Boolean);
+            if ('IntersectionObserver' in window && sections.length) {
+                const spy = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting) return;
+                        navLinks.forEach(a => a.classList.toggle(
+                            'active', a.getAttribute('href') === '#' + entry.target.id
+                        ));
+                    });
+                }, { rootMargin: '-45% 0px -50% 0px' });
+                sections.forEach(s => spy.observe(s));
+            }
+
+            /* --- Magnetic pull on primary buttons --- */
+            if (!reduced && window.matchMedia('(hover: hover) and (min-width: 900px)').matches) {
+                document.querySelectorAll('.hero-actions a').forEach(btn => {
+                    btn.addEventListener('pointermove', (e) => {
+                        const r = btn.getBoundingClientRect();
+                        const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+                        const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+                        btn.style.transform = `translate(${dx * 8}px, ${dy * 6 - 2}px)`;
+                    });
+                    btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
+                });
+            }
+        })();
     </script>
 </body>
 </html>
