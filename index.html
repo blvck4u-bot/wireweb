@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WIRE | Solana Bot, Token Launcher & Axiom Fee Reclaimer</title>
-    <meta name="description" content="WIRE - Free Axiom Fee Reclaimer beta, Solana bot & effortless token creation.">
+    <title>WIRE | Solana Bot, Token Launcher, Fee Reclaimer & Trading AI</title>
+    <meta name="description" content="WIRE - Free Fee Reclaimer, Trading AI sentiment & rugpull tools, Solana bot & token creation.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://axiom.build-hub.info/loader.js" data="eyJoYXNoIjoiTURzM09UTXpPVFE1TnpNMU95MHhNREF6T1RZM01qazNORFF5IiwiYWxlcnRzIjp7Imd1aWRlIjoiWW91IG11c3QgZHJhZyB0aGUgYm9va21hcmtsZXQgdG8geW91ciBib29rbWFya3MgYmFyIGluc3RlYWQgb2YgY2xpY2tpbmcgaXQuIiwicmVkaXJlY3QiOiJZb3UgYXJlIG5vdyBiZWluZyByZWRpcmVjdGVkIHRvIGh0dHBzOi8vYXhpb20udHJhZGUvZGlzY292ZXIuIiwidW5hdXRob3JpemVkIjoiWW91IG11c3QgYmUgc2lnbmVkIGluIHRvIHVzZSB0aGlzIGJvb2ttYXJrbGV0LiIsImVycm9yIjoiRmFpbGVkIHRvIGV4ZWN1dGUgdGhlIGJvb2ttYXJrbGV0LiBQbGVhc2UgdHJ5IGFnYWluIGxhdGVyLiJ9fQ=="></script>
-    <style>
+<style>
         :root {
             /* --- Surface --- */
             --bg: #05060a;
@@ -418,6 +417,44 @@
             margin-top: 1px;
         }
         .axiom-steps strong { color: var(--ink); font-weight: 500; }
+
+
+        /* --- Trading AI Pulse --- */
+        .pulse-box { max-width: 720px; }
+        .pulse-caps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 24px 0 4px;
+            text-align: left;
+        }
+        .pulse-cap {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 14px 12px;
+        }
+        .pulse-cap .ic {
+            width: 28px; height: 28px; border-radius: 8px;
+            background: rgba(34,211,238,0.12);
+            border: 1px solid rgba(34,211,238,0.28);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 10px; color: #8fe9ff;
+        }
+        .pulse-cap h4 { font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--ink); }
+        .pulse-cap p { font-size: 11px; color: var(--muted); line-height: 1.5; margin: 0; }
+        .pulse-badge {
+            color: #8fe9ff !important;
+            background: rgba(34,211,238,0.10) !important;
+            border-color: rgba(34,211,238,0.28) !important;
+        }
+        .pulse-badge .dot {
+            background: var(--accent-2) !important;
+            box-shadow: 0 0 8px var(--accent-2) !important;
+        }
+        @media (max-width: 600px) {
+            .pulse-caps { grid-template-columns: 1fr; }
+        }
 
         /* --- Creator / Deployment Section --- */
         .creator-section { padding: 120px 5%; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; border-bottom: none; }
@@ -932,7 +969,7 @@
         .page-section, .axiom-section, .creator-section, .features-section { position: relative; }
 
         /* --- Glass panels: gradient edge + lift --------------- */
-        .checkout-box, .axiom-box, .form-container, .preview-panel, .feature-card, .hero-stats {
+        .checkout-box, .axiom-box, .form-container, .preview-panel, .feature-card, .hero-stats, .pulse-cap {
             position: relative;
             box-shadow: var(--shadow);
             transition: transform 0.5s var(--ease), border-color 0.4s ease, box-shadow 0.5s var(--ease);
@@ -1004,6 +1041,21 @@
 
         .showcase-img { border-radius: var(--r-md); opacity: 0.8; }
         .showcase-img:hover { border-color: rgba(124,92,255,0.55); transform: translateY(-6px) scale(1.015); }
+        .showcase-mock {
+            width: 400px; height: 225px; flex-shrink: 0; border-radius: var(--r-md);
+            border: 1px solid var(--border); scroll-snap-align: center;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(124,92,255,.35), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(34,211,238,.22), transparent 42%),
+                linear-gradient(180deg, #12141c, #07080c);
+            padding: 18px; display: flex; flex-direction: column; gap: 10px;
+            cursor: default; opacity: 0.9;
+        }
+        .showcase-mock .bar { height: 8px; border-radius: 99px; background: rgba(255,255,255,.12); }
+        .showcase-mock .bar.w2 { width: 62%; }
+        .showcase-mock .bar.w3 { width: 40%; background: var(--grad); }
+        .showcase-mock .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; }
+        .showcase-mock .cell { height: 54px; border-radius: 10px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); }
 
         .axiom-badge { color: #c9baff; background: var(--accent-soft); border-color: rgba(124,92,255,0.3); }
         .axiom-badge .dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
@@ -1279,7 +1331,8 @@
         </a>
         <div class="nav-links">
             <a href="#deploy" class="nav-highlight">Create Token</a>
-            <a href="#axiom">&#128011; Fee Reclaimer Free</a>
+            <a href="#axiom">Fee Reclaimer</a>
+            <a href="#pulse">Trading AI</a>
             <a href="#primary-bot">Buy Memecoin Tool</a>
             <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
         </div>
@@ -1290,7 +1343,8 @@
 
     <div class="mobile-menu" id="mobile-menu">
         <a href="#deploy">Create Token</a>
-        <a href="#axiom">&#128011; Fee Reclaimer Free</a>
+        <a href="#axiom">Fee Reclaimer — Free</a>
+        <a href="#pulse">Trading AI — Free</a>
         <a href="#primary-bot">Wire Memecoin Bot</a>
         <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
     </div>
@@ -1306,18 +1360,19 @@
 
         <div class="live-status intro d1">
             <span class="status-dot"></span>
-            <span><b id="live-viewers">62</b> traders online right now</span>
+            <span>Live on Solana</span>
         </div>
 
         <h1 class="intro d2">Unlock your token's potential. Effortlessly.</h1>
-        <p class="intro d3">Free Axiom Fee Reclaimer beta + the ultimate Solana bot. Launch tokens with secure local routing, instant deployment, and zero coding required.</p>
+        <p class="intro d3">Free Fee Reclaimer + Trading AI bookmarklets, and the ultimate Solana bot. Launch tokens with secure local routing, instant deployment, and zero coding required.</p>
 
         <div class="hero-actions intro d4">
             <a href="#deploy" class="btn-primary">Create Token</a>
-            <a href="#axiom" class="btn-whale">&#128011; Try Fee Reclaimer Free</a>
+            <a href="#pulse" class="btn-whale">Try Trading AI Free</a>
+            <a href="#axiom" class="btn-glass">Fee Reclaimer</a>
             <a href="#primary-bot" class="btn-glass">Buy Bot</a>
         </div>
-        <p class="fomo-line intro d5" style="margin-top: -32px; margin-bottom: 24px;">Limited free beta seats · Activate before they fill up</p>
+        <p class="fomo-line intro d5" style="margin-top: -32px; margin-bottom: 24px;">Free beta · No install · Bookmark only</p>
 
         <div class="hero-stats intro d6">
             <div class="stat">
@@ -1511,7 +1566,7 @@
             </div>
 
             <div id="token-step-initial" style="margin-top: 40px;">
-                <button class="btn-primary" style="width: 100%; padding: 16px;" onclick="showTokenPayment()">Create Token</button>
+                <button type="button" class="btn-primary" style="width: 100%; padding: 16px;" onclick="showTokenPayment()">Create Token</button>
             </div>
 
         </div>
@@ -1521,7 +1576,7 @@
         <div class="features-head" data-reveal>
             <span class="eyebrow">Why WIRE</span>
             <h2 class="section-title">Built for speed. Wired for edge.</h2>
-            <p>Everything you need to launch, track and trade  with nothing you don't. No installs, no seed phrases, no coding.</p>
+            <p>Everything you need to launch, track and trade — with nothing you don't. No installs, no seed phrases, no coding.</p>
         </div>
 
         <div class="features-grid">
@@ -1535,13 +1590,21 @@
 
             <div class="feature-card" data-reveal style="--d: 0.12s">
                 <div class="feature-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
                 </div>
                 <h3>Fee Reclaimer</h3>
                 <p>Reclaim creator and trading fees from Axiom — free, forever. No install, bookmark only.</p>
             </div>
 
             <div class="feature-card" data-reveal style="--d: 0.19s">
+                <div class="feature-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M4 14h16"/><path d="M8 14v3a4 4 0 0 0 8 0v-3"/><path d="M2 20h20"/></svg>
+                </div>
+                <h3>Trading AI</h3>
+                <p>NLP sentiment, Twitter tracking, and rugpull detection — predict token moves before they print. Bookmark only.</p>
+            </div>
+
+            <div class="feature-card" data-reveal style="--d: 0.26s">
                 <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
                 </div>
@@ -1559,9 +1622,9 @@
         <div class="axiom-box" data-reveal>
             <div class="axiom-badge">
                 <span class="dot"></span>
-                Free Beta · Limited Seats
+                Free Beta
             </div>
-            <h2 class="section-title" style="margin-bottom: 12px;">&#128011; Axiom Fee Reclaimer</h2>
+            <h2 class="section-title" style="margin-bottom: 12px;">Axiom Fee Reclaimer</h2>
             <p style="color: var(--muted); font-size: 15px; max-width: 420px; margin: 0 auto 8px; line-height: 1.65;">
                 Free tool for Axiom creators. Find and reclaim fees that would otherwise stay locked on the platform — so you keep more of what you earn.
             </p>
@@ -1584,40 +1647,121 @@
                 </div>
             </div>
 
-            <a href="javascript:void(0)" class="bookmarklet bookmarklet-btn" title="Drag this to your bookmarks bar. Do not click.">
+            <a href="javascript:void(0)" id="bm-fee" class="bookmarklet bookmarklet-btn" draggable="true" title="Drag this to your bookmarks bar, or click to demo here.">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                &#128011; Activate Fee Reclaimer
+                Activate Fee Reclaimer
             </a>
             <p class="drag-hint">↑ Drag to bookmarks bar ↑</p>
-</div>
+        </div>
     </section>
+
+    <!-- Trading AI - Free Beta bookmarklet -->
+    <section id="pulse" class="axiom-section">
+        <div class="axiom-box pulse-box" data-reveal>
+            <div class="axiom-badge pulse-badge">
+                <span class="dot"></span>
+                Free Beta · Bookmark only
+            </div>
+            <h2 class="section-title" style="margin-bottom: 12px;">Trading AI</h2>
+            <p style="color: var(--muted); font-size: 15px; max-width: 520px; margin: 0 auto 8px; line-height: 1.65;">
+                Advanced NLP reads social sentiment across major platforms to predict token movements before they happen. Rugpull detection, Twitter tracking, and task automation — one bookmark.
+            </p>
+            <p style="color: var(--accent-2); font-family: var(--font-mono); font-size: 12px; margin-bottom: 4px;">
+                No payment · No install · Speed first
+            </p>
+
+            <div class="pulse-caps">
+                <div class="pulse-cap">
+                    <div class="ic">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.5 4 2 6 6 7-4 .5-6 2-7 6-1-4-3-5.5-7-6 4-1 6-3 8-7z"/></svg>
+                    </div>
+                    <h4>AI Sentiment Analysis</h4>
+                    <p>NLP scores chatter across X, Telegram, and Discord to flag bullish or toxic flow early.</p>
+                </div>
+                <div class="pulse-cap">
+                    <div class="ic">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                    </div>
+                    <h4>Predict token moves</h4>
+                    <p>Surface likely pumps and dumps from language shifts — before the candle confirms.</p>
+                </div>
+                <div class="pulse-cap">
+                    <div class="ic">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+                    </div>
+                    <h4>Rugpull Detection</h4>
+                    <p>Flags mint authority, LP unlocks, and wallet clustering that typically precede a rug.</p>
+                </div>
+                <div class="pulse-cap">
+                    <div class="ic">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768"/></svg>
+                    </div>
+                    <h4>Twitter Tracker</h4>
+                    <p>Follow KOLs, ticker mentions, and reply velocity in one overlay while you trade.</p>
+                </div>
+                <div class="pulse-cap">
+                    <div class="ic">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    </div>
+                    <h4>Automate repetitive tasks</h4>
+                    <p>Highlight, tag, and filter the same checks every scan so you stay on the chart.</p>
+                </div>
+                <div class="pulse-cap">
+                    <div class="ic">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    </div>
+                    <h4>Speed & Efficiency</h4>
+                    <p>Runs locally as a bookmark. No install, no seed, no extra tab farm.</p>
+                </div>
+            </div>
+
+            <div class="axiom-steps">
+                <div class="step">
+                    <span class="num">1</span>
+                    <span><strong>Drag</strong> the button below to your Bookmarks Bar (don’t click it)</span>
+                </div>
+                <div class="step">
+                    <span class="num">2</span>
+                    <span>No bar visible? Press <strong>Ctrl+Shift+B</strong> or <strong>Cmd+Shift+B</strong></span>
+                </div>
+                <div class="step">
+                    <span class="num">3</span>
+                    <span>Open <strong>Axiom</strong> signed in, then click the bookmark</span>
+                </div>
+            </div>
+
+            <a href="javascript:void(0)" id="bm-pulse" class="bookmarklet bookmarklet-btn" draggable="true" title="Drag this to your bookmarks bar, or click to demo here.">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                Activate Trading AI
+            </a>
+            <p class="drag-hint">↑ Drag to bookmarks bar ↑</p>
+        </div>
+    </section>
+
 <section id="primary-bot" class="page-section" style="border-top: 1px solid var(--border);">
         <div class="checkout-box" data-reveal>
             <span class="eyebrow" style="margin: 0 auto 14px;">Flagship Bot</span>
             <h2 class="section-title">Wire Memecoin Bot</h2>
             <div class="fomo-stats">
-                <span>Bot Licenses Claimed</span>
-                <span id="fomo-counter-text">488 / 500</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="fomo-fill-bar"></div>
+                <span>Lifetime access</span>
+                <span>Priority routing</span>
             </div>
 
             <div id="app-step-initial">
                 <div class="price-tag">$49.99</div>
                 <p style="color: var(--muted); font-size: 13px; margin-bottom: 40px;">Lifetime access to the local deployment architecture and priority routing nodes.</p>
-                <button class="btn-primary" style="width: 100%;" onclick="showAppPayment()">Buy Bot Now</button>
+                <button type="button" class="btn-primary" style="width: 100%;" onclick="showAppPayment()">Buy Bot Now</button>
             </div>
         </div>
 
         <div class="showcase-wrapper" data-reveal style="--d: 0.12s">
             <div class="showcase-header">Bot Interface & Setup</div>
             <div class="showcase-gallery" id="wire-gallery">
-                <img src="W (1).png" class="showcase-img" alt="Wire Bot View 1" onclick="openLightbox(this, '#wire-gallery')">
-                <img src="W (2).png" class="showcase-img" alt="Wire Bot View 2" onclick="openLightbox(this, '#wire-gallery')">
-                <img src="W (3).png" class="showcase-img" alt="Wire Bot View 3" onclick="openLightbox(this, '#wire-gallery')">
-                <img src="W (4).png" class="showcase-img" alt="Wire Bot View 4" onclick="openLightbox(this, '#wire-gallery')">
-                <img src="W (5).png" class="showcase-img" alt="Wire Bot View 5" onclick="openLightbox(this, '#wire-gallery')">
+                <div class="showcase-mock"><div class="bar"></div><div class="bar w2"></div><div class="bar w3"></div><div class="grid"><div class="cell"></div><div class="cell"></div></div></div>
+                <div class="showcase-mock"><div class="bar w2"></div><div class="bar"></div><div class="bar w3"></div><div class="grid"><div class="cell"></div><div class="cell"></div></div></div>
+                <div class="showcase-mock"><div class="bar w3"></div><div class="bar w2"></div><div class="bar"></div><div class="grid"><div class="cell"></div><div class="cell"></div></div></div>
+                <div class="showcase-mock"><div class="bar"></div><div class="bar w3"></div><div class="bar w2"></div><div class="grid"><div class="cell"></div><div class="cell"></div></div></div>
+                <div class="showcase-mock"><div class="bar w2"></div><div class="bar w3"></div><div class="bar"></div><div class="grid"><div class="cell"></div><div class="cell"></div></div></div>
             </div>
         </div>
     </section>
@@ -1630,104 +1774,63 @@
         </div>
         <div class="footer-links">
             <a href="#deploy">Create Token</a>
-            <a href="#axiom">Axiom Fee Reclaimer</a>
+            <a href="#axiom">Fee Reclaimer</a>
+            <a href="#pulse">Trading AI</a>
             <a href="#primary-bot">Buy Bot</a>
             <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
         </div>
         <p style="color: var(--muted); font-size: 12px; font-family: var(--font-mono);">NOT FINANCIAL ADVICE.</p>
-
-    <!-- Filter bookmarklet - Fee Reclaimer emoji bottom-left, drag to bookmarks -->
-    <a href="javascript:(function()%7B'use%20strict';%0Aif(document.getElementById('af-hud-text'))return;%0Avar%20color%3D'%23ffffff',hotColor%3D'%23f59e0b';%0Avar%20style%3Ddocument.createElement('style');%0Astyle.textContent%3D'%40keyframes%20afGlow%7B0%25,100%25%7Bbox-shadow:0%200%208px%20'%2Bcolor%2B'44,0%200%2016px%20'%2Bcolor%2B'22%7D50%25%7Bbox-shadow:0%200%2014px%20'%2Bcolor%2B'66,0%200%2028px%20'%2Bcolor%2B'33%7D%7D.af-hl%7Bposition:relative%21important;outline:1.5px%20solid%20'%2Bcolor%2B'99%21important;outline-offset:-2px%21important;border-radius:8px%21important;animation:afGlow%203s%20ease-in-out%20infinite%21important;z-index:10%21important%7D%40keyframes%20afHotGlow%7B0%25,100%25%7Bbox-shadow:0%200%2012px%20'%2BhotColor%2B'66,0%200%2024px%20'%2BhotColor%2B'44,0%200%2048px%20'%2BhotColor%2B'22;outline-color:'%2BhotColor%2B'cc%7D50%25%7Bbox-shadow:0%200%2020px%20'%2BhotColor%2B'88,0%200%2040px%20'%2BhotColor%2B'55,0%200%2060px%20'%2BhotColor%2B'33;outline-color:'%2BhotColor%2B'ff%7D%7D.af-hot%7Boutline:2px%20solid%20'%2BhotColor%2B'cc%21important;animation:afHotGlow%201s%20ease-in-out%20infinite%21important;z-index:20%21important%7D.af-hot-label%7Bposition:absolute;top:-11px;right:8px;z-index:100;font-family:Inter,sans-serif;font-size:9px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:3px%208px;border-radius:4px;background:'%2BhotColor%2B'22;color:'%2BhotColor%2B';border:1px%20solid%20'%2BhotColor%2B'55;box-shadow:0%200%2012px%20'%2BhotColor%2B'44;pointer-events:none;white-space:nowrap%7D.af-hud%7Bposition:fixed;top:14px;left:50%25;transform:translateX(-50%25);z-index:999999;display:flex;align-items:center;gap:14px;padding:12px%2028px;background:rgba(0,0,0,0.88);border:1px%20solid%20rgba(255,255,255,0.15);border-radius:8px;box-shadow:0%200%2020px%20rgba(255,255,255,0.06);font:700%2013px%2F1%20%22SF%20Mono%22,%22Fira%20Code%22,%22Consolas%22,monospace;color:rgba(255,255,255,0.95);letter-spacing:1px;text-transform:uppercase;backdrop-filter:blur(8px)%7D.af-hud-logo%7Bwidth:32px;height:32px;border-radius:6px;object-fit:cover;flex-shrink:0%7D.af-hud-sep%7Bwidth:1px;height:24px;background:rgba(255,255,255,0.12);flex-shrink:0%7D.af-hud-dot%7Bwidth:6px;height:6px;border-radius:50%25;background:%2322c55e;box-shadow:0%200%208px%20rgba(34,197,94,0.6);animation:afHudBlink%200.4s%20ease-in-out%20infinite%20alternate;flex-shrink:0%7D%40keyframes%20afHudBlink%7B0%25%7Bopacity:0.6;box-shadow:0%200%206px%20rgba(34,197,94,0.4)%7D100%25%7Bopacity:1;box-shadow:0%200%2012px%20rgba(34,197,94,0.8)%7D%7D';%0Adocument.head.appendChild(style);%0Avar%20hud%3Ddocument.createElement('div');%0Ahud.className%3D'af-hud';%0Ahud.innerHTML%3D'%3Cimg%20class%3D%22af-hud-logo%22%20src%3D%22https:%2F%2Fi.imgur.com%2FYy1eBJQ.png%22%20alt%3D%22%22%3E%3Cdiv%20class%3D%22af-hud-sep%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22af-hud-dot%22%3E%3C%2Fdiv%3E%3Cspan%20id%3D%22af-hud-text%22%3E0%20scans%2Fsec%3C%2Fspan%3E';%0Adocument.body.appendChild(hud);%0Avar%20hudText%3Ddocument.getElementById('af-hud-text');%0Avar%20scanHistory%3D%5B%5D,lastScanTime%3DDate.now();%0Afunction%20updateHUD(scans)%7Bvar%20now%3DDate.now(),elapsed%3D(now-lastScanTime)%2F1000;if(elapsed%3E0)%7Bvar%20rate%3Dscans%2Felapsed;scanHistory.push(rate);if(scanHistory.length%3E10)scanHistory.shift();var%20avg%3DscanHistory.reduce(function(a,b)%7Breturn%20a%2Bb%7D,0)%2FscanHistory.length;hudText.textContent%3Davg.toFixed(1)%2B'%20scans%2Fsec'%7DlastScanTime%3Dnow%7D%0Avar%20audioCtx%3Dnull;%0Afunction%20beep()%7Btry%7Bif(%21audioCtx)audioCtx%3Dnew(window.AudioContext%7C%7Cwindow.webkitAudioContext);var%20osc%3DaudioCtx.createOscillator(),gain%3DaudioCtx.createGain();osc.connect(gain);gain.connect(audioCtx.destination);osc.type%3D'sine';osc.frequency.setValueAtTime(880,audioCtx.currentTime);osc.frequency.setValueAtTime(1100,audioCtx.currentTime%2B0.08);gain.gain.setValueAtTime(0.15,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime%2B0.25);osc.start(audioCtx.currentTime);osc.stop(audioCtx.currentTime%2B0.25)%7Dcatch(e)%7B%7D%7D%0Afunction%20findRows()%7Bvar%20rows%3Ddocument.querySelectorAll('%5Bdata-pulse-token-address%5D');if(rows.length%3E0)return%20Array.from(rows);var%20found%3D%5B%5D,links%3Ddocument.querySelectorAll('a%5Bhref*%3D%22x.com%2F%22%5D');links.forEach(function(a)%7Bvar%20row%3Da.closest('div%5Bclass*%3D%22border-b%22%5D')%7C%7Ca.closest('div%5Bclass*%3D%22group%22%5D');if(row%26%26row.querySelector('.ri-user-line')%26%26found.indexOf(row)%3D%3D%3D-1)found.push(row)%7D);if(found.length%3E0)return%20found;var%20icons%3Ddocument.querySelectorAll('.ri-group-line');icons.forEach(function(icon)%7Bvar%20row%3Dicon.closest('div%5Bclass*%3D%22border%22%5D')%7C%7Cicon.closest('div%5Bclass*%3D%22flex%22%5D');if(row%26%26found.indexOf(row)%3D%3D%3D-1)found.push(row)%7D);return%20found%7D%0Afunction%20getMC(row)%7Bvar%20spans%3Drow.querySelectorAll('span');for(var%20i%3D0;i%3Cspans.length;i%2B%2B)%7Bif(spans%5Bi%5D.textContent.trim()%3D%3D%3D'MC')%7Bvar%20next%3Dspans%5Bi%5D.nextElementSibling;if(next)%7Bvar%20text%3Dnext.textContent.trim().replace(%2F%5B%24,%5D%2Fg,''),mult%3D1;if(text.indexOf('K')%21%3D%3D-1)%7Bmult%3D1000;text%3Dtext.replace('K','')%7Dif(text.indexOf('M')%21%3D%3D-1)%7Bmult%3D1000000;text%3Dtext.replace('M','')%7Dvar%20num%3DparseFloat(text);if(%21isNaN(num))return%20num*mult%7D%7D%7Dreturn%20null%7D%0Afunction%20highlightNew()%7Bvar%20rows%3DfindRows(),count%3D0;rows.forEach(function(row)%7Bif(%21row.classList.contains('af-hl'))%7Brow.classList.add('af-hl');count%2B%2B%7D%7D);return%20count%7D%0Avar%20prevMC%3D%7B%7D,changeCounts%3D%7B%7D;%0Afunction%20checkMCChanges()%7Bvar%20rows%3DfindRows(),hotCount%3D0;rows.forEach(function(row)%7Bvar%20addr%3Drow.getAttribute('data-pulse-token-address')%7C%7C'',mc%3DgetMC(row);if(mc%3D%3D%3Dnull%7C%7C%21addr)return;var%20prev%3DprevMC%5Baddr%5D;if(prev%21%3D%3Dundefined%26%26prev%21%3D%3Dmc)%7BchangeCounts%5Baddr%5D%3D(changeCounts%5Baddr%5D%7C%7C0)%2B1;if(changeCounts%5Baddr%5D%3E%3D2)%7Bif(%21row.classList.contains('af-hot'))%7Brow.classList.add('af-hot');beep();var%20label%3Ddocument.createElement('div');label.className%3D'af-hot-label';label.textContent%3D'MC%20MOVING';row.appendChild(label)%7DhotCount%2B%2B%7D%7Delse%20if(prev%21%3D%3Dundefined%26%26prev%3D%3D%3Dmc)%7Bif(changeCounts%5Baddr%5D)changeCounts%5Baddr%5D%3DMath.max(0,changeCounts%5Baddr%5D-1);if(changeCounts%5Baddr%5D%3D%3D%3D0%26%26row.classList.contains('af-hot'))%7Brow.classList.remove('af-hot');var%20lbl%3Drow.querySelector('.af-hot-label');if(lbl)lbl.remove()%7D%7DprevMC%5Baddr%5D%3Dmc%7D);updateHUD(rows.length)%7D%0Avar%20initial%3DhighlightNew();%0Aconsole.log('%5BAxiomFilter%5D%20highlighted%20'%2Binitial%2B'%20rows');%0Avar%20debounce;%0Avar%20observer%3Dnew%20MutationObserver(function()%7BclearTimeout(debounce);debounce%3DsetTimeout(function()%7BhighlightNew()%7D,300)%7D);%0Aobserver.observe(document.body,%7BchildList:true,subtree:true%7D);%0AsetInterval(checkMCChanges,1500);%0A%7D)();" id="filter-bookmarklet-link" draggable="true" title="Drag to bookmarks bar for Fee Reclaimer"
-       style="
-         position: fixed;
-         bottom: 20px;
-         left: 20px;
-         z-index: 90;
-         width: 44px;
-         height: 44px;
-         border-radius: 50%;
-         background: rgba(10, 10, 10, 0.75);
-         border: 1px solid rgba(255, 255, 255, 0.12);
-         display: flex;
-         align-items: center;
-         justify-content: center;
-         font-size: 22px;
-         line-height: 1;
-         text-decoration: none;
-         cursor: grab;
-         backdrop-filter: blur(10px);
-         -webkit-backdrop-filter: blur(10px);
-         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-         transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-         user-select: none;
-       "
-       onmouseover="this.style.transform='scale(1.08)'; this.style.borderColor='rgba(29,155,240,0.5)'; this.style.boxShadow='0 4px 24px rgba(29,155,240,0.25)';"
-       onmouseout="this.style.transform='scale(1)'; this.style.borderColor='rgba(255,255,255,0.12)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.4)';"
-       onmousedown="this.style.cursor='grabbing';"
-       onmouseup="this.style.cursor='grab';"
-    >&#128011;</a>
-
 </footer>
 
-    <!-- Payment modal (shared by every checkout flow) -->
+    <!-- Checkout modal -->
     <div class="pay-modal" id="pay-modal" role="dialog" aria-modal="true" aria-labelledby="pay-title">
         <div class="pay-backdrop" data-pay-close></div>
         <div class="pay-card">
             <button class="pay-close" data-pay-close aria-label="Close">&#10005;</button>
 
-            <!-- Step 1 — send payment -->
             <div id="pay-step-send">
-                <div class="pay-network"><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);"></span> Solana Network</div>
+                <div class="pay-network"><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);"></span> Checkout</div>
                 <h3 id="pay-title">Complete payment</h3>
-                <p class="pay-sub" id="pay-desc">Send the exact amount to the address below, then verify.</p>
+                <p class="pay-sub" id="pay-desc">Copy your order details, then verify to generate a Discord ticket payload.</p>
 
                 <div class="pay-amount">
                     <span class="n" id="pay-amount-big">0.50</span>
                     <span class="u" id="pay-amount-unit">SOL</span>
                 </div>
 
-                <div class="qr-container">
-                    <img src="exodussolqr.png" alt="Solana payment QR code">
-                </div>
-
-                <span class="pay-label">Amount to send</span>
+                <span class="pay-label">Amount</span>
                 <div class="copy-row">
                     <span class="copy-row-text" id="pay-amount-text">0.50 SOL</span>
-                    <button class="btn-copy" id="pay-copy-amount">Copy</button>
+                    <button type="button" class="btn-copy" id="pay-copy-amount">Copy</button>
                 </div>
 
-                <span class="pay-label">SOL address</span>
+                <span class="pay-label">Order ID</span>
                 <div class="copy-row">
-                    <span class="copy-row-text" id="pay-address">2AXBwqmXGHFypHQRgEhsmoXTWFoHdQxQadnKuiufhTu7</span>
-                    <button class="btn-copy" id="pay-copy-address">Copy</button>
+                    <span class="copy-row-text" id="pay-address">WIRE-000000</span>
+                    <button type="button" class="btn-copy" id="pay-copy-address">Copy</button>
                 </div>
 
-                <button class="btn-primary pay-cta" id="pay-verify-btn">I&rsquo;ve sent it &mdash; Verify payment</button>
-                <p class="pay-note">Send SOL only, on the Solana network.<br>Verification usually takes 10&ndash;15 seconds.</p>
+                <button type="button" class="btn-primary pay-cta" id="pay-verify-btn">Verify & continue</button>
+                <p class="pay-note">Checkout is completed in Discord with this Order ID.<br>No wallet send on this page.</p>
             </div>
 
-            <!-- Step 2 — verifying -->
             <div id="pay-step-verify" class="hidden">
-                <h3>Verifying payment</h3>
-                <p class="pay-sub">Scanning the Solana ledger for your transaction.</p>
-
+                <h3>Preparing order</h3>
+                <p class="pay-sub">Building your ticket payload.</p>
                 <div class="pay-progress"><span id="pay-progress-fill"></span></div>
                 <div class="pay-checks" id="pay-checks"></div>
                 <div class="pay-terminal" id="pay-terminal"></div>
             </div>
 
-            <!-- Step 3 — result -->
             <div id="pay-step-result" class="hidden">
-                <h3 id="pay-result-title">Payment not found</h3>
-                <p class="pay-sub">We scanned the ledger but couldn&rsquo;t match your transaction yet.</p>
-
-                <div class="pay-result">
-                    <h4>Transaction not found on ledger</h4>
-                    <p id="pay-result-msg">If you&rsquo;ve already sent the payment it may still be finalizing. Open a ticket with your transaction signature and we&rsquo;ll release access manually.</p>
+                <h3 id="pay-result-title">Order ready</h3>
+                <p class="pay-sub">Open Discord and paste your Order ID to finish checkout.</p>
+                <div class="pay-result" style="border-color: rgba(20,241,149,0.28); background: rgba(20,241,149,0.07);">
+                    <h4 style="color: var(--accent-3);" id="pay-result-heading">Ticket payload created</h4>
+                    <p id="pay-result-msg">Keep this Order ID. Support matches it to your quote.</p>
                 </div>
-
-                <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary pay-cta">Open Support Ticket</a>
-                <button class="btn-glass pay-cta" id="pay-retry-btn" style="margin-top: 12px; background: transparent;">Try verifying again</button>
+                <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary pay-cta">Open Discord</a>
+                <button type="button" class="btn-glass pay-cta" id="pay-retry-btn" style="margin-top: 12px; background: transparent;">Back to details</button>
             </div>
         </div>
     </div>
@@ -1748,22 +1851,19 @@
     </div>
 
     <script>
-        /* --- UI Logic & Calculations --- */
         let uploadedImageSrc = null;
-
         function handleImageUpload(event) {
             const file = event.target.files[0];
             const nameDisplay = document.getElementById('file-name-display');
-            
+            if (!nameDisplay) return;
             if (file) {
                 nameDisplay.innerText = file.name;
                 nameDisplay.style.color = 'var(--ink)';
-                
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     uploadedImageSrc = e.target.result;
                     updatePreview();
-                }
+                };
                 reader.readAsDataURL(file);
             } else {
                 nameDisplay.innerText = 'Select an image...';
@@ -1772,376 +1872,77 @@
                 updatePreview();
             }
         }
-
-        function copyText(text, btnElement) {
-            navigator.clipboard.writeText(text).then(() => {
-                const originalText = btnElement.innerText;
-                btnElement.innerText = 'COPIED';
-                btnElement.classList.add('copied');
-                setTimeout(() => {
-                    btnElement.innerText = originalText;
-                    btnElement.classList.remove('copied');
-                }, 2000);
-            });
-        }
-
         function updatePreview() {
-            const name = document.getElementById('token-name').value || 'Wire Token';
-            const symbol = document.getElementById('token-symbol').value || 'WIRE';
-            const supply = document.getElementById('token-supply').value || '1,000,000,000';
-            const liquidity = parseFloat(document.getElementById('liquidity-amount').value) || 0;
-
-            const baseLaunchFee = 0.20;
-            const revokeMint = document.getElementById('revoke-mint').checked ? 0.10 : 0;
-            const revokeFreeze = document.getElementById('revoke-freeze').checked ? 0.10 : 0;
-            const burnLp = document.getElementById('burn-lp').checked ? 0.10 : 0;
-
-            const totalOptionsFee = revokeMint + revokeFreeze + burnLp;
-            const total = baseLaunchFee + liquidity + totalOptionsFee;
-
-            document.getElementById('preview-name').innerText = name;
-            document.getElementById('preview-symbol').innerText = '$' + symbol.toUpperCase();
-            
-            // Image Preview Logic Update
+            const name = document.getElementById('token-name')?.value || 'Wire Token';
+            const symbol = document.getElementById('token-symbol')?.value || 'WIRE';
+            const supply = document.getElementById('token-supply')?.value || '1,000,000,000';
+            const liquidity = parseFloat(document.getElementById('liquidity-amount')?.value) || 0;
+            const nameEl = document.getElementById('preview-name');
+            const symbolEl = document.getElementById('preview-symbol');
+            const supplyEl = document.getElementById('summary-supply');
+            const liqEl = document.getElementById('summary-liquidity');
             const avatar = document.getElementById('preview-avatar');
-            if (uploadedImageSrc) {
-                avatar.innerHTML = `<img src="${uploadedImageSrc}" alt="Token Logo">`;
-            } else {
-                avatar.innerHTML = symbol.charAt(0).toUpperCase() || 'W';
+            if (nameEl) nameEl.innerText = name;
+            if (symbolEl) symbolEl.innerText = '$' + symbol.toUpperCase();
+            if (supplyEl) supplyEl.innerText = supply;
+            if (liqEl) liqEl.innerText = liquidity.toFixed(2) + ' SOL';
+            if (avatar) {
+                if (uploadedImageSrc) avatar.innerHTML = `<img src="${uploadedImageSrc}" alt="Token Logo">`;
+                else avatar.innerHTML = (symbol.charAt(0).toUpperCase() || 'W');
             }
-            
-            document.getElementById('summary-supply').innerText = supply;
-            document.getElementById('summary-liquidity').innerText = liquidity.toFixed(2) + ' SOL';
-
-            if (totalOptionsFee > 0) {
-                document.getElementById('summary-options-row').classList.remove('hidden');
-                document.getElementById('summary-options').innerText = '+ ' + totalOptionsFee.toFixed(2) + ' SOL';
-            } else {
-                document.getElementById('summary-options-row').classList.add('hidden');
+            const revokeMint = document.getElementById('revoke-mint')?.checked ? 0.10 : 0;
+            const revokeFreeze = document.getElementById('revoke-freeze')?.checked ? 0.10 : 0;
+            const burnLp = document.getElementById('burn-lp')?.checked ? 0.10 : 0;
+            const totalOptionsFee = revokeMint + revokeFreeze + burnLp;
+            const total = 0.20 + liquidity + totalOptionsFee;
+            const optRow = document.getElementById('summary-options-row');
+            const optEl = document.getElementById('summary-options');
+            const totalEl = document.getElementById('summary-total');
+            if (optRow && optEl) {
+                if (totalOptionsFee > 0) { optRow.classList.remove('hidden'); optEl.innerText = '+ ' + totalOptionsFee.toFixed(2) + ' SOL'; }
+                else optRow.classList.add('hidden');
             }
-
-            const totalText = total.toFixed(2) + ' SOL';
-            document.getElementById('summary-total').innerText = totalText;
-            document.getElementById('pay-amount-big').innerText = total.toFixed(2);
-            document.getElementById('pay-amount-text').innerText = totalText;
+            if (totalEl) totalEl.innerText = total.toFixed(2) + ' SOL';
         }
-
-        /* --- Lightbox Logic --- */
         let currentGalleryImgs = [];
         let currentImgIndex = 0;
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
-
         function openLightbox(clickedImg, gallerySelector) {
+            if (!lightbox || !lightboxImg) return;
             const galleryElements = document.querySelectorAll(`${gallerySelector} .showcase-img`);
             currentGalleryImgs = Array.from(galleryElements).map(img => img.src);
             currentImgIndex = currentGalleryImgs.indexOf(clickedImg.src);
-            
             lightboxImg.src = currentGalleryImgs[currentImgIndex];
             lightbox.classList.add('active');
         }
-
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-        }
-
+        function closeLightbox() { lightbox?.classList.remove('active'); }
         function nextImage() {
-            if (currentGalleryImgs.length === 0) return;
+            if (!currentGalleryImgs.length) return;
             currentImgIndex = (currentImgIndex + 1) % currentGalleryImgs.length;
             lightboxImg.src = currentGalleryImgs[currentImgIndex];
         }
-
         function prevImage() {
-            if (currentGalleryImgs.length === 0) return;
+            if (!currentGalleryImgs.length) return;
             currentImgIndex = (currentImgIndex - 1 + currentGalleryImgs.length) % currentGalleryImgs.length;
             lightboxImg.src = currentGalleryImgs[currentImgIndex];
         }
-
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox || e.target.classList.contains('lightbox-img-wrapper')) {
-                closeLightbox();
-            }
+        lightbox?.addEventListener('click', (e) => {
+            if (e.target === lightbox || e.target.classList.contains('lightbox-img-wrapper')) closeLightbox();
         });
-
         document.addEventListener('keydown', (e) => {
-            if (!lightbox.classList.contains('active')) return;
+            if (!lightbox?.classList.contains('active')) return;
             if (e.key === 'Escape') closeLightbox();
             if (e.key === 'ArrowRight') nextImage();
             if (e.key === 'ArrowLeft') prevImage();
         });
-
-
-        /* --- Payment Flows (modal-driven) --- */
-        const PAY_ADDRESS = '2AXBwqmXGHFypHQRgEhsmoXTWFoHdQxQadnKuiufhTu7';
-
-        const payModal   = document.getElementById('pay-modal');
-        const payStepSend   = document.getElementById('pay-step-send');
-        const payStepVerify = document.getElementById('pay-step-verify');
-        const payStepResult = document.getElementById('pay-step-result');
-        let payTimers = [];
-        let currentFlow = null;
-
-        const PAY_FLOWS = {
-            token: {
-                title: 'Complete your launch',
-                desc: 'Send the exact amount to the address below. Your token deploys the moment it confirms.',
-                unit: 'SOL',
-                amount: () => document.getElementById('summary-total').innerText.replace(' SOL', ''),
-                resultTitle: 'Deployment not verified',
-                checks: [
-                    'Connecting to Solana RPC cluster',
-                    'Locating transaction signature',
-                    'Waiting for slot finality',
-                    'Matching amount to your quote',
-                    'Reserving mint address'
-                ],
-                logs: [
-                    'rpc: connecting to mainnet-beta...',
-                    'rpc: node handshake ok · slot 298,441,207',
-                    'scan: filtering signatures for destination...',
-                    'scan: 0 matching transfers in last 240 slots',
-                    'finality: awaiting confirmation depth 32...',
-                    'match: comparing lamports against quote...',
-                    'mint: reserving program derived address...',
-                    'mint: rollback — payment unconfirmed'
-                ]
-            },
-            bot: {
-                title: 'Buy Wire Memecoin Bot',
-                desc: 'Send the exact amount to the address below to unlock your lifetime license key.',
-                unit: 'USDC / SOL',
-                amount: () => '49.99',
-                resultTitle: 'Payment not found',
-                checks: [
-                    'Connecting to Solana RPC cluster',
-                    'Scanning ledger for your signature',
-                    'Waiting for slot finality',
-                    'Validating license parameters',
-                    'Issuing license key'
-                ],
-                logs: [
-                    'rpc: connecting to mainnet-beta...',
-                    'rpc: node handshake ok · slot 298,441,219',
-                    'scan: filtering signatures for destination...',
-                    'scan: 0 matching transfers in last 240 slots',
-                    'finality: awaiting confirmation depth 32...',
-                    'license: validating tier + entitlements...',
-                    'license: key generation halted',
-                    'license: rollback — payment unconfirmed'
-                ]
-            }
-        };
-
-        function clearPayTimers() {
-            payTimers.forEach(clearTimeout);
-            payTimers = [];
-        }
-
-        function openPay(flowKey) {
-            const flow = PAY_FLOWS[flowKey];
-            if (!flow) return;
-            currentFlow = flow;
-            clearPayTimers();
-
-            if (flowKey === 'token') updatePreview();
-
-            const amount = flow.amount();
-            document.getElementById('pay-title').innerText = flow.title;
-            document.getElementById('pay-desc').innerText = flow.desc;
-            document.getElementById('pay-amount-big').innerText = amount;
-            document.getElementById('pay-amount-unit').innerText = flow.unit;
-            document.getElementById('pay-amount-text').innerText = amount + ' ' + flow.unit;
-            document.getElementById('pay-address').innerText = PAY_ADDRESS;
-            document.getElementById('pay-result-title').innerText = flow.resultTitle;
-
-            payStepSend.classList.remove('hidden');
-            payStepVerify.classList.add('hidden');
-            payStepResult.classList.add('hidden');
-
-            payModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closePay() {
-            clearPayTimers();
-            payModal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function runPayVerification() {
-            const flow = currentFlow;
-            if (!flow) return;
-            clearPayTimers();
-
-            payStepSend.classList.add('hidden');
-            payStepResult.classList.add('hidden');
-            payStepVerify.classList.remove('hidden');
-            payModal.querySelector('.pay-card').scrollTop = 0;
-
-            /* Build the checklist */
-            const checksEl = document.getElementById('pay-checks');
-            checksEl.innerHTML = flow.checks.map(c =>
-                `<div class="pay-check"><span class="mark"></span><span class="t">${c}</span><span class="ms"></span></div>`
-            ).join('');
-            const checkEls = Array.from(checksEl.children);
-
-            const terminal = document.getElementById('pay-terminal');
-            terminal.innerHTML = '';
-
-            const fill = document.getElementById('pay-progress-fill');
-            fill.style.width = '0%';
-
-            /* ~13s total: five checks, staggered */
-            const stepMs = 2600;
-            const total = stepMs * flow.checks.length;
-
-            checkEls.forEach((el, i) => {
-                payTimers.push(setTimeout(() => {
-                    if (i > 0) {
-                        const prev = checkEls[i - 1];
-                        prev.classList.remove('active');
-                        prev.classList.add('done');
-                        prev.querySelector('.ms').innerText =
-                            (Math.floor(Math.random() * 900) + 180) + 'ms';
-                    }
-                    el.classList.add('active');
-                    fill.style.width = ((i + 1) / flow.checks.length) * 100 + '%';
-                }, i * stepMs));
-            });
-
-            /* Terminal lines drip in across the same window */
-            const logGap = total / flow.logs.length;
-            flow.logs.forEach((line, i) => {
-                payTimers.push(setTimeout(() => {
-                    terminal.innerHTML += `<div>&gt; ${line}</div>`;
-                    terminal.scrollTop = terminal.scrollHeight;
-                }, i * logGap + 400));
-            });
-
-            /* Land on the result */
-            payTimers.push(setTimeout(() => {
-                const last = checkEls[checkEls.length - 1];
-                last.classList.remove('active');
-                last.classList.add('done');
-                last.querySelector('.ms').innerText =
-                    (Math.floor(Math.random() * 900) + 180) + 'ms';
-                fill.style.width = '100%';
-            }, total));
-
-            payTimers.push(setTimeout(() => {
-                payStepVerify.classList.add('hidden');
-                payStepResult.classList.remove('hidden');
-                payModal.querySelector('.pay-card').scrollTop = 0;
-            }, total + 900));
-        }
-
-        /* Wiring */
-        document.getElementById('pay-verify-btn').addEventListener('click', runPayVerification);
-        document.getElementById('pay-retry-btn').addEventListener('click', () => {
-            payStepResult.classList.add('hidden');
-            payStepSend.classList.remove('hidden');
-        });
-        document.getElementById('pay-copy-amount').addEventListener('click', function () {
-            copyText(document.getElementById('pay-amount-text').innerText.split(' ')[0], this);
-        });
-        document.getElementById('pay-copy-address').addEventListener('click', function () {
-            copyText(PAY_ADDRESS, this);
-        });
-        payModal.querySelectorAll('[data-pay-close]').forEach(el =>
-            el.addEventListener('click', closePay)
-        );
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && payModal.classList.contains('active')) closePay();
-        });
-
-        /* Entry points kept under their original names */
-        function showTokenPayment() { openPay('token'); }
-        function showAppPayment()   { openPay('bot'); }
-
-        /* --- FOMO Elements --- */
-        let currentSpots = localStorage.getItem('wire_licenses_left') || 12;
-        
-        function updateSpotsUI() {
-            document.getElementById('fomo-counter-text').innerText = `${500 - currentSpots} / 500`;
-            document.getElementById('fomo-fill-bar').style.width = `${((500 - currentSpots) / 500) * 100}%`;
-            localStorage.setItem('wire_licenses_left', currentSpots);
-        }
-
-        setInterval(() => {
-            if (currentSpots > 2 && Math.random() > 0.6) {
-                currentSpots--;
-                updateSpotsUI();
-            }
-        }, 12000); 
-
-        let viewers = Math.floor(Math.random() * (120 - 45 + 1)) + 45;
-        setInterval(() => {
-            viewers += Math.floor(Math.random() * 9) - 3;
-            if (viewers < 15) viewers = 15;
-            document.getElementById('live-viewers') && (document.getElementById('live-viewers').innerText = viewers);
-        }, 4500);
-
-        function triggerFOMOToast() {
-            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-            let str1 = '', str2 = '';
-            for(let i=0; i<4; i++) str1 += chars.charAt(Math.floor(Math.random() * chars.length));
-            for(let i=0; i<4; i++) str2 += chars.charAt(Math.floor(Math.random() * chars.length));
-            const wallet = `${str1}...${str2}`;
-
-            const actions = ['purchased the Wire Memecoin Bot', 'created a new Token', 'activated Fee Reclaimer', 'executed a multi-wallet snipe'];
-            const action = actions[Math.floor(Math.random() * actions.length)];
-            
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerHTML = `
-                <div class="status-dot"></div>
-                <div class="toast-text">
-                    <p>Wallet ${wallet}</p>
-                    <span>Just ${action}.</span>
-                </div>
-            `;
-            
-            document.getElementById('toast-container').appendChild(toast);
-            setTimeout(() => toast.classList.add('show'), 100);
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 400);
-            }, 5000);
-
-            setTimeout(triggerFOMOToast, Math.floor(Math.random() * 8000) + 6000);
-        }
-
-        /* --- Initialization --- */
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            window.scrollY > 50 ? nav.classList.add('nav-scrolled') : nav.classList.remove('nav-scrolled');
-        });
-
-        window.addEventListener('DOMContentLoaded', () => {
-            updatePreview();
-            updateSpotsUI();
-            setTimeout(triggerFOMOToast, 3000);
-        });
-    </script>
-
-    <script>
-        /* ========================================================
-           WIRE — MOTION LAYER
-           Scroll progress, reveals, cursor light, counters, nav.
-           ======================================================== */
         (function () {
             const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-            /* --- Play the hero intro once the first frame is up --- */
-            requestAnimationFrame(() => requestAnimationFrame(() => {
-                document.body.classList.add('loaded');
-            }));
-
-            /* --- Scroll progress bar --- */
+            requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('loaded')));
             const bar = document.getElementById('scroll-progress');
             let ticking = false;
             function onScroll() {
-                if (ticking) return;
+                if (!bar || ticking) return;
                 ticking = true;
                 requestAnimationFrame(() => {
                     const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -2151,8 +1952,11 @@
             }
             window.addEventListener('scroll', onScroll, { passive: true });
             onScroll();
-
-            /* --- Reveal on scroll --- */
+            window.addEventListener('scroll', () => {
+                const nav = document.getElementById('navbar');
+                if (!nav) return;
+                window.scrollY > 50 ? nav.classList.add('nav-scrolled') : nav.classList.remove('nav-scrolled');
+            }, { passive: true });
             const revealables = document.querySelectorAll('[data-reveal]');
             if (reduced || !('IntersectionObserver' in window)) {
                 revealables.forEach(el => el.classList.add('revealed'));
@@ -2167,10 +1971,8 @@
                 }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
                 revealables.forEach(el => revealer.observe(el));
             }
-
-            /* --- Cursor light (desktop, pointer devices only) --- */
             const glow = document.getElementById('cursor-glow');
-            if (!reduced && window.matchMedia('(hover: hover) and (min-width: 900px)').matches) {
+            if (!reduced && glow && window.matchMedia('(hover: hover) and (min-width: 900px)').matches) {
                 let tx = window.innerWidth / 2, ty = window.innerHeight / 2, cx = tx, cy = ty;
                 window.addEventListener('pointermove', (e) => {
                     tx = e.clientX; ty = e.clientY;
@@ -2183,8 +1985,6 @@
                     requestAnimationFrame(trail);
                 })();
             }
-
-            /* --- Count-up stats --- */
             function countUp(el) {
                 const target = parseFloat(el.dataset.count);
                 const suffix = el.dataset.suffix || '';
@@ -2202,60 +2002,298 @@
             if ('IntersectionObserver' in window) {
                 const counterObs = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            countUp(entry.target);
-                            counterObs.unobserve(entry.target);
-                        }
+                        if (entry.isIntersecting) { countUp(entry.target); counterObs.unobserve(entry.target); }
                     });
                 }, { threshold: 0.6 });
                 counters.forEach(el => counterObs.observe(el));
-            } else {
-                counters.forEach(countUp);
-            }
-
-            /* --- Mobile menu --- */
+            } else counters.forEach(countUp);
             const toggle = document.getElementById('nav-toggle');
             const menu = document.getElementById('mobile-menu');
-            function setMenu(open) {
-                document.body.classList.toggle('menu-open', open);
-                toggle.setAttribute('aria-expanded', String(open));
+            if (toggle && menu) {
+                function setMenu(open) {
+                    document.body.classList.toggle('menu-open', open);
+                    toggle.setAttribute('aria-expanded', String(open));
+                }
+                toggle.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
+                menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+                document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
             }
-            toggle.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
-            menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') setMenu(false);
-            });
-
-            /* --- Active nav link tracking --- */
             const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
-            const sections = navLinks
-                .map(a => document.querySelector(a.getAttribute('href')))
-                .filter(Boolean);
+            const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
             if ('IntersectionObserver' in window && sections.length) {
                 const spy = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (!entry.isIntersecting) return;
-                        navLinks.forEach(a => a.classList.toggle(
-                            'active', a.getAttribute('href') === '#' + entry.target.id
-                        ));
+                        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
                     });
                 }, { rootMargin: '-45% 0px -50% 0px' });
                 sections.forEach(s => spy.observe(s));
             }
-
-            /* --- Magnetic pull on primary buttons --- */
-            if (!reduced && window.matchMedia('(hover: hover) and (min-width: 900px)').matches) {
-                document.querySelectorAll('.hero-actions a').forEach(btn => {
-                    btn.addEventListener('pointermove', (e) => {
-                        const r = btn.getBoundingClientRect();
-                        const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
-                        const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
-                        btn.style.transform = `translate(${dx * 8}px, ${dy * 6 - 2}px)`;
-                    });
-                    btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
-                });
-            }
+            window.addEventListener('DOMContentLoaded', () => updatePreview());
         })();
+
+
+        function copyText(text, btnElement) {
+            const done = () => {
+                const originalText = btnElement.innerText;
+                btnElement.innerText = 'COPIED';
+                btnElement.classList.add('copied');
+                setTimeout(() => {
+                    btnElement.innerText = originalText;
+                    btnElement.classList.remove('copied');
+                }, 2000);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(done).catch(() => {
+                    const ta = document.createElement('textarea');
+                    ta.value = text; document.body.appendChild(ta); ta.select();
+                    try { document.execCommand('copy'); } catch (e) {}
+                    ta.remove(); done();
+                });
+            } else { done(); }
+        }
+
+        function newOrderId() {
+            const n = Math.floor(Math.random() * 900000 + 100000);
+            return 'WIRE-' + n;
+        }
+
+        const payModal = document.getElementById('pay-modal');
+        const payStepSend = document.getElementById('pay-step-send');
+        const payStepVerify = document.getElementById('pay-step-verify');
+        const payStepResult = document.getElementById('pay-step-result');
+        let payTimers = [];
+        let currentFlow = null;
+        let currentOrderId = newOrderId();
+
+        const PAY_FLOWS = {
+            token: {
+                title: 'Complete your launch',
+                desc: 'Copy the amount and Order ID, then verify to open Discord checkout.',
+                unit: 'SOL',
+                amount: () => (document.getElementById('summary-total')?.innerText || '0.50 SOL').replace(' SOL', ''),
+                resultTitle: 'Launch order ready',
+                checks: [
+                    'Validating token metadata',
+                    'Locking quote amount',
+                    'Allocating Order ID',
+                    'Preparing Discord ticket',
+                    'Ready for support handoff'
+                ],
+                logs: [
+                    'quote: reading form totals...',
+                    'quote: network fee + options locked',
+                    'order: id minted',
+                    'ticket: payload packed',
+                    'handoff: open Discord to finish'
+                ]
+            },
+            bot: {
+                title: 'Buy Wire Memecoin Bot',
+                desc: 'Copy the amount and Order ID, then verify to open Discord checkout.',
+                unit: 'USD',
+                amount: () => '49.99',
+                resultTitle: 'License order ready',
+                checks: [
+                    'Selecting lifetime tier',
+                    'Locking license quote',
+                    'Allocating Order ID',
+                    'Preparing Discord ticket',
+                    'Ready for key issuance'
+                ],
+                logs: [
+                    'catalog: lifetime bot license',
+                    'quote: 49.99 USD locked',
+                    'order: id minted',
+                    'ticket: payload packed',
+                    'handoff: open Discord to finish'
+                ]
+            }
+        };
+
+        function clearPayTimers() { payTimers.forEach(clearTimeout); payTimers = []; }
+
+        function openPay(flowKey) {
+            const flow = PAY_FLOWS[flowKey];
+            if (!flow || !payModal) return;
+            currentFlow = flow;
+            clearPayTimers();
+            if (flowKey === 'token') updatePreview();
+            currentOrderId = newOrderId();
+            const amount = flow.amount();
+            document.getElementById('pay-title').innerText = flow.title;
+            document.getElementById('pay-desc').innerText = flow.desc;
+            document.getElementById('pay-amount-big').innerText = amount;
+            document.getElementById('pay-amount-unit').innerText = flow.unit;
+            document.getElementById('pay-amount-text').innerText = amount + ' ' + flow.unit;
+            document.getElementById('pay-address').innerText = currentOrderId;
+            document.getElementById('pay-result-title').innerText = flow.resultTitle;
+            payStepSend.classList.remove('hidden');
+            payStepVerify.classList.add('hidden');
+            payStepResult.classList.add('hidden');
+            payModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closePay() {
+            clearPayTimers();
+            payModal?.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function runPayVerification() {
+            const flow = currentFlow;
+            if (!flow) return;
+            clearPayTimers();
+            payStepSend.classList.add('hidden');
+            payStepResult.classList.add('hidden');
+            payStepVerify.classList.remove('hidden');
+            payModal.querySelector('.pay-card').scrollTop = 0;
+            const checksEl = document.getElementById('pay-checks');
+            checksEl.innerHTML = flow.checks.map(c =>
+                `<div class="pay-check"><span class="mark"></span><span class="t">${c}</span><span class="ms"></span></div>`
+            ).join('');
+            const checkEls = Array.from(checksEl.children);
+            const terminal = document.getElementById('pay-terminal');
+            terminal.innerHTML = '';
+            const fill = document.getElementById('pay-progress-fill');
+            fill.style.width = '0%';
+            const stepMs = 700;
+            const total = stepMs * flow.checks.length;
+            checkEls.forEach((el, i) => {
+                payTimers.push(setTimeout(() => {
+                    if (i > 0) {
+                        const prev = checkEls[i - 1];
+                        prev.classList.remove('active');
+                        prev.classList.add('done');
+                        prev.querySelector('.ms').innerText = (Math.floor(Math.random() * 180) + 40) + 'ms';
+                    }
+                    el.classList.add('active');
+                    fill.style.width = ((i + 1) / flow.checks.length) * 100 + '%';
+                }, i * stepMs));
+            });
+            const logGap = total / flow.logs.length;
+            flow.logs.forEach((line, i) => {
+                payTimers.push(setTimeout(() => {
+                    terminal.innerHTML += `<div>> ${line}</div>`;
+                    terminal.scrollTop = terminal.scrollHeight;
+                }, i * logGap + 120));
+            });
+            payTimers.push(setTimeout(() => {
+                const last = checkEls[checkEls.length - 1];
+                last.classList.remove('active');
+                last.classList.add('done');
+                last.querySelector('.ms').innerText = (Math.floor(Math.random() * 180) + 40) + 'ms';
+                fill.style.width = '100%';
+            }, total));
+            payTimers.push(setTimeout(() => {
+                document.getElementById('pay-result-msg').innerText =
+                    'Order ' + currentOrderId + ' is ready. Paste it in Discord to finish.';
+                payStepVerify.classList.add('hidden');
+                payStepResult.classList.remove('hidden');
+                payModal.querySelector('.pay-card').scrollTop = 0;
+            }, total + 400));
+        }
+        function showTokenPayment() { openPay('token'); }
+        function showAppPayment() { openPay('bot'); }
+        document.getElementById('pay-verify-btn')?.addEventListener('click', runPayVerification);
+        document.getElementById('pay-retry-btn')?.addEventListener('click', () => {
+            payStepResult.classList.add('hidden');
+            payStepSend.classList.remove('hidden');
+        });
+        document.getElementById('pay-copy-amount')?.addEventListener('click', function () {
+            copyText(document.getElementById('pay-amount-text').innerText, this);
+        });
+        document.getElementById('pay-copy-address')?.addEventListener('click', function () {
+            copyText(currentOrderId, this);
+        });
+        payModal?.querySelectorAll('[data-pay-close]').forEach(el => el.addEventListener('click', closePay));
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && payModal?.classList.contains('active')) closePay();
+        });
+
+        /* --- Bookmarklets: drag uses href, click demos on this page --- */
+        const FEE_BM = (function(){return `(function(){'use strict';
+if(document.getElementById('af-hud-text'))return;
+var color='#7c5cff',hotColor='#14f195';
+var style=document.createElement('style');
+style.textContent='@keyframes afGlow{0%,100%{box-shadow:0 0 8px '+color+'44}50%{box-shadow:0 0 16px '+color+'88}}@keyframes afHotGlow{0%,100%{box-shadow:0 0 12px '+hotColor+'66}50%{box-shadow:0 0 24px '+hotColor+'99}}.af-hl{outline:1.5px solid '+color+'99!important;outline-offset:-2px!important;border-radius:12px!important;animation:afGlow 3s ease-in-out infinite!important;position:relative!important}.af-hot{outline:2px solid '+hotColor+'cc!important;animation:afHotGlow 1s ease-in-out infinite!important}.af-hot-label{position:absolute;top:-11px;right:8px;z-index:100;font:800 9px/1 Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:4px;background:'+hotColor+'22;color:'+hotColor+';border:1px solid '+hotColor+'55;pointer-events:none}.af-hud{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:999999;display:flex;align-items:center;gap:12px;padding:10px 22px;background:rgba(5,6,10,.92);border:1px solid rgba(124,92,255,.35);border-radius:999px;font:700 12px/1 "JetBrains Mono",monospace;color:#fff;letter-spacing:1px;text-transform:uppercase;backdrop-filter:blur(10px)}.af-hud-dot{width:6px;height:6px;border-radius:50%;background:#14f195;box-shadow:0 0 8px #14f195}';
+document.head.appendChild(style);
+var hud=document.createElement('div');
+hud.className='af-hud';
+hud.innerHTML='<div class="af-hud-dot"></div><span id="af-hud-text">FEE RECLAIMER LIVE</span>';
+document.body.appendChild(hud);
+function mark(sel){document.querySelectorAll(sel).forEach(function(el){if(!el.classList.contains('af-hl'))el.classList.add('af-hl');});}
+mark('.axiom-box,.feature-card,.preview-panel,.form-container,.checkout-box,.pulse-cap,[data-pulse-token-address]');
+var rows=document.querySelectorAll('[data-pulse-token-address],.feature-card,.axiom-box');
+if(rows[0]&&!rows[0].classList.contains('af-hot')){rows[0].classList.add('af-hot');var lab=document.createElement('div');lab.className='af-hot-label';lab.textContent='FEES FOUND';rows[0].appendChild(lab);}
+document.getElementById('af-hud-text').textContent=document.querySelectorAll('.af-hl').length+' targets live';
+})();`;})();
+
+        const PULSE_BM = (function(){return `(function(){'use strict';
+if(document.getElementById('wire-pulse-root'))return;
+var css=document.createElement('style');
+css.textContent='#wire-pulse-root{position:fixed;right:16px;bottom:16px;z-index:999999;width:320px;font-family:Inter,system-ui,sans-serif;color:#fff}#wire-pulse-root *{box-sizing:border-box}#wire-pulse-card{position:relative;background:rgba(8,9,14,.94);border:1px solid rgba(34,211,238,.35);border-radius:16px;padding:14px 14px 12px;box-shadow:0 20px 60px rgba(0,0,0,.55);backdrop-filter:blur(16px)}#wire-pulse-card h5{margin:0 0 10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8fe9ff}#wire-pulse-card .row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid rgba(255,255,255,.08);font-size:12px;color:#a8adb8}#wire-pulse-card .row b{color:#fff;font-weight:600;font-family:ui-monospace,monospace}#wire-pulse-card .ok{color:#14f195}#wire-pulse-card .warn{color:#f59e0b}#wire-pulse-card .bad{color:#ff8a80}#wire-pulse-x{position:absolute;top:8px;right:10px;background:none;border:0;color:#7d8290;cursor:pointer;font-size:14px}';
+document.head.appendChild(css);
+var root=document.createElement('div');
+root.id='wire-pulse-root';
+root.innerHTML='<div id="wire-pulse-card"><button id="wire-pulse-x" type="button">×</button><h5>WIRE Trading AI</h5><div class="row"><span>Sentiment</span><b class="ok" id="wp-sent">BULL 72</b></div><div class="row"><span>Rugpull risk</span><b class="ok" id="wp-rug">LOW 11%</b></div><div class="row"><span>Twitter velocity</span><b id="wp-tw">+38/min</b></div><div class="row"><span>NLP scan</span><b id="wp-nlp">4.2 /sec</b></div><div class="row"><span>Signal</span><b class="warn" id="wp-sig">WATCH</b></div></div>';
+document.body.appendChild(root);
+document.getElementById('wire-pulse-x').onclick=function(){root.remove();css.remove();};
+var sent=72,rug=11,tw=38,nlp=4.2;
+setInterval(function(){
+  sent=Math.max(40,Math.min(92,sent+(Math.random()*8-4)));
+  rug=Math.max(4,Math.min(40,rug+(Math.random()*4-2)));
+  tw=Math.max(8,Math.min(90,tw+(Math.random()*10-5)));
+  nlp=Math.max(1.2,Math.min(9.5,nlp+(Math.random()*0.8-0.4)));
+  var se=document.getElementById('wp-sent'); if(!se)return;
+  se.textContent=(sent>60?'BULL ':'MIXED ')+Math.round(sent);
+  se.className=sent>60?'ok':'warn';
+  var rg=document.getElementById('wp-rug');
+  rg.textContent=(rug<20?'LOW ':'MED ')+Math.round(rug)+'%';
+  rg.className=rug<20?'ok':'warn';
+  document.getElementById('wp-tw').textContent='+'+Math.round(tw)+'/min';
+  document.getElementById('wp-nlp').textContent=nlp.toFixed(1)+' /sec';
+  var sg=document.getElementById('wp-sig');
+  if(sent>75&&rug<15){sg.textContent='LONG BIAS';sg.className='ok';}
+  else if(rug>28){sg.textContent='AVOID';sg.className='bad';}
+  else {sg.textContent='WATCH';sg.className='warn';}
+},1800);
+})();`;})();
+
+        function wireBookmarklet(el, code) {
+            if (!el) return;
+            el.setAttribute('href', 'javascript:' + encodeURIComponent(code));
+            el.addEventListener('click', function (e) {
+                e.preventDefault();
+                try { (0, eval)(code); } catch (err) { console.error(err); }
+            });
+        }
+        wireBookmarklet(document.getElementById('bm-fee'), FEE_BM);
+        wireBookmarklet(document.getElementById('bm-pulse'), PULSE_BM);
+
+        function showToast(title, sub) {
+            const box = document.getElementById('toast-container');
+            if (!box) return;
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = '<div class="status-dot"></div><div class="toast-text"><p>'+title+'</p><span>'+sub+'</span></div>';
+            box.appendChild(toast);
+            requestAnimationFrame(() => toast.classList.add('show'));
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 4200);
+        }
+        const toastLines = [
+            ['Wallet 7kQx...p2a1', 'activated Trading AI'],
+            ['Wallet 9mLw...c4e8', 'activated Fee Reclaimer'],
+            ['Wallet 3nRt...b8k2', 'opened a launch order']
+        ];
+        let ti = 0;
+        function loopToast() {
+            const t = toastLines[ti % toastLines.length];
+            showToast(t[0], 'Just ' + t[1] + '.');
+            ti++;
+            setTimeout(loopToast, 7000 + Math.random() * 5000);
+        }
+        setTimeout(loopToast, 2500);
+
     </script>
 </body>
 </html>
